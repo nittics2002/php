@@ -2,8 +2,7 @@
 
 namespace Validator\validator;
 
-use TypeError;
-
+use UnexpectedValueException;
 use Validator\{
     ValidatorErrorBug,
     ValidatorInterface,
@@ -33,6 +32,13 @@ class RecursiveValidator implements ValidatorInterface
     private array $errors = [];
     
     /**
+     *   earlyReturn
+     *   
+     *   @var bool
+     */
+    private array $earlyReturn = false;
+    
+    /**
      *  __construct
      * 
      *  @param callable[][] $judgementProcessings
@@ -50,7 +56,7 @@ class RecursiveValidator implements ValidatorInterface
         array $judgementProcessings,
         array $dataset
     ):void {
-        $this->judgementProcessing = $judgementProcessing;
+        $this->judgementProcessings = $judgementProcessings;
         $this->dataset = $dataset;
     }
     
@@ -59,40 +65,83 @@ class RecursiveValidator implements ValidatorInterface
      */
     public function isValid():bool
     {
+        $this->errors = [];
+        $judgement = true;
         
-        
-        
-        
-        
-        $this->validatorErrorBug = null;
-        
-        $retult = call_user_func(
-            $this->judgementProcessing,
-            $value
-        );
-        
-        if (!is_bool($result)) {
-            new TypeError(
-                "A return value of judgment processing isn't 'bool'"
-            );
-        }
-        
-        if (!$result) {
-          $this->validatorErrorBug = new ValidatorErrorBug(
+        foreach ($this->judgementProcessings as $name => $callbacks) {
+            if (!is_array($callbacks)) {
+                throw new UnexpectedValueException(
+                    "judgementProcessings is not callable[][]."
+                        . " name={$name}"
+                );
+            }
             
-          );
+            if (!isset($this->dataset[$name])) {
+                throw new UnexpectedValueException(
+                    "data isn't defined. name={$name}"
+                );
+                
+            }
+            
+            foreach ($callbacks as $no => $callback) {
+                if (!is_callable($callback)) {
+                    throw new UnexpectedValueException(
+                        "judgementProcessings is not callable[][]."
+                            . " name={$name}"
+                            . " no={$no}"
+                    );
+                }
+                
+                $retult = call_user_func(
+                    $callback,
+                    $this->dataset[$name]
+                );
+                
+                if (!is_bool($result)) {
+                    new UnexpectedValueException(
+                        "A return value of judgment processing isn't 'bool'"
+                    );
+                }
+                
+                if (!$result) {
+                  $judgement = false;
+                  
+                  $this->errors[$name][$no] = new ValidatorErrorBug(
+                    $callable,
+                    $value
+                  );
+                  
+                  if ($this->earlyReturn) {
+                      return $judgement;
+                  }
+                }
+            }
+            
         }
-        
-        return $retult;
+        return $judgement;
     }
     
     /**
      *  {@inheritDoc}
      *
-     *  @return ValidatorErrorBug[]
+     *  @return ValidatorErrorBug[][]
+     *      [
+     *          name1 => [ValidatorErrorBug11,...],
+     *          name2 => [ValidatorErrorBug21,...],
+     *      ]
      */
-    public function error():ValidatorErrorBug[]
+    public function error():array
     {
         return $this->errors;
+    }
+    
+    /**
+     *  setEarlyReturn
+     * 
+     *  @return static
+     */
+    public function setEarlyReturn():static
+    {
+        return $this->earlyReturn = true;
     }
 }

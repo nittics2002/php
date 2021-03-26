@@ -2,8 +2,7 @@
 
 namespace Validator\rule;
 
-use TypeError;
-
+use UnexpectedValueException;
 use Validator\ValidatorRuleInterface;
 
 class CallbackValidatorRule implements ValidatorRuleInterface
@@ -38,8 +37,8 @@ class CallbackValidatorRule implements ValidatorRuleInterface
         );
         
         if (!is_bool($result)) {
-            new TypeError(
-                "A return value of judgment processing isn't 'bool'"
+            new UnexpectedValueException(
+                "A return value of judgment processing isn't bool"
             );
         }
         
