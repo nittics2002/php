@@ -2,22 +2,19 @@
 
 namespace Validator;
 
-use Validator\ValidatorErrorBug;
-
 interface ValidatorInterface
 {
     /**
      *   isValid
      *   
-     *   @param mixed $value
      *   @return bool
      */
-    public function isValid(mixed $value):bool;
+    public function isValid():bool;
     
     /**
-     *   error
+     *   errors
      *   
-     *   @return ?ValidatorErrorBug
+     *   @return iterable
      */
-    public function error():?ValidatorErrorBug;
+    public function errors():iterable;
 }

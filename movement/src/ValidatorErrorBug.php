@@ -7,29 +7,12 @@ class ValidatorErrorBug
     /**
      *  __construct
      * 
-     *  @param string $name
-     *  @param mixed $value
      *  @param string $rule
+     *  @param mixed $value
      */
     public function __construct(
-        public string $name,
-        public mixed $value,
         public string $rule,
+        public mixed $value,
     ):void {
-    }
-    
-    /**
-     *  fromArray
-     * 
-     *  @param array $parameters
-     *  @return static
-     */
-    public static function fromArray(array $parameters):static
-    {
-        return new static(
-            $parameters['name'],
-            $parameters['value'],
-            $parameters['rule'],
-        );
     }
 }

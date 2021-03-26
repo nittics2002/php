@@ -1,15 +1,12 @@
 <?php
 
-namespace Validator;
+namespace Validator\rule;
 
 use TypeError;
 
-use Validator\{
-    ValidatorErrorBug,
-    ValidatorInterface,
-}
+use Validator\ValidatorRuleInterface;
 
-class CallbackValidator implements ValidatorInterface
+class CallbackValidatorRule implements ValidatorRuleInterface
 {
     /**
      *   judgementProcessing
@@ -17,13 +14,6 @@ class CallbackValidator implements ValidatorInterface
      *   @var callable
      */
     private callable $judgementProcessing;
-    
-    /**
-     *   ValidatorErrorBug
-     *   
-     *   @var ValidatorErrorBug
-     */
-    private ValidatorErrorBug $validatorErrorBug;
     
     /**
      *  __construct
@@ -53,20 +43,6 @@ class CallbackValidator implements ValidatorInterface
             );
         }
         
-        if (!$result) {
-          $this->validatorErrorBug = new ValidatorErrorBug(
-            
-          );
-        }
-        
         return $retult;
-    }
-    
-    /**
-     *   @inheritDoc
-     */
-    public function error():?ValidatorErrorBug
-    {
-        return $this->validatorErrorBug;
     }
 }
