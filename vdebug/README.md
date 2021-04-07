@@ -35,7 +35,7 @@ vim-vdebugの動作テスト用
 - 環境変数を設定する
 
 > `XDEBUG_SESSION=1`
-> `XDEBUG_CONFIG=client_host=localhost client_port=9000`
+> `XDEBUG_CONFIG="client_host=localhost client_port=9000"`
 >> xdebugのportは初期値=9003
 >> vdebugのportは初期値=9000
 >> vdebugの変更は手間がかかるため、xdebug側を変更する
@@ -55,6 +55,7 @@ vim-vdebugの動作テスト用
 - [F2]step_over
 - [F3]step_in
 - [F4]step_out
+- [F10]breakpoint設定
 
 > 他のキーはテストした環境では上手くない
 
