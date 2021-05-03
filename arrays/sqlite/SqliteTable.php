@@ -2,19 +2,18 @@
 
 declare(strict_types=1);
 
-namespace arrays;
+namespace arrays\sqlite;
 
 use POD;
 use arrays\ArrayTableInterface;
+use arrays\sqlite\SqliteTableTwoTableTrait;
 
 class SqliteTable implements ArrayTableInterface
 {
+    use SqliteTableTwoTableTrait;
     
-    /**
-    *   @var string
-    *
-    */
-    //private const TYPE_INT = 'int';
+    
+    
     
     
     

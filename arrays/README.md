@@ -25,12 +25,24 @@ $resultArray = $resultSqliteArrayTable->toArray();
 
 #### const dataType
 
+use php
+
+- int
+- float
+- string
+- datetime
+
+use database
+
 - INT
 - DECIMAL
 - TEXT
+- TIMESTAMP
+
+not used?
+
 - DATE
 - TIME
-- DATETIME
 
 ### two table method
 
@@ -111,6 +123,9 @@ $resultArray = $resultSqliteArrayTable->toArray();
 
 - columnNames
 - columnTypes [[colName => dataType],...]]
+
+- parseColumns(...$column_names) (private)
+
 
 ### not support method
 

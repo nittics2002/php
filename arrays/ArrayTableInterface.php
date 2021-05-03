@@ -12,11 +12,21 @@ interface ArrayTableInterface
     /**
     *   join
     *
-    *   @param ArrayTableInterface $table
+    *   @param ArrayTableInterface $other_table
     *   @return static
     */
     public function join(
-        ArrayTableInterface $table,
+        ArrayTableInterface $other_table,
+    ):static;
+    
+    /**
+    *   leftJoin
+    *
+    *   @param ArrayTableInterface $other_table
+    *   @return static
+    */
+    public function leftJoin(
+        ArrayTableInterface $other_table,
     ):static;
     
     
