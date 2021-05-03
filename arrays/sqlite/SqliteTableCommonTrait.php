@@ -7,6 +7,12 @@ namespace arrays\sqlite;
 trait SqliteTableCommonTrait
 {
     /**
+    *   @var string[] [sql1,...]
+    *
+    */
+    private array $sqls = [];
+    
+    /**
     *   @var array [[column_name => data_type],...]
     *
     */
@@ -51,49 +57,56 @@ trait SqliteTableCommonTrait
     /**
     *   parseColumns
     *
-    *   @@param array ...$column_names
-    *   @return array
+    *   @@param array $column_names
+    *   @@param ?array $other_column_names
+    *   @return array [[column_name1,...], ([column_name1,...])]
     */
-    private function parseColumns(...$column_names):array
-    {
+    private function parseColumns(
+        array $column_names,
+        ?array $other_column_names,
+    ):array{
+        if ($other_column_names === null) {
+            return $column_names;
+        }
+        
         $diff = array_diff($column_names);
         
-        $first = array_shift($column_names);
-        $counter = 0;
-        
-        
-        
-        //array_map???
-        $intercect = array_reduce(
+        $intercect = array_intersect(
             $column_names,
-            function($carry, $item) use (&$counter) {
-                $intercect = array_intersect($carry, $item);
-                
-                return array_map(
-                    function($column_name) use ($counter) {
-                        return "{$column_name}_{$carry}";
-                    },
-                    $intercect
-                );
-            },
-            $first,
+            $other_column_names
         );
         
+        $renamed = array_map(
+            fn($column_name) => "{$column_name}_a",
+            $intercect
+        );
         
-        
-        
-        
-        
-        
-        
-        return $intercect
-        
-        
-        
-        
-        
-        
-        
-        
+        return [
+            $column_names,
+            $diff + $renamed,
+        ];
     }
+    
+    /**
+    *   parseColumnConditions
+    *
+    *   @@param array $column_conditions [table1colname => table2colname,...]
+    *   @return array [[table1colname, table2colname],...]
+    */
+    private function parseColumnConditions(
+        return array_map (
+            fn ($column1, $column) => [$column1, $column],
+            array_keys($column_conditions),
+            array_values($column_conditions),
+        );
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

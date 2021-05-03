@@ -1,4 +1,17 @@
-# array
+# SqliteArrayTable
+
+##210503
+
+- SqliteTableCommon
+ - appendSql()
+ - create define_columns method
+
+
+
+
+
+
+---
 
 ##sqlite3を利用したテーブルクラス
 
