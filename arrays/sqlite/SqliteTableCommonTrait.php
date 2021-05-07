@@ -6,6 +6,8 @@ namespace arrays\sqlite;
 
 trait SqliteTableCommonTrait
 {
+    use SqliteTableDataTypeTrait;
+    
     /**
     *   @var string[] [sql1,...]
     *
@@ -35,13 +37,7 @@ trait SqliteTableCommonTrait
     */
     public function columnTypes():array
     {
-        $column_types = [];
-        
-        foreach ($this->define_columns as $column_name => $type) {
-            $column_types[$column_name] = $type;
-        }
-        
-        return $column_types;
+        return $this->define_columns;
     }
     
     /**
@@ -51,7 +47,14 @@ trait SqliteTableCommonTrait
     */
     private function columnRavelingTypes():array
     {
-        return $this->define_columns;
+        $column_types = [];
+        
+        foreach ($this->define_columns as $column_name => $type) {
+            $column_types[$column_name] = 
+                $this->ravelingDataType($type);
+        }
+        
+        return $column_types;
     }
     
     /**

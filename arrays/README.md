@@ -2,14 +2,17 @@
 
 ##210503
 
+- joinの時、テーブルを作成する必要がある
+ - createTable()が必要
+
+
+
+
+##210503
+
 - SqliteTableCommon
  - appendSql()
  - create define_columns method
-
-
-
-
-
 
 ---
 

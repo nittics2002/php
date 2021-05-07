@@ -30,4 +30,12 @@ interface ArrayTableDataTypeInterface
     *   @return string
     */
     private function unRavelingDataType(string $used_type):string;
+    
+    /**
+    *   isDefinedDataType
+    *
+    *   @param string $array_type
+    *   @return bool
+    */
+    private function isDefinedDataType(string $array_type):bool;
 }

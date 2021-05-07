@@ -4,19 +4,20 @@ declare(strict_types=1);
 
 namespace arrays\sqlite;
 
+use InvalidArgumentException;
 use arrays\ArrayTableDataTypeInterface;
 
 trait SqliteTableDataTypeTrait implements ArrayTableDataTypeInterface
 {
     /**
-    *   @var array
+    *   @var array [php_type => database_type,...]
     *
     */
     private array data_types = [
-        TYPE_INT => 'integer',
-        TYPE_FLOAT => 'numeric',
-        TYPE_STRING => 'text',
-        TYPE_DATETIME => 'timespamp',
+        ArrayTableDataTypeInterface::TYPE_INT => 'integer',
+        ArrayTableDataTypeInterface::TYPE_FLOAT => 'numeric',
+        ArrayTableDataTypeInterface::TYPE_STRING => 'text',
+        ArrayTableDataTypeInterface::TYPE_DATETIME => 'timespamp',
     ];
     
     /**
@@ -25,11 +26,13 @@ trait SqliteTableDataTypeTrait implements ArrayTableDataTypeInterface
     */
     private function ravelingDataType(string $array_type):string
     {
-        if (!array_key_exists($this->data_types)) {
-            throw new AAA
+        if (!array_key_exists($array_type, $this->data_types)) {
+            throw new InvalidArgumentException(
+                "data type not defined:{$array_type}"
+            );
         }
         
-        return $this->data_types($array_type);
+        return $this->data_types[$array_type];
     }
     
     /**
@@ -38,10 +41,21 @@ trait SqliteTableDataTypeTrait implements ArrayTableDataTypeInterface
     */
     private function unRavelingDataType(string $used_type):string
     {
-        if (!in_array($this->data_types)) {
-            throw new AAA
+        if (!in_array($used_type, $this->data_types)) {
+            throw new InvalidArgumentException(
+                "data type not defined:{$used_type}"
+            );
         }
         
         return array_keys($this->data_types, $used_type);
+    }
+    
+    /**
+    *   {inherit}
+    *
+    */
+    private function isDefinedDataType(string $array_type):bool
+    {
+        return array_key_exists($array_type, $this->data_types);
     }
 }
