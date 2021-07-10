@@ -1,4 +1,22 @@
 
+
+#othes_value
+
+別途、class化？
+
+array_pop/array_shiftだけっぽい
+==>poped/shiftedというmethodにしたい
+==>ReferencedFunctionから別class化？
+==>methodにpop/shiftとpoped/shifted
+    ==>combineと類似
+
+
+
+
+
+
+
+
 #調査
         
         //array かつ arg1がarray
@@ -52,17 +70,17 @@
         
         
         //array 引数は検討必要
-        array_combine //conbineKeyAndKey,...
-        array_fill_keys //1
+        array_combine //conbineKeyUseKey,...
+        array_fill_keys //1 //fillKeysKeyUseKey,...
         array_map //2
         
         
         
         //引数にarrayなし
-        array_fill
-        array
-        list
-        range
+          array_fill
+          array
+          list
+          range
         
         
         //////////////////////////////////////

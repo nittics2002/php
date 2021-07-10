@@ -17,6 +17,16 @@ class BasicFunction
     *   @val array [function_name=>argument_position]
     */
     private array $not_first_array_argument = [];
+
+    /**
+    *   @val array [function_name]
+    */
+    private array $has_others_return = [];
+
+    /**
+    *   @val mixed
+    */
+    private mixed $others_value;
     
     /**
     *   functionList
@@ -55,6 +65,7 @@ class BasicFunction
         string $name,
         array $arguments,
     ):mixed {
+        $this->others_value = null;
         $this->checkFunction($name);
         
         $resolved_arguments = $this->resolveArgument(
@@ -69,6 +80,16 @@ class BasicFunction
         );
     }
     
+    /**
+    *   aaa
+    *
+    *   @return mixed
+    */
+    public function aaa():mixed
+    {
+        return $this->others_value;
+    }
+
     /**
     *   checkFunction
     *
