@@ -47,7 +47,7 @@
         //arrayだがreturnの検討必要
           array_splice  //1&  //return 置換された1&
         
-      //array 引数も要注意
+        //array 引数も要注意
         compact //
         
         
@@ -71,23 +71,23 @@
         ------------------------------------
         //ReferencedFunction
         //boolだがarrayのreturnにする
-        array_multisort
-        array_walk
-        array_walk_recursive
-        
-        arsort
-        asort
-        krsort
-        ksort
-        natcasesort
-        natsort
-        rsort
-        sort
-        uasort
-        uksort
-        usort
-        
-        shuffle
+          array_multisort
+          array_walk
+          array_walk_recursive
+          
+          arsort
+          asort
+          krsort
+          ksort
+          natcasesort
+          natsort
+          rsort
+          sort
+          uasort
+          uksort
+          usort
+          
+          shuffle
         ------------------------------------
         
         
