@@ -6,12 +6,17 @@ namespace wrapper\array;
 
 use RuntimeException;
 
-abstract class AbstractBasicFunction
+class BasicFunction
 {
     /**
-    *   @val array
+    *   @val array [function_name]
     */
     private array $functions = [];
+
+    /**
+    *   @val array [function_name=>argument_position]
+    */
+    private array $not_first_array_argument = [];
     
     /**
     *   functionList
@@ -103,6 +108,22 @@ abstract class AbstractBasicFunction
         }
         return $result;
     }
+
+    /**
+    *   resolveArgumentPosition
+    *
+    *   @param string $name
+    *   @return ?int
+    */
+    public function resolveArgumentPosition(
+        string $name,
+    ):?int {
+      return array_key_exists(
+        $name,
+        $this->not_first_array_argument,
+      )? $this->not_first_array_argument[$name]:
+        null;
+    }
     
     /**
     *   resolveArgument
@@ -112,9 +133,24 @@ abstract class AbstractBasicFunction
     *   @param array $arguments
     *   @return array
     */
-    abstract protected function resolveArgument(
+    protected function resolveArgument(
         array $dataset,
         string $name,
         array $arguments,
-    ):array;
+    ):array {
+      if (is_null(
+        $this->resolveArgumentPosition($name)
+        ) {
+            array_splice(
+              $arguments,
+              $this->not_first_array_argument[$name],
+              1,
+              $dataset,
+            ):
+            return $arguments;
+        }
+      
+      array_unshift($arguments, $dataset);
+      return $arguments;
+    }
 }

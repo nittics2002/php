@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace wrapper\array;
 
-use wrapper\array\AbstractBasicFunction;
+use wrapper\array\BasicFunction;
 
-class ValueFunction extends AbstractBasicFunction
+class ValueFunction extends BasicFunction
 {
     /**
     *   {inherit}
@@ -28,32 +28,7 @@ class ValueFunction extends AbstractBasicFunction
     *   @val array [function_name=>argument_position]
     */
     private array $not_first_array_argument = [
-        'array_key_exists' => 2,
-        'array_search' => 2,
+        'array_key_exists' => 1,
+        'array_search' => 1,
     ];
-
-    /**
-    *   {inherit}
-    */
-    public function resolveArgument(
-        array $dataset,
-        string $name,
-        array $arguments,
-    ):array{
-      if (array_key_exists(
-        $name,
-        $this->not_first_array_argument,
-      )) {
-        array_splice(
-          $arguments,
-          $this->not_first_array_argument[$name],
-          1,
-          $dataset,
-        );
-        return $arguments;
-      }
-      
-      array_unshift($arguments, $dataset);
-      return $arguments;
-    }
 }

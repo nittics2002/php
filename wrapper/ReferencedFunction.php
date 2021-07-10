@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace wrapper\array;
 
-use wrapper\array\AbstractBasicFunction;
+use wrapper\array\BasicFunction;
 
-class ReferencedFunction extends AbstractBasicFunction
+class ReferencedFunction extends BasicFunction
 {
     /**
     *   {inherit}
@@ -37,23 +37,19 @@ class ReferencedFunction extends AbstractBasicFunction
     ];
 
     /**
+    *   @val array [function_name=>argument_position]
+    */
+    private array $not_first_array_argument = [
+        'array_map' => 1,
+    ];
+
+    /**
     *   {inherit}
     */
     private array $has_others_return = [
       'array_push',
       'array_unshift',
     ];
-
-    *   {inherit}
-    */
-    public function resolveArgument(
-        array $dataset,
-        string $name,
-        array $arguments,
-    ):array{
-        array_unshift($arguments, &$dataset);
-        return $arguments;
-    }
     
     /**
     *   {inherit}
