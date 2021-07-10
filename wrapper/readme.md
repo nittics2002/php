@@ -60,14 +60,16 @@
         range
         
         
-        /////
+        //////////////////////////////////////
         
         
         //bool
-        array_key_exists/key_exists
-        in_array
+        array_key_exists/key_exists //2番目 <=$arrayが
+        in_array    //1番目
         
         
+        ------------------------------------
+        //ReferencedFunction
         //boolだがarrayのreturnにする
         array_multisort
         array_walk
@@ -86,40 +88,74 @@
         usort
         
         shuffle
+        ------------------------------------
+        
+        
+        
         
         //int|string|null
-        array_key_first
-        array_key_last
-        key
+        array_key_first //1
+        array_key_last  //1
+        key //1
         
         //mixed
-        array_pop
-        array_reduce
-        array_shift
-        current/pos
+        array_pop   //1&
+        array_reduce    //1
+        array_shift //1&
+        current/pos //1
         
         
         //mixedだがarrayのreturnにする
-        end
-        next
-        prev
-        reset
+        end //1&
+        next    //1&
+        prev    //1&
+        reset   //1&
         
         
         //int
-        array_push
-        array_unshift
-        count/seizeof
-        extract
+        array_push  //1&
+        array_unshift   //1&
+        count/seizeof   //1
+        extract //1&
         
         //int|float
-        array_product
-        array_sum
+        array_product   //1
+        array_sum   //1
         
         //int|string|arrray
-        array_rand
+        array_rand  //1
         
         //int|string|false
-        array_search
+        array_search    //2
+        
+
+
+
+        ////////////////////////////////////////
+        
+        //bool 引数arrayなし
+        is_array
+        
+        //array 引数arrayなし
+        explode
+        
+        //string
+        implode/join //2
         
         
+        //array|false  引数arrayなし
+        preg_split
+        
+        
+        その他mbstringにも類似あり
+        mb_split
+        mb_str_split
+        ...etc
+        
+
+
+        
+
+
+
+
