@@ -41,15 +41,20 @@
         
         
         
+        
+        
+        
         //arrayだがreturnの検討必要
-        array_splice
-        compact
+          array_splice  //1&  //return 置換された1&
+        
+      //array 引数も要注意
+        compact //
         
         
         //array 引数は検討必要
-        array_combine
-        array_fill_keys
-        array_map
+        array_combine //conbineKeyAndKey,...
+        array_fill_keys //1
+        array_map //2
         
         
         
@@ -61,11 +66,6 @@
         
         
         //////////////////////////////////////
-        
-        
-        //bool
-        array_key_exists/key_exists //2番目 <=$arrayが
-        in_array    //1番目
         
         
         ------------------------------------
@@ -91,42 +91,47 @@
         ------------------------------------
         
         
+        //bool
+          array_key_exists/key_exists //2番目 <=$arrayが
+          in_array    //1番目
+        
+        
         
         
         //int|string|null
-        array_key_first //1
-        array_key_last  //1
-        key //1
+          array_key_first //1
+          array_key_last  //1
+          key //1
         
         //mixed
-        array_pop   //1&
-        array_reduce    //1
-        array_shift //1&
-        current/pos //1
+          array_pop   //1&  //==>popedデータを取得するmethod作る?
+          array_reduce    //1
+          array_shift //1&  //==>shiftedデータを...
+          current/pos //1
         
         
         //mixedだがarrayのreturnにする
-        end //1&
-        next    //1&
-        prev    //1&
-        reset   //1&
+          end //1&
+          next    //1&
+          prev    //1&
+          reset   //1&
         
         
         //int
-        array_push  //1&
-        array_unshift   //1&
-        count/seizeof   //1
-        extract //1&
+          array_push  //1&  //reruen pushed array
+          array_unshift   //1&  //return unshifted array
+          count/seizeof   //1
+        extract //1&  //returnが展開された変数の数だがどうする?
         
         //int|float
-        array_product   //1
-        array_sum   //1
+          array_product   //1
+          array_sum   //1
         
         //int|string|arrray
-        array_rand  //1
+          array_rand  //1
         
         //int|string|false
-        array_search    //2
+          array_search    //2
         
 
 

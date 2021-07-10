@@ -12,24 +12,38 @@ class ReferencedFunction extends AbstractBasicFunction
     *   {inherit}
     */
     private array $functions = [
-        array_multisort
-        array_walk
-        array_walk_recursive
-        arsort
-        asort
-        krsort
-        ksort
-        natcasesort
-        natsort
-        rsort
-        sort
-        uasort
-        uksort
-        usort
-        shuffle
+        'array_multisort',
+        'array_walk',
+        'array_walk_recursive',
+        'arsort',
+        'asort',
+        'krsort',
+        'ksort',
+        'natcasesort',
+        'natsort',
+        'rsort',
+        'sort',
+        'uasort',
+        'uksort',
+        'usort',
+        'shuffle',
+        'array_splice',
+        'array_pop',
+        'array_shift',
+        'end',
+        'next',
+        'prev',
+        'reset',
     ];
-    
+
     /**
+    *   {inherit}
+    */
+    private array $has_others_return = [
+      'array_push',
+      'array_unshift',
+    ];
+
     *   {inherit}
     */
     public function resolveArgument(
