@@ -34,6 +34,9 @@ class ReferencedFunction extends BasicFunction
         'next',
         'prev',
         'reset',
+        'array_map',
+        'array_push',
+        'array_unshift',
     ];
 
     /**
@@ -46,7 +49,7 @@ class ReferencedFunction extends BasicFunction
     /**
     *   {inherit}
     */
-    private array $has_others_return = [
+    private array $has_related_function = [
       'array_push',
       'array_unshift',
     ];

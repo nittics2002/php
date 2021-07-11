@@ -21,12 +21,12 @@ class BasicFunction
     /**
     *   @val array [function_name]
     */
-    private array $has_others_return = [];
+    private array $has_related_function = [];
 
     /**
     *   @val mixed
     */
-    private mixed $others_value;
+    private mixed $related_value;
     
     /**
     *   functionList
@@ -46,7 +46,7 @@ class BasicFunction
     */
     public function has(string $name):bool
     {
-        return in_array(
+        $result = in_array(
             $name,
             $this->functions
         );
@@ -65,7 +65,7 @@ class BasicFunction
         string $name,
         array $arguments,
     ):mixed {
-        $this->others_value = null;
+        $this->related_value = null;
         $this->checkFunction($name);
         
         $resolved_arguments = $this->resolveArgument(
@@ -81,13 +81,13 @@ class BasicFunction
     }
     
     /**
-    *   aaa
+    *   relatedValue
     *
     *   @return mixed
     */
-    public function aaa():mixed
+    public function relatedValue():mixed
     {
-        return $this->others_value;
+        return $this->related_value;
     }
 
     /**
@@ -121,8 +121,10 @@ class BasicFunction
             $name,
             $arguments,
         );
-        
-        if ($result === false)) {
+
+      if (in_array($name, $this->has_related_value)) {
+        $this->related_value = $result;
+      } elseif ($result === false)) {
             throw new RuntimeException(
                 "execution failure :{$name}"
             );
