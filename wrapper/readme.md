@@ -66,13 +66,13 @@ array_pop/array_shiftだけっぽい
           array_splice  //1&  //return 置換された1&
         
         //array 引数も要注意
-        compact //
+        compact //変数名から配列を作る  //対象外?
         
         
         //array 引数は検討必要
         array_combine //conbineKeyUseKey,...
         array_fill_keys //1 //fillKeysKeyUseKey,...
-        array_map //2
+          array_map //2
         
         
         
