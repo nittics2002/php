@@ -1,8 +1,14 @@
 <?php
 
+/**
+*   BasicFunction
+*
+*   @version 210714
+*/
+
 declare(strict_types=1);
 
-namespace wrapper\array;
+namespace Concerto\wrapper\array;
 
 use RuntimeException;
 
@@ -11,47 +17,47 @@ class BasicFunction
     /**
     *   @val array [function_name]
     */
-    private array $functions = [];
+    protected array $functions = [];
 
     /**
     *   @val array [function_name=>argument_position]
     */
-    private array $not_first_array_argument = [];
+    protected array $not_first_array_argument = [];
 
     /**
     *   @val array [function_name]
     */
-    private array $has_related_function = [];
+    protected array $has_related_value = [];
 
     /**
     *   @val mixed
     */
-    private mixed $related_value;
-    
+    protected mixed $related_value = null;
+
     /**
     *   functionList
     *
     *   @return array
     */
-    public function functionList():array
+    public function functionList(): array
     {
         return $this->functions;
     }
-    
+
     /**
     *   has
     *
     *   @param string $name
     *   @return bool
     */
-    public function has(string $name):bool
+    public function has(string $name): bool
     {
-        $result = in_array(
+        return in_array(
             $name,
             $this->functions
         );
     }
-    
+
     /**
     *   execute
     *
@@ -64,28 +70,28 @@ class BasicFunction
         array $dataset,
         string $name,
         array $arguments,
-    ):mixed {
+    ): mixed {
         $this->related_value = null;
         $this->checkFunction($name);
-        
+
         $resolved_arguments = $this->resolveArgument(
             $dataset,
             $name,
             $arguments,
         );
-                
+
         return $this->callFunction(
             $name,
             $resolved_arguments,
         );
     }
-    
+
     /**
     *   relatedValue
     *
     *   @return mixed
     */
-    public function relatedValue():mixed
+    public function relatedValue(): mixed
     {
         return $this->related_value;
     }
@@ -96,7 +102,7 @@ class BasicFunction
     *   @param string $name
     *   @return bool
     */
-    protected function checkFunction(string $name):bool
+    protected function checkFunction(string $name): bool
     {
         if (!$this->has($name)) {
             throw new RuntimeException(
@@ -105,7 +111,7 @@ class BasicFunction
         }
         return true;
     }
-    
+
     /**
     *   callFunction
     *
@@ -116,18 +122,20 @@ class BasicFunction
     protected function callFunction(
         string $name,
         array $arguments,
-    ):mixed;
+    ): mixed {
+        if (!is_callable($name)) {
+            throw new RuntimeException(
+                "method is not callable :{$name}"
+            );
+        }
+
         $result = call_user_func_array(
             $name,
             $arguments,
         );
 
-      if (in_array($name, $this->has_related_value)) {
-        $this->related_value = $result;
-      } elseif ($result === false)) {
-            throw new RuntimeException(
-                "execution failure :{$name}"
-            );
+        if (in_array($name, $this->has_related_value)) {
+            $this->related_value = $result;
         }
         return $result;
     }
@@ -138,16 +146,16 @@ class BasicFunction
     *   @param string $name
     *   @return ?int
     */
-    public function resolveArgumentPosition(
+    protected function resolveArgumentPosition(
         string $name,
-    ):?int {
-      return array_key_exists(
-        $name,
-        $this->not_first_array_argument,
-      )? $this->not_first_array_argument[$name]:
+    ): ?int {
+        return array_key_exists(
+            $name,
+            $this->not_first_array_argument,
+        ) ? $this->not_first_array_argument[$name] :
         null;
     }
-    
+
     /**
     *   resolveArgument
     *
@@ -160,20 +168,18 @@ class BasicFunction
         array $dataset,
         string $name,
         array $arguments,
-    ):array {
-      if (is_null(
-        $this->resolveArgumentPosition($name)
-        ) {
+    ): array {
+        if (!is_null($this->resolveArgumentPosition($name))) {
             array_splice(
-              $arguments,
-              $this->not_first_array_argument[$name],
-              1,
-              $dataset,
-            ):
-            return $arguments;
+                $arguments,
+                $this->not_first_array_argument[$name],
+                0,
+                [$dataset],
+            );
+              return $arguments;
         }
-      
-      array_unshift($arguments, $dataset);
-      return $arguments;
+
+        array_unshift($arguments, $dataset);
+        return $arguments;
     }
 }

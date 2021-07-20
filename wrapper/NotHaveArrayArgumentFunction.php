@@ -1,21 +1,25 @@
 <?php
 
+/**
+*   NotHaveArrayArgumentFunction
+*
+*   @version 210714
+*/
+
 declare(strict_types=1);
 
-namespace wrapper\array;
+namespace Concerto\wrapper\array;
 
-use wrapper\array\AbstractBasicFunction;
+use Concerto\wrapper\array\BasicFunction;
 
-class NotHaveArrayArgumentFunction extends AbstractBasicFunction
+class NotHaveArrayArgumentFunction extends BasicFunction
 {
     /**
     *   {inherit}
     */
-    private array $functions = [
-      'array_fill',
-      'array',
-      'list',
-      'range',
+    protected array $functions = [
+        'array_fill',
+        'range',
     ];
 
     /**
@@ -25,7 +29,7 @@ class NotHaveArrayArgumentFunction extends AbstractBasicFunction
         array $dataset,
         string $name,
         array $arguments,
-    ):array{
-      return $arguments;
+    ): array {
+        return $arguments;
     }
 }

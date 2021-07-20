@@ -1,191 +1,76 @@
 <?php
 
+/**
+*   StandardArrayObject
+*
+*   @version 210715
+*/
+
 declare(strict_types=1);
 
-namespace wrapper;
+namespace Concerto\wrapper\array;
+
+use BadMethodCallException;
+use Concerto\wrapper\array\{
+    BasicFunction,
+    DefineMethodTrait,
+    NotHaveArrayArgumentFunction,
+    ReferToFunction,
+    ValueReturnFunction,
+    ValueToFunction,
+};
 
 class StandardArrayObject
 {
+    use DefineMethodTrait;
+    
     /**
     *   @val array
     */
-    private array $dataset;
-    
-    /**
-    *   @val array [method_name=>function_name]
-    */
-    private array $define_standard_functions = [
-        
-        //array かつ arg1がarray
-        array_change_key_case
-        array_chunk
-        array_column
-        array_count_values
-        
-        array_diff_assoc
-        array_diff_key
-        array_diff_uassoc
-        array_diff_ukey
-        array_diff
-        array_udiff_assoc
-        array_udiff_uassoc
-        array_udiff
-        
-        array_filter
-        array_flip
-        
-        array_intersect_assoc
-        array_intersect_key
-        array_intersect_uassoc
-        array_intersect_ukey
-        array_intersect
-        array_uintersect_assoc 
-        array_uintersect_uassoc
-        array_uintersect
-        
-        array_keys
-        array_merge_recursive
-        array_merge
-        array_pad
-        array_replace_recursive
-        array_replace
-        array_reverse
-        array_slice
-        array_unique
-        array_values
-        
-        
-        
-        //arrayだがreturnの検討必要
-        array_splice
-        compact
-        
-        
-        //array 引数は検討必要
-        array_combine
-        array_fill_keys
-        array_map
-        
-        
-        
-        //引数にarrayなし
-        array_fill
-        array
-        list
-        range
-        
-        
-        /////
-        
-        
-        //bool
-        array_key_exists/key_exists
-        in_array
-        
-        
-        //boolだがarrayのreturnにする
-        array_multisort
-        array_walk
-        array_walk_recursive
-        
-        arsort
-        asort
-        krsort
-        ksort
-        natcasesort
-        natsort
-        rsort
-        sort
-        uasort
-        uksort
-        usort
-        
-        shuffle
-        
-        //int|string|null
-        array_key_first
-        array_key_last
-        key
-        
-        //mixed
-        array_pop
-        array_reduce
-        array_shift
-        current/pos
-        
-        
-        //mixedだがarrayのreturnにする
-        end
-        next
-        prev
-        reset
-        
-        
-        //int
-        array_push
-        array_unshift
-        count/seizeof
-        extract
-        
-        //int|float
-        array_product
-        array_sum
-        
-        //int|string|arrray
-        array_rand
-        
-        //int|string|false
-        array_search
-        
-        
-        
-        
-        
-        
+    protected array $functions = [
+        NotHaveArrayArgumentFunction::class,
+        ReferToFunction::class,
+        ValueReturnFunction::class,
+        ValueToFunction::class,
     ];
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    /**
+    *   @val array
+    */
+    protected array $dataset;
+
+    /**
+    *   @val array
+    */
+    protected array $delegates = [];
+
+    /**
+    *   @val mixed
+    */
+    protected mixed $related_value = null;
+
     /**
     *   __construct
     *
     *   @param iterable $dataset
     */
     public function __construct(
-         iterable $dataset,
+        iterable $dataset,
     ) {
-        $this->dataset = is_array($dataset)?
-            $dataset: iterator_to_array($dataset);
+        $this->dataset = is_array($dataset) ?
+            $dataset : iterator_to_array($dataset);
     }
-    
+
     /**
     *   toArray
     *
     *   @return array
     */
-    public function toArray():array
+    public function toArray(): array
     {
         return $this->dataset;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     /**
     *   {inherit}
     *
@@ -194,21 +79,120 @@ class StandardArrayObject
         string $name,
         array $arguments
     ): mixed {
-        
-        
-        
-        
-        
-        $function_name = 'array' . $this->StudyToSnake($name);
-        if (function_exists($function_name)) {
-            $result = call_user_func_array(
-                $function_name,
-                $arguments
-            );
+
+        foreach (['', 'array_'] as $prefix) {
+            $function_name = $prefix. $this->studyToSnaKe($name);
+
+            if ($this->hasInDeligate($function_name)) {
+                   $delegated = $this->resolveDeligate($function_name);
+                   $return = $delegated->execute(
+                       $this->toArray(),
+                       $function_name,
+                       $arguments,
+                   );
+                   
+                   $this->related_value = $delegated->relatedValue();
+                   
+                   return is_array($return)?
+                        new static($return):$return;
+            }
         }
-        
+
+        throw new BadMethodCallException(
+            "not defined method:{$name}"
+        );
     }
-    
-    
-    
+
+    /**
+    *   studyToSnaKe
+    *
+    *   @param string $study_string
+    *   @return string
+    */
+    protected function studyToSnaKe(
+        string $study_string,
+    ): string {
+        $replaced = (string)mb_ereg_replace_callback(
+            '[A-Z]',
+            function ($matches) {
+                return '_'  . mb_strtolower($matches[0]);
+            },
+            $study_string
+        );
+
+        if (
+            mb_substr($replaced, 0, 1) == '_' &&
+            mb_substr($study_string, 0, 1) != '_'
+        ) {
+            return mb_substr($replaced, 1);
+        }
+        return $replaced;
+    }
+
+    /**
+    *   hasInDeligate
+    *
+    *   @param string $function_name
+    *   @return bool
+    */
+    protected function hasInDeligate(
+        string $function_name,
+    ): bool {
+        $this->delegate();
+
+        foreach ($this->delegates as $object) {
+            if ($object->has($function_name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+    *   delegate
+    *
+    *   @return static
+    */
+    protected function delegate(): static
+    {
+        if ($this->delegates !== []) {
+            return $this;
+        }
+
+        foreach ($this->functions as $object_name) {
+            $this->delegates[] = new $object_name();
+        }
+        return $this;
+    }
+
+    /**
+    *   resolveDeligate
+    *
+    *   @param string $function_name
+    *   @return BasicFunction
+    */
+    protected function resolveDeligate(
+        string $function_name,
+    ): BasicFunction {
+        $this->delegate();
+
+        foreach ($this->delegates as $object) {
+            if ($object->has($function_name)) {
+                return $object;
+            }
+        }
+        throw new BadMethodCallException(
+            "not defined function name:{$function_name}"
+        );
+    }
+
+    /**
+    *   relatedValue
+    *
+    *   @return mixed
+    */
+    public function relatedValue(): mixed
+    {
+        return $this->related_value;
+    }
 }
