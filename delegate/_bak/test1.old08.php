@@ -7,7 +7,6 @@ ini_set('display_error', '1');
 
 interface LibInterface
 {
-    public function nonInjected(string $str);
     public function injected(LibInterface $obj);
     //convertDelegatorで使う
     public function getLibId();
@@ -20,12 +19,6 @@ class LibClass implements LibInterface
     public function __construct($id)
     {
         $this->id = $id;
-    }
-    
-    public function nonInjected(string $str)
-    {
-        var_dump(__METHOD__, $str);
-        return $str;
     }
     
     public function injected(LibInterface $obj)
@@ -52,7 +45,6 @@ class LibClass implements LibInterface
 
 interface MyInterface
 {
-    public function nonInjected(string $str);
     public function injected(MyInterface $obj);
 } 
 
@@ -63,12 +55,6 @@ class MyClass implements MyInterface
     public function __construct($id)
     {
         $this->id = $id;
-    }
-    
-    public function nonInjected(string $str)
-    {
-        var_dump(__METHOD__, $str);
-        return $str;
     }
     
     public function injected(MyInterface $obj)
@@ -100,7 +86,6 @@ var_dump($LibClass2->getLibId());
 $str = '継承した関数';
 $LibClass1->extended($str);
 
-$LibClass1->nonInjected("nonInjected={$idLib1}");
 $LibClass1->injected($LibClass2);
 
 //プロジェクト側
@@ -115,7 +100,6 @@ $idMy2 = 'プロジェクト2';
 $MyClass2 = new MyClass($idMy2);
 var_dump($MyClass2->getMyId());
 
-$MyClass1->nonInjected("nonInjected={$idMy1}");
 $MyClass1->injected($MyClass2);
 
 
@@ -388,25 +372,7 @@ class BridgeClass implements MyInterface
     }
     
     
-    
-    
-    
     //method injection MyInterface => must be convert
-    
-    /**
-    *   {inherit}
-    */
-    public function nonInjected(string $str)
-    {
-        return static::convertAndExecuteAllArgumentsAndResult(
-            [
-                $this->delegator,
-                'nonInjected',
-            ],
-            [$str]
-        );
-    }
-    
     /**
     *   {inherit}
     */
@@ -421,16 +387,12 @@ class BridgeClass implements MyInterface
         );
     }
     
-    
-    
-    //convertToOriginalで使うconstruct引数取得用
-    //delegatorとoriginalでmethodが違う getMyId()/getLibId()
+    //convertOriginalで使う
+    //delegatorから取得する内容が必要?
     public function getMyId()
     {
         return $this->delegator->getLibId();
     }
-    
-    
     
     
     
@@ -465,7 +427,6 @@ var_dump($BridgeClass2->id);
 
 echo "--------------------------injected start\n";
 
-$BridgeClass1->nonInjected("nonInjected={$idBridge1}");
 $BridgeClass1->injected($BridgeClass2);
 
 echo "--------------------------END\n";
