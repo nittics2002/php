@@ -9,7 +9,7 @@ interface LibInterface
 {
     public function injected(LibInterface $obj);
     //convertDelegatorで使う
-    public function getLibId();
+    public function getId();
 } 
 
 class LibClass implements LibInterface
@@ -34,7 +34,7 @@ class LibClass implements LibInterface
     }
     
     //convertDelegatorで使う
-    public function getLibId()
+    public function getId()
     {
         return $this->id;
     }
@@ -140,8 +140,7 @@ trait BridgeTrait
     *   @param mixed $target
     *   @return bool
     */
-    //protected static function isOriginalObject(mixed $target):bool
-    protected static function isOriginalObject($target):bool
+    protected static function isOriginalObject(mixed $target):bool
     {
         $originalNamespace = static::class;
         return $target instanceof $originalNamespace;
@@ -153,8 +152,7 @@ trait BridgeTrait
     *   @param mixed $target
     *   @return bool
     */
-    //protected static function isDelegatorObject(mixed $target):bool
-    protected static function isDelegatorObject($target):bool
+    protected static function isDelegatorObject(mixed $target):bool
     {
         $delegatorNamespace = static::delegatorNamespace();
         return $target instanceof $delegatorNamespace;
@@ -168,58 +166,29 @@ trait BridgeTrait
     */
     protected static function convertAllArgumentsUgingDelegator(
         array $arguments
-    ):array {
-        
-        
-        echo "---convertAllArgumentsUgingDelegator start\n";
-        var_dump($arguments);
-        
-        
-        
+    ):object {
         $delegated = [];
         foreach($arguments as $argument) {
             $delegated[] = static::isOriginalObject($argument)?
                 static::convertToDelegator($argument):
                 $argument;
         }
-        
-        var_dump($delegated);
-        
-        
-        echo "---convertAllArgumentsUgingDelegator end\n";
-        
         return $delegated;
     }
     
     /**
     *   convertAndExecuteAllArgumentsAndResult
     *
-    *   @param callable $callback
     *   @param array $arguments
     *   @return mixed
     */
     protected static function convertAndExecuteAllArgumentsAndResult(
         callable $callback,
         array $arguments
-    //): mixed {
-    ) {
-        
-        
-        echo "---convertAndExecuteAllArgumentsAndResult start\n";
-        
-        
-        
+    ): mixed {
         $converted = static::convertAllArgumentsUgingDelegator(
             $arguments,
         );
-        
-        
-        var_dump($callback);
-        var_dump($converted);
-        
-        
-        exit;
-        
         
         $result = call_user_func_array(
             $callback,
@@ -318,16 +287,12 @@ class BridgeClass implements MyInterface
     protected static function convertToDelegator(
         object $original
     ):object{
-        
-        
-        echo "---convertToDelegator start\n";
-        var_dump($original);    //bridge classが渡されている
-        
-        
-        $delegatorNamespace = static::delegatorNamespace();
-        
-        return new $delegatorNamespace(
-            $original->getLibId()
+        return call_user_func_array(
+            [
+                static::delegatorNamespace(),
+                '__construct',
+            ],
+            $original->getId()
         );
     }
     
@@ -343,16 +308,7 @@ class BridgeClass implements MyInterface
     public function __call(
         string $name,
         array $arguments
-    //): mixed {
-    ) {
-        
-        echo "---__call start\n";
-        var_dump($name);
-        var_dump($arguments);
-        echo "---__call convertAndExecuteAllArgumentsAndResult\n";
-        
-        
-        
+    ): mixed {
         return static::convertAndExecuteAllArgumentsAndResult(
             [static::class, $name],
             $arguments
@@ -365,8 +321,7 @@ class BridgeClass implements MyInterface
     public static function __callStatic(
         string $name,
         array $arguments
-    //): mixed {
-    ) {
+    ): mixed {
         return static::convertAndExecuteAllArgumentsAndResult(
             [static::class, $name],
             $arguments
@@ -414,30 +369,7 @@ class BridgeClass implements MyInterface
     */
     public function injected(MyInterface $obj)
     {
-        
-        //ここで、argument $objは BridgeClass
-        
-        //__call＝＞convertToDelegatorで$orinal->getMyId()を実行している
-        //したがって $orinal->getMyId()はBridgeClassなので、自分を読んでいる
-        //結果、無限loopになる
-        
-        
-        
-        
-        
-        
         //return $this->__call('injected', [$obj]);
-        
-        echo "---injected start\n";
-        var_dump(static::class);
-        var_dump($obj);
-        var_dump(method_exists(static::class, '__call'));
-        echo "---injected call_user_func_array\n";
-        
-        
-        
-        
-        
         
         return call_user_func_array(
             [
@@ -484,7 +416,7 @@ $idBridge2 = 'ブリッジ2';
 $BridgeClass2 = new BridgeClass($idBridge2);
 var_dump($BridgeClass2->id);
 
-echo "--------------------------injected start\n";
+echo "--------------------------\n";
 
 $BridgeClass1->injected($BridgeClass2);
 
