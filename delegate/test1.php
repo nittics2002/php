@@ -363,18 +363,24 @@ class BridgeClass implements MyInterface
     }
     
     
-    //MyInterface
+    //method injection MyInterface => must be convert
     /**
     *   {inherit}
     */
     public function injected(MyInterface $obj)
     {
+        //return $this->__call('injected', [$obj]);
+        
+        return call_user_func_array(
+            [
+                static::class,
+                '__call'
+            ],
+            ['injected', [$obj]]
+        );
         
         
         
-        
-        
-        return $this->__call(__METHOD__, [$object]);
     }
     
     
@@ -409,6 +415,8 @@ echo "--------------------------\n";
 $idBridge2 = 'ブリッジ2';
 $BridgeClass2 = new BridgeClass($idBridge2);
 var_dump($BridgeClass2->id);
+
+echo "--------------------------\n";
 
 $BridgeClass1->injected($BridgeClass2);
 
