@@ -1,0 +1,26 @@
+--------------------------ライブラリ側start
+string(18) "LibClass::getLibId"
+string(16) "ライブラリ1"
+string(18) "LibClass::getLibId"
+string(16) "ライブラリ2"
+string(18) "LibClass::extended"
+string(18) "継承した関数"
+string(18) "LibClass::injected"
+string(16) "ライブラリ2"
+--------------------------プロジェクト側start
+string(16) "MyClass::getMyId"
+string(19) "プロジェクト1"
+string(16) "MyClass::getMyId"
+string(19) "プロジェクト2"
+string(17) "MyClass::injected"
+string(19) "プロジェクト2"
+--------------------------ブリッジstart
+string(13) "ブリッジ1"
+string(27) "bridgeオリジナルmethod"
+--------------------------
+string(13) "ブリッジ2"
+--------------------------injected start
+string(18) "LibClass::getLibId"
+string(18) "LibClass::injected"
+string(13) "ブリッジ2"
+--------------------------END

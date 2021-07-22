@@ -286,7 +286,7 @@ class BridgeClass implements MyInterface
                 static::class,
                 '__construct',
             ],
-            $delegator->getLibId(),
+            $delegator->getMyId(),
         );
     }
     
@@ -299,7 +299,7 @@ class BridgeClass implements MyInterface
         $delegatorNamespace = static::delegatorNamespace();
         
         return new $delegatorNamespace(
-            $original->getMyId()
+            $original->getLibId()
         );
     }
     
@@ -378,13 +378,12 @@ class BridgeClass implements MyInterface
     */
     public function injected(MyInterface $obj)
     {
-        return static::convertAndExecuteAllArgumentsAndResult(
-            [
-                $this->delegator,
-                'injected',
-            ],
-            [$obj]
+        $delegatorNamespace = static::delegatorNamespace();
+        
+        $converted_obj = new $delegatorNamespace(
+            $obj->getMyId()
         );
+        return $this->delegator->injected($converted_obj);
     }
     
     //convertOriginalで使う
@@ -415,6 +414,8 @@ echo "--------------------------ブリッジstart\n";
 $idBridge1 = 'ブリッジ1';
 $BridgeClass1 = new BridgeClass($idBridge1);
 var_dump($BridgeClass1->id);
+
+echo "--------------------------\n";
 
 $BridgeClass1->bridge('bridgeオリジナルmethod');
 
