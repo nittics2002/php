@@ -141,7 +141,8 @@ trait BridgeTrait
     */
     protected static function isOriginalObject(mixed $target):bool
     {
-        return $target instanceof static::originalNamespace();
+        $originalNamespace = static::originalNamespace();
+        return $target instanceof $originalNamespace;
     }
     
     /**
@@ -152,7 +153,8 @@ trait BridgeTrait
     */
     protected static function isDelegatorObject(mixed $target):bool
     {
-        return $target instanceof static::delegatorNamespace();
+        $delegatorNamespace = static::originalNamespace();
+        return $target instanceof $delegatorNamespace;
     }
     
     /**
@@ -180,7 +182,7 @@ trait BridgeTrait
     *   @return mixed
     */
     protected static function convertAndExecuteAllArgumentsAndResult(
-        callable $callback、
+        callable $callback,
         array $arguments
     ): mixed {
         $converted = static::convertAllArgumentsUgingDelegator(
@@ -293,12 +295,12 @@ class BridgeClass implements MyInterface
     *   {inherit}
     */
     public function __call(
-        string$name,
+        string $name,
         array $arguments
     ): mixed {
         return static::convertAndExecuteAllArgumentsAndResult(
-            [static, $name],
-            $arguments,
+            [static::class, $name],
+            $arguments
         );
     }
     
@@ -306,11 +308,11 @@ class BridgeClass implements MyInterface
     *   {inherit}
     */
     public static function __callStatic(
-        string$name,
+        string $name,
         array $arguments
     ): mixed {
         return static::convertAndExecuteAllArgumentsAndResult(
-            [static, $name],
+            [static::class, $name],
             $arguments
         );
     }
@@ -342,10 +344,10 @@ class BridgeClass implements MyInterface
     /**
     *   {inherit}
     */
-    public function __unset($name, $arguments) {
+    public function __unset($name) {
         $this->__call(
             __METHOD__, 
-            array_merge([$name], $arguments),
+            $name
         );
     }
     
