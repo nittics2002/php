@@ -1,5 +1,8 @@
 <?php
 
+ini_set('error_reporting', E_ALL);
+ini_set('display_error', '1');
+
 //ライブラリ側
 
 interface LibInterface
@@ -95,17 +98,15 @@ var_dump($MyClass2->id);
 
 $MyClass1->injected($MyClass2);
 
+
+
+////////////////////////////////////////////
+
+
 //ブリッジ
 
 trait BridgeTrait
 {
-    /**
-    *   originalNamespace
-    *
-    *   @return string
-    */
-    abstract protected static function originalNamespace():string;
-    
     /**
     *   delegatorNamespace
     *
@@ -141,7 +142,7 @@ trait BridgeTrait
     */
     protected static function isOriginalObject(mixed $target):bool
     {
-        $originalNamespace = static::originalNamespace();
+        $originalNamespace = static::class;
         return $target instanceof $originalNamespace;
     }
     
@@ -153,7 +154,7 @@ trait BridgeTrait
     */
     protected static function isDelegatorObject(mixed $target):bool
     {
-        $delegatorNamespace = static::originalNamespace();
+        $delegatorNamespace = static::delegatorNamespace();
         return $target instanceof $delegatorNamespace;
     }
     
@@ -210,11 +211,6 @@ class BridgeClass implements MyInterface
     /**
     *   @var string 
     */
-    protected static string $originalNamespace;
-    
-    /**
-    *   @var string 
-    */
     protected static string $delegatorNamespace;
     
     /**
@@ -236,15 +232,20 @@ class BridgeClass implements MyInterface
     public function __construct(
         string $id
     ) {
+        $this->gelegator = call_user_func_array(
+            [
+                static::delegatorNamespace(),
+                '__construct'
+            ],
+            $id
+        );
+        
+        
+        
         $this->id = $id;
-    }
-    
-    /**
-    *   {inherit}
-    */
-    protected static function originalNamespace():string
-    {
-        return static::originalNamespace;
+        
+        
+        
     }
     
     /**
@@ -263,7 +264,7 @@ class BridgeClass implements MyInterface
     ):object{
         return call_user_func_array(
             [
-                static::originalNamespace(),
+                static::class,
                 '__construct',
             ],
             $delegator->getMyId(),
@@ -317,11 +318,28 @@ class BridgeClass implements MyInterface
         );
     }
     
+    
+    
+    
+    //property　magic method 要検討
+    
+    
     /**
     *   {inherit}
     */
     public function __get($name) {
+        
+        
+        echo "---__get({$name}))....\n";
+        
+        //delegatorの__getを実行する
+        
+        
+        
+        
+        /*
         return $this->__call(__METHOD__, [$name]);
+        */
     }
     
     /**
@@ -376,8 +394,15 @@ class BridgeClass implements MyInterface
 
 //こんな感じで実行したい
 
+echo "--------------------------\n";
+
+
 $idBridge1 = 'ブリッジ1';
 $BridgeClass1 = new BridgeClass($idBridge1);
+
+echo "--------------------------\n";
+
+
 var_dump($BridgeClass1->id);
 
 $idBridge2 = 'ブリッジ2';
