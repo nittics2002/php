@@ -227,21 +227,118 @@ trait BridgeTrait
 }
 
 
-
-//abstractだとnamespaceをstaticで取得する為、危険
-class BridgeClass implements MyInterface
+abstract class StandardBridgeObject
 {
     use BridgeTrait;
     
     /**
     *   @var string 
     */
-    protected static string $delegatorNamespace = LibClass::class;
+    protected static string $delegatorNamespace;
     
     /**
     *   @var object 
     */
     protected object $delegator;
+    
+    /**
+    *   {inherit}
+    */
+    protected static function delegatorNamespace():string
+    {
+        return static::$delegatorNamespace;
+    }
+    
+    /**
+    *   {inherit}
+    */
+    abstract protected static function convertToOriginal(
+        object $delegator
+    ):object;
+    
+    /**
+    *   {inherit}
+    */
+    abstract protected static function convertToDelegator(
+        object $original
+    ):object;
+    
+    /**
+    *   {inherit}
+    */
+    public function __call(
+        string $name,
+        array $arguments
+    //): mixed {
+    ) {
+        return static::convertAndExecuteAllArgumentsAndResult(
+            [static::class, $name],
+            $arguments
+        );
+    }
+    
+    /**
+    *   {inherit}
+    */
+    public static function __callStatic(
+        string $name,
+        array $arguments
+    //): mixed {
+    ) {
+        return static::convertAndExecuteAllArgumentsAndResult(
+            [static::class, $name],
+            $arguments
+        );
+    }
+    
+    /**
+    *   {inherit}
+    */
+    public function __get(
+        string $name
+    //): mixed {
+    ) {
+        return $this->delegator->$name;
+    }
+    
+    /**
+    *   {inherit}
+    */
+    public function __set(
+        string $name,
+        array $arguments
+    ): void {
+        $this->delegator->$name = $arguments;
+    }
+    
+    /**
+    *   {inherit}
+    */
+    public function __isset(
+        string $name
+    ): bool {
+        return isset($this->delegator->$name);
+    }
+    
+    /**
+    *   {inherit}
+    */
+    public function __unset(string $name):void {
+        unset($this->delegator->$name);
+    }
+}
+
+
+
+
+
+//abstractだとnamespaceをstaticで取得する為、危険
+class BridgeClass extends StandardBridgeObject implements MyInterface
+{
+    /**
+    *   @var string 
+    */
+    protected static string $delegatorNamespace = LibClass::class;
     
     /**
     *   @var string //MyInterface
@@ -258,37 +355,9 @@ class BridgeClass implements MyInterface
         string $id
     ) {
         $delegatorNamespace = static::delegatorNamespace();
-        
-        
         $this->delegator = new $delegatorNamespace(
             $id
         );
-        
-        
-        //var_dump($this->delegator);
-        
-        
-        
-        //$this->gelegator = call_user_func_array(
-            //[
-                //static::delegatorNamespace(),
-                //static::$delegatorNamespace,
-                //'__construct'
-            //],
-            //$id
-        //);
-        
-        //MyInterface
-        //delegatorで持つので不要
-        //$this->id = $id;
-    }
-    
-    /**
-    *   {inherit}
-    */
-    protected static function delegatorNamespace():string
-    {
-        return static::$delegatorNamespace;
     }
     
     /**
@@ -320,88 +389,7 @@ class BridgeClass implements MyInterface
     }
     
     
-    
-    
-    
-    //magic method用のabstract class作るか?
-    
-    /**
-    *   {inherit}
-    */
-    public function __call(
-        string $name,
-        array $arguments
-    //): mixed {
-    ) {
-        return static::convertAndExecuteAllArgumentsAndResult(
-            [static::class, $name],
-            $arguments
-        );
-    }
-    
-    /**
-    *   {inherit}
-    */
-    public static function __callStatic(
-        string $name,
-        array $arguments
-    //): mixed {
-    ) {
-        return static::convertAndExecuteAllArgumentsAndResult(
-            [static::class, $name],
-            $arguments
-        );
-    }
-    
-    
-    
-    
-    //property　magic method 要検討
-    
-    
-    /**
-    *   {inherit}
-    */
-    public function __get($name) {
-        return $this->delegator->$name;
-    }
-    
-    /**
-    *   {inherit}
-    */
-    public function __set($name, $arguments) {
-        $this->delegator->$name = $arguments;
-    }
-    
-    /**
-    *   {inherit}
-    */
-    public function __isset($name) {
-        return isset($this->delegator->$name);
-    }
-    
-    /**
-    *   {inherit}
-    */
-    public function __unset($name) {
-        unset($this->delegator->$name);
-    }
-    
-    
-    
-    
-    
-    //method injection MyInterface => must be convert
-    
-    //implements　methodは、定義する必要がある
-    //convertAndExecuteAllArgumentsAndResultを呼び出す
-    //違いは基本的にmethod名のみ?
-    //共通methodの呼び出しだけにしたい
-    
-    
-    
-    
-    
+    //MyInterface method
     
     /**
     *   {inherit}
@@ -434,7 +422,6 @@ class BridgeClass implements MyInterface
     
     
     //convertToOriginalで使うconstruct引数取得用
-    //delegatorとoriginalでmethodが違う getMyId()/getLibId()
     public function getMyId()
     {
         return $this->delegator->getLibId();
