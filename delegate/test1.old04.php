@@ -97,21 +97,24 @@ $MyClass1->injected($MyClass2);
 
 //ブリッジ
 
+
+//traitで汎用化できないか？
 trait BridgeTrait
 {
     /**
-    *   originalNamespace
-    *
-    *   @return string
+    *   @var object 
     */
-    abstract protected static function originalNamespace():string;
+    protected object $gelegator;
     
     /**
-    *   delegatorNamespace
-    *
-    *   @return string
+    *   @var string 
     */
-    abstract protected static function delegatorNamespace():string;
+    protected string $originalNamespace;
+    
+    /**
+    *   @var string 
+    */
+    protected string $delegatorNamespace;
     
     /**
     *   convertToOriginal
@@ -134,6 +137,36 @@ trait BridgeTrait
     ):object;
     
     /**
+    *   delegator
+    *
+    *   @return object
+    */
+    protected static function delegator()
+    {
+        return $this->gelegator;
+    }
+    
+    /**
+    *   originalNamespace
+    *
+    *   @return string
+    */
+    protected static function originalNamespace():string
+    {
+        return $this->originalNamespace;
+    }
+    
+    /**
+    *   delegatorNamespace
+    *
+    *   @return string
+    */
+    protected static function delegatorNamespace():string
+    {
+        return $this->delegatorNamespace;
+    }
+    
+    /**
     *   isOriginalObject
     *
     *   @param mixed $target
@@ -141,7 +174,7 @@ trait BridgeTrait
     */
     protected static function isOriginalObject(mixed $target):bool
     {
-        return $target instanceof static::originalNamespace();
+        return $target instanceof $this->originalNamespace();
     }
     
     /**
@@ -152,7 +185,31 @@ trait BridgeTrait
     */
     protected static function isDelegatorObject(mixed $target):bool
     {
-        return $target instanceof static::delegatorNamespace();
+        return $target instanceof $this->delegatorNamespace();
+    }
+    
+    /**
+    *   constructDelegator
+    *
+    *   @param array $arguments
+    *   @return object
+    */
+    protected static function constructDelegator(
+        array $arguments
+    ):object{
+        $result = call_user_func_array(
+            [$this->delegator(), '__construct'],
+            $arguments,
+        );
+        
+        if (!$this->isDelegatorObject($result)) {
+            throw new LogicException(
+                "faild constructDelegator:" .
+                    var_export($arguments, true)
+            );
+        }
+        
+        return $result;
     }
     
     /**
@@ -166,128 +223,31 @@ trait BridgeTrait
     ):object {
         $delegated = [];
         foreach($arguments as $argument) {
-            $delegated[] = static::isOriginalObject($argument)?
-                static::convertToDelegator($argument):
+            $delegated[] = $this->isOriginalObject($argument)?
+                $this->convertDelegator($argument):
                 $argument;
         }
         return $delegated;
     }
     
     /**
-    *   convertAndExecuteAllArgumentsAndResult
+    *   convertAllArgumentsAndResult
     *
     *   @param array $arguments
     *   @return mixed
     */
-    protected static function convertAndExecuteAllArgumentsAndResult(
+    protected function convertAndExecuteAllArgumentsAndResult(
         callable $callback、
-        array $arguments
+        array $arguments,
     ): mixed {
-        $converted = static::convertAllArgumentsUgingDelegator(
-            $arguments,
-        );
         
-        $result = call_user_func_array(
-            $callback,
-            $converted,
-        );
         
-        return static::isOriginalObject($result)?
-            static::convertToDelegator($result):
-            $result;
-    }
-}
-
-
-
-//abstractだとnamespaceをstaticで取得する為、危険
-class BridgeClass implements MyInterface
-{
-    use BridgeTrait;
-    
-    /**
-    *   @var string 
-    */
-    protected static string $originalNamespace;
-    
-    /**
-    *   @var string 
-    */
-    protected static string $delegatorNamespace;
-    
-    /**
-    *   @var object 
-    */
-    protected object $gelegator;
-    
-    /**
-    *   @var string //MyInterface
-    */
-    protected string $id;
-    
-    /**
-    *   __construct
-    *
-    *   @param array $arguments
-    *   @return object
-    */
-    public function __construct(
-        string $id
-    ) {
-        $this->id = $id;
-    }
-    
-    /**
-    *   {inherit}
-    */
-    protected static function originalNamespace():string
-    {
-        return static::originalNamespace;
-    }
-    
-    /**
-    *   {inherit}
-    */
-    protected static function delegatorNamespace():string
-    {
-        return static::delegatorNamespace;
-    }
-    
-    /**
-    *   {inherit}
-    */
-    protected static function convertToOriginal(
-        object $delegator
-    ):object{
-        return call_user_func_array(
-            [
-                static::originalNamespace(),
-                '__construct',
-            ],
-            $delegator->getMyId(),
-        );
-    }
-    
-    /**
-    *   {inherit}
-    */
-    protected static function convertToDelegator(
-        object $original
-    ):object{
-        return call_user_func_array(
-            [
-                static::delegatorNamespace(),
-                '__construct',
-            ],
-            $delegator->getId()
-        );
     }
     
     
     
     
     
-    //magic method用のabstract class作るか?
     
     /**
     *   {inherit}
@@ -296,35 +256,78 @@ class BridgeClass implements MyInterface
         string$name,
         array $arguments
     ): mixed {
-        return static::convertAndExecuteAllArgumentsAndResult(
-            [static, $name],
-            $arguments,
+        $delegated_arguments =
+            $this->convertAllArgumentsUgingDelegator($arguments);
+        
+        $result = call_user_func_array(
+            [$this->delegator(), $name],
+            $delegated_arguments,
         );
+        
+        return $this->isOriginalObject($result)?
+            $this->convertDelegator($result):
+            $result;
     }
     
     /**
     *   {inherit}
     */
-    public static function __callStatic(
+    public function __callStatic(
         string$name,
         array $arguments
     ): mixed {
-        return static::convertAndExecuteAllArgumentsAndResult(
-            [static, $name],
-            $arguments
+        
+        
+        //呼び出すmethodもstaticの必要が......
+        
+    }
+    
+    
+}
+
+class BridgeClass implements MyInterface
+{
+    use BridgeTrait;
+    
+    public $id;
+    
+    public function __construct($id)
+    {
+        $this->id = $id;
+        $this->constructDelegator(
+            "delegator_{$id}"
         );
     }
     
-    /**
-    *   {inherit}
-    */
+    //abstract overwrite
+    //original<=>delegator変換の定義
+    protected function convertToOriginal(
+        object $delegator
+    ):object {
+        return $this->constructDelegator(
+            $delegator->getId()
+        );
+    }
+    
+    protected function convertToDelegator(
+        object $original
+    ):object {
+        return $this->constructDelegator(
+            $original->getMyId()
+        );
+    }
+    
+    //変換が必要なimplements methods
+    public function injected(MyInterface $obj)
+    {
+        return $this->__call(__METHOD__, [$object]);
+    }
+    
+    //magic methodのdelegate
     public function __get($name) {
         return $this->__call(__METHOD__, [$name]);
     }
     
-    /**
-    *   {inherit}
-    */
     public function __set($name, $arguments) {
         $this->__call(
             __METHOD__, 
@@ -332,31 +335,15 @@ class BridgeClass implements MyInterface
         );
     }
     
-    /**
-    *   {inherit}
-    */
     public function __isset($name) {
         return $this->__call(__METHOD__, [$name]);
     }
     
-    /**
-    *   {inherit}
-    */
     public function __unset($name, $arguments) {
         $this->__call(
             __METHOD__, 
             array_merge([$name], $arguments),
         );
-    }
-    
-    
-    //MyInterface
-    /**
-    *   {inherit}
-    */
-    public function injected(MyInterface $obj)
-    {
-        return $this->__call(__METHOD__, [$object]);
     }
     
     
@@ -368,7 +355,6 @@ class BridgeClass implements MyInterface
         return $str;
     }
 }
-
 
 /////////////////////////////
 
