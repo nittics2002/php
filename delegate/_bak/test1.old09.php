@@ -393,16 +393,6 @@ class BridgeClass implements MyInterface
     
     //method injection MyInterface => must be convert
     
-    //implements　methodは、定義する必要がある
-    //convertAndExecuteAllArgumentsAndResultを呼び出す
-    //違いは基本的にmethod名のみ?
-    //共通methodの呼び出しだけにしたい
-    
-    
-    
-    
-    
-    
     /**
     *   {inherit}
     */
