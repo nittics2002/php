@@ -23,20 +23,19 @@ class LibClass implements LibInterface
     
     public function injected(LibInterface $obj)
     {
-        var_dump(__METHOD__, $obj->id);
+        var_dump($obj->id);
         return $this->id;
     }
     
     public function extended($str)
     {
-        var_dump(__METHOD__, $str);
+        var_dump($str);
         return $str;
     }
     
     //convertDelegatorで使う
     public function getLibId()
     {
-        var_dump(__METHOD__);
         return $this->id;
     }
 }
@@ -59,46 +58,43 @@ class MyClass implements MyInterface
     
     public function injected(MyInterface $obj)
     {
-        var_dump(__METHOD__, $obj->id);
+        var_dump($obj->id);
         return $this->id;
     }
     
     //convertOriginalで使う
     public function getMyId()
     {
-        var_dump(__METHOD__);
         return $this->id;
     }
 }
 
 //ライブラリ側
 
-echo "--------------------------ライブラリ側start\n";
-
 $idLib1 = 'ライブラリ1';
 $LibClass1 = new LibClass($idLib1);
-var_dump($LibClass1->getLibId());
+var_dump($LibClass1->id);
 
 $idLib2 = 'ライブラリ2';
 $LibClass2 = new LibClass($idLib2);
-var_dump($LibClass2->getLibId());
+var_dump($LibClass2->id);
 
 $str = '継承した関数';
 $LibClass1->extended($str);
 
 $LibClass1->injected($LibClass2);
 
-//プロジェクト側
 
-echo "--------------------------プロジェクト側start\n";
+
+//プロジェクト側
 
 $idMy1 = 'プロジェクト1';
 $MyClass1 = new MyClass($idMy1);
-var_dump($MyClass1->getMyId());
+var_dump($MyClass1->id);
 
 $idMy2 = 'プロジェクト2';
 $MyClass2 = new MyClass($idMy2);
-var_dump($MyClass2->getMyId());
+var_dump($MyClass2->id);
 
 $MyClass1->injected($MyClass2);
 
@@ -173,12 +169,24 @@ trait BridgeTrait
     protected static function convertAllArgumentsUgingDelegator(
         array $arguments
     ):array {
+        
+        
+        echo "---convertAllArgumentsUgingDelegator start\n";
+        var_dump($arguments);
+        
+        
+        
         $delegated = [];
         foreach($arguments as $argument) {
             $delegated[] = static::isOriginalObject($argument)?
                 static::convertToDelegator($argument):
                 $argument;
         }
+        
+        var_dump($delegated);
+        
+        
+        echo "---convertAllArgumentsUgingDelegator end\n";
         
         return $delegated;
     }
@@ -195,9 +203,23 @@ trait BridgeTrait
         array $arguments
     //): mixed {
     ) {
+        
+        
+        echo "---convertAndExecuteAllArgumentsAndResult start\n";
+        
+        
+        
         $converted = static::convertAllArgumentsUgingDelegator(
             $arguments,
         );
+        
+        
+        var_dump($callback);
+        var_dump($converted);
+        
+        
+        exit;
+        
         
         $result = call_user_func_array(
             $callback,
@@ -296,6 +318,12 @@ class BridgeClass implements MyInterface
     protected static function convertToDelegator(
         object $original
     ):object{
+        
+        
+        echo "---convertToDelegator start\n";
+        var_dump($original);    //bridge classが渡されている
+        
+        
         $delegatorNamespace = static::delegatorNamespace();
         
         return new $delegatorNamespace(
@@ -317,6 +345,14 @@ class BridgeClass implements MyInterface
         array $arguments
     //): mixed {
     ) {
+        
+        echo "---__call start\n";
+        var_dump($name);
+        var_dump($arguments);
+        echo "---__call convertAndExecuteAllArgumentsAndResult\n";
+        
+        
+        
         return static::convertAndExecuteAllArgumentsAndResult(
             [static::class, $name],
             $arguments
@@ -378,19 +414,41 @@ class BridgeClass implements MyInterface
     */
     public function injected(MyInterface $obj)
     {
-        $delegatorNamespace = static::delegatorNamespace();
         
-        $converted_obj = new $delegatorNamespace(
-            $obj->getMyId()
+        //ここで、argument $objは BridgeClass
+        
+        //__call＝＞convertToDelegatorで$orinal->getMyId()を実行している
+        //したがって $orinal->getMyId()はBridgeClassなので、自分を読んでいる
+        //結果、無限loopになる
+        
+        
+        
+        
+        
+        
+        //return $this->__call('injected', [$obj]);
+        
+        echo "---injected start\n";
+        var_dump(static::class);
+        var_dump($obj);
+        var_dump(method_exists(static::class, '__call'));
+        echo "---injected call_user_func_array\n";
+        
+        
+        
+        
+        
+        
+        return call_user_func_array(
+            [
+                static::class,
+                '__call'
+            ],
+            ['injected', [$obj]]
         );
-        return $this->delegator->injected($converted_obj);
-    }
-    
-    //convertOriginalで使う
-    //delegatorから取得する内容が必要?
-    public function getMyId()
-    {
-        return $this->delegator->getLibId();
+        
+        
+        
     }
     
     
@@ -408,7 +466,7 @@ class BridgeClass implements MyInterface
 
 //こんな感じで実行したい
 
-echo "--------------------------ブリッジstart\n";
+echo "--------------------------\n";
 
 
 $idBridge1 = 'ブリッジ1';
