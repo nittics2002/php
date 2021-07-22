@@ -211,12 +211,12 @@ class BridgeClass implements MyInterface
     /**
     *   @var string 
     */
-    protected static string $delegatorNamespace;
+    protected static string $delegatorNamespace = LibClass::class;
     
     /**
     *   @var object 
     */
-    protected object $gelegator;
+    protected object $delegator;
     
     /**
     *   @var string //MyInterface
@@ -232,20 +232,30 @@ class BridgeClass implements MyInterface
     public function __construct(
         string $id
     ) {
-        $this->gelegator = call_user_func_array(
-            [
-                static::delegatorNamespace(),
-                '__construct'
-            ],
+        $delegatorNamespace = static::delegatorNamespace();
+        
+        
+        $this->delegator = new $delegatorNamespace(
             $id
         );
         
         
-        
-        $this->id = $id;
-        
+        //var_dump($this->delegator);
         
         
+        
+        //$this->gelegator = call_user_func_array(
+            //[
+                //static::delegatorNamespace(),
+                //static::$delegatorNamespace,
+                //'__construct'
+            //],
+            //$id
+        //);
+        
+        //MyInterface
+        //delegatorで持つので不要
+        //$this->id = $id;
     }
     
     /**
@@ -253,7 +263,7 @@ class BridgeClass implements MyInterface
     */
     protected static function delegatorNamespace():string
     {
-        return static::delegatorNamespace;
+        return static::$delegatorNamespace;
     }
     
     /**
@@ -282,7 +292,7 @@ class BridgeClass implements MyInterface
                 static::delegatorNamespace(),
                 '__construct',
             ],
-            $delegator->getId()
+            $original->getId()
         );
     }
     
@@ -328,45 +338,28 @@ class BridgeClass implements MyInterface
     *   {inherit}
     */
     public function __get($name) {
-        
-        
-        echo "---__get({$name}))....\n";
-        
-        //delegatorの__getを実行する
-        
-        
-        
-        
-        /*
-        return $this->__call(__METHOD__, [$name]);
-        */
+        return $this->delegator->$name;
     }
     
     /**
     *   {inherit}
     */
     public function __set($name, $arguments) {
-        $this->__call(
-            __METHOD__, 
-            array_merge([$name], $arguments),
-        );
+        $this->delegator->$name = $arguments;
     }
     
     /**
     *   {inherit}
     */
     public function __isset($name) {
-        return $this->__call(__METHOD__, [$name]);
+        return isset($this->delegator->$name);
     }
     
     /**
     *   {inherit}
     */
     public function __unset($name) {
-        $this->__call(
-            __METHOD__, 
-            $name
-        );
+        unset($this->delegator->$name);
     }
     
     
@@ -376,6 +369,11 @@ class BridgeClass implements MyInterface
     */
     public function injected(MyInterface $obj)
     {
+        
+        
+        
+        
+        
         return $this->__call(__METHOD__, [$object]);
     }
     
@@ -399,11 +397,14 @@ echo "--------------------------\n";
 
 $idBridge1 = 'ブリッジ1';
 $BridgeClass1 = new BridgeClass($idBridge1);
+var_dump($BridgeClass1->id);
 
 echo "--------------------------\n";
 
+$BridgeClass1->bridge('bridgeオリジナルmethod');
 
-var_dump($BridgeClass1->id);
+
+echo "--------------------------\n";
 
 $idBridge2 = 'ブリッジ2';
 $BridgeClass2 = new BridgeClass($idBridge2);
@@ -411,3 +412,4 @@ var_dump($BridgeClass2->id);
 
 $BridgeClass1->injected($BridgeClass2);
 
+echo "--------------------------END\n";
