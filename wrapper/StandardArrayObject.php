@@ -3,7 +3,7 @@
 /**
 *   StandardArrayObject
 *
-*   @version 210715
+*   @version 210722
 */
 
 declare(strict_types=1);
@@ -56,9 +56,11 @@ class StandardArrayObject
     */
     public function __construct(
         iterable $dataset,
+        mixed $related_value,
     ) {
         $this->dataset = is_array($dataset) ?
             $dataset : iterator_to_array($dataset);
+        $this->related_value = $related_value;
     }
 
     /**
@@ -91,10 +93,12 @@ class StandardArrayObject
                        $arguments,
                    );
                    
-                   $this->related_value = $delegated->relatedValue();
-                   
                    return is_array($return)?
-                        new static($return):$return;
+                        new static(
+                            $return,
+                            $delegated->relatedValue(),
+                        ):
+                        $return;
             }
         }
 
