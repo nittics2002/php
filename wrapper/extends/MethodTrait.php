@@ -143,9 +143,4 @@ trait DefineMethodTrait
     ): bool {
       return $this->toArray() === [];
     }
-
-
-    
-    
-    
 }
