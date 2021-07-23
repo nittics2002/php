@@ -143,7 +143,34 @@ trait DefineMethodTrait
     ): bool {
       return $this->toArray() === [];
     }
-
-
-
+   
+    /**
+    *  max
+    *
+    *   @param ?int $flags
+    *   @return mixed
+    */
+    public function max(
+        ?$flags = SORT_REGULAR 
+    //): mixed {
+    ) {
+      $array = $this->toArray();
+      rsort($array, $flags);
+      return current($array);
+    }
+   
+    /**
+    *  min
+    *
+    *   @param ?int $flags
+    *   @return mixed
+    */
+    public function min(
+        ?$flags = SORT_REGULAR 
+    //): mixed {
+    ) {
+      $array = $this->toArray();
+      sort($array, $flags);
+      return current($array);
+    }
 }
