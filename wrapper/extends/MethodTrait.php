@@ -97,6 +97,53 @@ trait DefineMethodTrait
         $array
       );
     }
+    
+    /**
+    *  any 
+    *
+    *   @param mixed $value
+    *   @return bool
+    */
+    public function any(
+      //mixed $value
+      $value
+    ): bool {
+      foreach($this->toArray() as $current) {
+        if ($current === $value) {
+          return true;
+        }
+      }
+      return false;
+    }
+    
+    /**
+    *  some 
+    *
+    *   @param mixed $value
+    *   @return bool
+    */
+    public function some(
+      //mixed $value
+      $value
+    ): bool {
+      foreach($this->toArray() as $current) {
+        if ($current !== $value) {
+          return false;
+        }
+      }
+      return true;
+    }
+    
+    /**
+    *  isEmpty 
+    *
+    *   @return bool
+    */
+    public function isEmpty(
+    ): bool {
+      return $this->toArray() === [];
+    }
+
 
     
     
