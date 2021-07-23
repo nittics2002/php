@@ -117,12 +117,12 @@ trait DefineMethodTrait
     }
     
     /**
-    *  some 
+    *  every
     *
     *   @param mixed $value
     *   @return bool
     */
-    public function some(
+    public function every(
       //mixed $value
       $value
     ): bool {
