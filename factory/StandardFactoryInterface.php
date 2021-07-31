@@ -5,14 +5,14 @@ namespace Concerto\pattern\builder;
 interface StandardFactoryInterface
 {
   /*
-   *  build
+   *  make
    *
    *  @param string $namespace
    *  @param ?array $arguments
-   *  @retun object
+   *  @retun mixed
    */ 
-  public function build(
+  public function make(
     string $namespace,
     ?array $arguments
-  ): object;
+  ): mixed;
 } 
