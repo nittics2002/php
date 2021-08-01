@@ -58,21 +58,7 @@ class StandardFactory implements StandardFactoryInterface
       string|callable $abstract,
       array $parameters = [], 
     ): mixed {
-       $concrete = $this->getContextualConcrete($abstract);
-       $needsContextualBuild = !empty($parameters) ||
-         !is_null($concrete);
-       
-       if (isset($this->instances[$abstract]) &&
-         ! $needsContextualBuild
-       ) {
-          return $this->instances[$abstract];
-       }
-       
-       $this->with[] = $parameters;
-       
-       if (is_null($concrete)) {
           $concrete = $this->getConcrete($abstract);
-       }
        
        if ($this->isBuildable($concrete, $abstract)) {
           $object = $this->build($concrete);
@@ -80,19 +66,7 @@ class StandardFactory implements StandardFactoryInterface
           $object = $this->make($concrete);
        }
        
-       foreach ($this->getExtenders($abstract) as $extender) {
-          $object = $extender($object, $this);
-       }
-       
-      
-        if ($this->isShared($abstract) &&
-        ! $needsContextualBuild
-        ) {
-          $this->instances[$abstract] = $object;
-        }
-        
       $this->resolved[$abstract] = true;
-      array_pop($this->with);
       return $object;
   }
 
@@ -103,58 +77,14 @@ class StandardFactory implements StandardFactoryInterface
    * @return mixed
    */
    protected function getConcrete(
-    string|callable$abstract
+    string|callable $abstract
    ):mixed {
-       if (isset($this->bindings[$abstract])) {
-            return $this->bindings[$abstract]['concrete'];
-       }
-       return $abstract;
+     if ($this->container->has($abstract)) {
+       return $this->container->get($abstract);
+     }
+    return $abstract; 
    }
 
-   /**
-   * Get the contextual concrete binding for the given abstract.
-   *
-   * @param string|callable $abstract
-   * @return Closure|string|array|null
-   */
-   protected function getContextualConcrete(
-        string|callable $abstract)
-   ):Closure|string|array|null{
-       if (
-        !is_null(
-            $binding = $this->findInContextualBindings($abstract)
-        )
-        ) {
-            return $binding;
-       }
-       
-       if (empty($this->abstractAliases[$abstract])) {
-        return;
-       }
-       
-       foreach ($this->abstractAliases[$abstract] as $alias) {
-           if (
-            !is_null(
-                $binding = $this->findInContextualBindings($alias)
-            )
-           ) {
-            return $binding;
-           }
-       }
-   }
-   
-   /**
-   * Find the concrete binding for the given abstract in the contextual binding array.
-   *
-   * @param string|callable $abstract
-   * @return Closure|string|null
-   */
-   protected function findInContextualBindings(
-    string|callable $abstract
-   ):Closure|string|null {
-    return $this->contextual[end($this->buildStack)][$abstract] ?? null;
-   }
-   
    /**
    * Determine if the given concrete is buildable.
    *
