@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="shift_jis"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xml:lang="ja" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta content="text/html; charset=shift_jis" http-equiv="Content-Type" />
+        <title>iLogScanner 解析結果レポート</title>
+        <style type="text/css"><--/*  * common */* {   margin: 0px;   padding: 0px;}body {   background-color:#FFFFFF;   color:#000000;   font-family:'Verdana',sans-serif;}h1 {   border-bottom: solid 2px #363;   padding-left: 5px;   font-weight: bold;   color: #363; }h2 {   border-bottom:1px dotted #FF6633;   border-left:5px solid #FF6633;   color:#FF6633;   font-size:140%;   font-weight:bold;   margin:1.5em 0px 1em;   padding:3px 0pt 3px 3px;   text-align:left;}h3 {   border-bottom:1px double #FF6633;   color:#FF6633;   font-size:100%;   font-weight:normal;   margin:0.5em 0px 0em 0.5em;   padding:3px 0pt 3px 3px;   text-align:left;}p {   margin:0.5em 1em;}/* * common class */.font_small {   font-size:80%;}.main { margin-left:1em;   width: 700px;}.header {   width:100%;   margin: 0 0 1em;}.footer {   height:50px;   margin-top: 1em;   border-top: solid 2px #363;   padding-left: 5px;   font-weight: normal;   font-size:70%;   color: #363;   text-align:right; }/* * alone page */.alone {   font-size:80%;   margin-left:1em;}/* * alone page result table */.result_summary {   margin: 0 0 1em;}.result_summary li {   list-style-type: square;   margin: 0px 20px 0px 0px;}.result_table {   margin-top: 0.2em;   margin-bottom: 1em;   border-collapse: collapse;   border: solid 1px #999;   font-size: 80%;   width: 80%;}.result_table caption {   margin-top: 1em;   margin-bottom: 2em;   text-align: left;}.result_table th {   height:40px;   background: #E6E6E6;   text-align: center;   white-space: nowrap;   border: solid 1px #999;   color: #666;}.result_table td {   border: solid 1px #999;   padding: 4px 6px;}.result_table td.pattern {   white-space: nowrap;}.result_table td.pattern2 {   white-space: nowrap;   padding: 0px 0px 0px 50px;}.result_table td.cnt, .result_table td.attack {   text-align: right;   white-space: nowrap;}.result_url {   margin-left:30px;}div.warning_box {   margin: 0.5em 0;   border: solid 1px #FF6464;} div.warning_box h3 {   margin: 0;   background: #FF6464;   padding: 5px 15px;   color: #FFF;}div.warning_box p {   margin: 0.5em;}div.warning_box ul {   margin: 0.5em 0.5em 0.5em 0.5em;}div.vulnerability {   margin: 0 0 20px 0;}div.vulnerability ul {   margin: 0.5em 0.5em 0.5em 2em;}div.vulnerability table {   margin-left: 1.5em;}--></style>
+    </head>
+    <body>
+        <div class="main">
+            <div class="header">
+                <h1>iLogScanner - 解析結果レポート</h1>
+            </div>
+            <div class="alone">
+                <div class="result">
+                    <h2>解析結果</h2>
+                    <div class="result_summary">
+                        <ul>
+                            <li>終了ステータス：完了</li>
+                            <li>解析日時：2021/08/03 09:15</li>
+                            <li>解析対象ファイル：u_nc210506.log</li>
+                            <li>解析指定日付： - </li>
+                            <li>解析対象日付：2021/05/06 - 2021/05/06</li>
+                            <li>解析レベル：標準</li>
+                            <li>検出数　　：  計 0 件</li>
+                        </ul>
+                    </div>
+                    <div class="result_detail">
+                                  検出したWebサイトへの攻撃について、下記に詳細を記述します。          
+                        <table class="result_table">
+                            <tr>
+                                <th colspan="2">検出対象脆弱性</th>
+                                <th>攻撃があったと思われる件数</th>
+                                <th>
+                                    攻撃が成功した可能性の
+                                    <br />
+                                    高い件数
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="pattern" colspan="2">
+                                    <a href="#sql">SQLインジェクション</a>
+                                </td>
+                                <td class="cnt">0</td>
+                                <td class="attack">0</td>
+                            </tr>
+                            <tr>
+                                <td class="pattern" colspan="2">
+                                    <a href="#oscmd">OSコマンドインジェクション</a>
+                                </td>
+                                <td class="cnt">0</td>
+                                <td class="attack">-</td>
+                            </tr>
+                            <tr>
+                                <td class="pattern" colspan="2">
+                                    <a href="#dt">ディレクトリトラバーサル</a>
+                                </td>
+                                <td class="cnt">0</td>
+                                <td class="attack">-</td>
+                            </tr>
+                            <tr>
+                                <td class="pattern" colspan="2">
+                                    <a href="#xss">クロスサイトスクリプティング</a>
+                                </td>
+                                <td class="cnt">0</td>
+                                <td class="attack">-</td>
+                            </tr>
+                            <tr>
+                                <td class="pattern" colspan="2">
+                                    <a href="#other">その他</a>
+                                </td>
+                                <td class="cnt">0</td>
+                                <td class="attack">-</td>
+                            </tr>
+                        </table>
+                        <br />
+                    </div>
+                </div>
+                <div class="vulnerability_box">
+                    <h2>検出対象脆弱性の説明と対策</h2>
+                    <div class="vulnerability_basic">
+                        <div class="vulnerability">
+                            <h3>
+                                <a id="sql">SQLインジェクション</a>
+                            </h3>
+                            <p>
+                                              「SQLインジェクション」は、データベースと連携したWebアプリケーションに問合せ命令文の組み立て方法に問題があるとき、Webアプリケーションへ宛てた要求に、悪意を持って細工されたSQL文を埋め込まれて（Injection）しまうと、データベースを不正に操作されてしまう問題です。これにより、データベースが不正に操作され、Webサイトは重要情報などが盗まれたり、情報が書き換えられたりといった被害を受けてしまう場合があります。
+                                <br />
+                                <a href="http://www.ipa.go.jp/security/vuln/vuln_contents/sql.html" target="_blank">http://www.ipa.go.jp/security/vuln/vuln_contents/sql.html</a>
+                            </p>
+                            <p class="font_small">対策URL:</p>
+                            <p class="result_url font_small">
+                                <a href="http://www.ipa.go.jp/security/vuln/websecurity.html" target="_blank">http://www.ipa.go.jp/security/vuln/websecurity.html</a>
+                                <br />
+                                <a href="http://www.ipa.go.jp/security/awareness/vendor/programmingv2/index.html" target="_blank">http://www.ipa.go.jp/security/awareness/vendor/programmingv2/index.html</a>
+                            </p>
+                        </div>
+                        <div class="vulnerability">
+                            <h3>
+                                <a id="oscmd">OSコマンドインジェクション</a>
+                            </h3>
+                            <p>
+                                              「OSコマンドインジェクション」は、Webサーバ上の任意のOSコマンドが実行されてしまう問題です。これにより、Webサーバを不正に操作され、重要情報などが盗まれたり、攻撃の踏み台に悪用される場合があります。
+                                <br />
+                                <a href="http://www.ipa.go.jp/security/vuln/vuln_contents/oscmd.html" target="_blank">http://www.ipa.go.jp/security/vuln/vuln_contents/oscmd.html</a>
+                            </p>
+                            <p class="font_small">対策URL:</p>
+                            <p class="result_url font_small">
+                                <a href="http://www.ipa.go.jp/security/vuln/websecurity.html" target="_blank">http://www.ipa.go.jp/security/vuln/websecurity.html</a>
+                                <br />
+                                <a href="http://www.ipa.go.jp/security/awareness/vendor/programmingv2/index.html" target="_blank">http://www.ipa.go.jp/security/awareness/vendor/programmingv2/index.html</a>
+                            </p>
+                        </div>
+                        <div class="vulnerability">
+                            <h3>
+                                <a id="dt">ディレクトリトラバーサル</a>
+                            </h3>
+                            <p>
+                                              「ディレクトリトラバーサル」は、相対パス記法を利用して、管理者が意図していないWeｂサーバ上のファイルやディレクトリにアクセスされたり、アプリケーションを実行される問題です。これらにより、本来公開を意図しないファイルが読み出され、重要情報が盗まれたり、不正にアプリケーションを実行されファイルが破壊されるなどの危険があります。
+                                <br />
+                                <a href="http://www.ipa.go.jp/security/vuln/vuln_contents/dt.html" target="_blank">http://www.ipa.go.jp/security/vuln/vuln_contents/dt.html</a>
+                            </p>
+                            <p class="font_small">対策URL:</p>
+                            <p class="result_url font_small">
+                                <a href="http://www.ipa.go.jp/security/vuln/websecurity.html" target="_blank">http://www.ipa.go.jp/security/vuln/websecurity.html</a>
+                                <br />
+                                <a href="http://www.ipa.go.jp/security/awareness/vendor/programmingv2/index.html" target="_blank">http://www.ipa.go.jp/security/awareness/vendor/programmingv2/index.html</a>
+                            </p>
+                        </div>
+                        <div class="vulnerability">
+                            <h3>
+                                <a id="xss">クロスサイトスクリプティング</a>
+                            </h3>
+                            <p>
+                                              「クロスサイトスクリプティング」は、Webサイトの訪問者の入力をそのまま画面に表示する掲示板などのWebアプリケーションが、悪意のあるスクリプト（命令）を訪問者のブラウザに送ってしまう問題です。これにより、アンケート、掲示板、サイト内検索など、ユーザからの入力内容をWebページに表示するWebアプリケーションで、適切なセキュリティ対策がされていない場合、悪意を持ったスクリプト(命令)を埋め込まれてしまい、Webページを表示した訪問者のブラウザ環境でスクリプトが実行されてしまう可能性があります。その結果として、cookieなどからの情報の漏洩や意図しないページの参照が行われてしまいます。
+                                <br />
+                                <a href="http://www.ipa.go.jp/security/vuln/vuln_contents/xss.html" target="_blank">http://www.ipa.go.jp/security/vuln/vuln_contents/xss.html</a>
+                            </p>
+                            <p class="font_small">対策URL:</p>
+                            <p class="result_url font_small">
+                                <a href="http://www.ipa.go.jp/security/vuln/websecurity.html" target="_blank">http://www.ipa.go.jp/security/vuln/websecurity.html</a>
+                                <br />
+                                <a href="http://www.ipa.go.jp/security/awareness/vendor/programmingv2/index.html" target="_blank">http://www.ipa.go.jp/security/awareness/vendor/programmingv2/index.html</a>
+                            </p>
+                        </div>
+                        <div class="vulnerability">
+                            <h3>
+                                <a id="other">その他</a>
+                            </h3>
+                            <p>              16進コード、親パス等の特殊文字を使用して、偽装した攻撃用文字列で攻撃が行われています。これにより、アプリケーションの妥当性チェック機構を迂回し、SQLインジェクション、クロスサイトスクリプティング等の攻撃を行うことを狙ったものです。また、ワームなどが悪用する Web サーバの脆弱性を突いた攻撃でも、このような特殊文字が使われます。それぞれの攻撃に応じた対策が必要になります。            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">      Copyright(c) Information-technology Promotion Agency, Japan. All rights reserved    </div>
+        </div>
+    </body>
+</html>
