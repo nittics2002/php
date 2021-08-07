@@ -63,7 +63,7 @@ mb_ereg(string $pattern, string $string, array &$matches = null): bool
 
 
 
-//bool|array-first
+//bool|array-none
 
 mb_detect_order(array|string|null $encoding = null): array|bool
 
@@ -73,7 +73,8 @@ mb_detect_order(array|string|null $encoding = null): array|bool
 
 
 
-//bool|string-first
+
+//bool|string-none
 
 mb_http_output(?string $encoding = null): string|bool
 
@@ -95,6 +96,10 @@ mb_convert_case(string $string, int $mode, ?string $encoding = null):
 mb_convert_kana(string $string, string $mode = "KV", ?string $encoding
    = null): string
 
+
+
+
+
 mb_decode_mimeheader(string $string): string
 
 mb_decode_numericentity(string $string, array $map, ?string $encoding =
@@ -114,6 +119,11 @@ mb_encode_numericentity(
        ?string $encoding = null,
        bool $hex = false
    ): string
+
+
+
+
+
 
 mb_output_handler(string $string, int $status): string
 
