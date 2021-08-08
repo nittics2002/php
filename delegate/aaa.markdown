@@ -2,7 +2,8 @@
 #210808
 
 - implementsする事は、methodを定義することになる
-- 
+- 引数や戻り値がclass等で変換が必要な場合は、変換用methodを用意する
+- 従って、abstract/traitする標準classは作れそうもない
 
 
 
