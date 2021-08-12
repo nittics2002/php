@@ -27,38 +27,27 @@ $container->bindParameters(
 
   /*
    *  @param string $name
-   *  @param array $parameters
+   *  @param array $context
    *  @param ?bool $isPromptly
    *  @return ContainerInterface
    */
   public function bindParameters(
     string $name,
-    array $parameters,
+    array $context,
     ?bool $isPromptly = true
   ):ContainerInterface {
 
-    foreach($parameters as $parameter) {
-      $
+    foreach($context as $methodName => $parameters) {
+      foreach($parameters as $parameterName => $value) {
+        $bindName = "${name}.${methodName}.${parameterName}";
+
+      if ($isPromptly &&
+        !in_array($bindName, $this->parameters)
+      ) {
+          $this->parameters[] = $bindName;
+      }
+      $this->raw($bindName, $value);
     }
-
+    }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  public function bindParameters(
-    string $name,
-    array $parameters,
-  ):ContainerInterface {
-
 
