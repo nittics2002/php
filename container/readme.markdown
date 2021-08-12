@@ -1,9 +1,18 @@
 
+#210812
+
+- union type について
+ - foo|null がある場合と無い場合
+  - !isBuiltin() でclassを判定
+   - ?Class の場合
+    - bind()やmake()などでパラメータのがある
+    - container->get(Class::class)
+    - isDefaultValueAvailable true の場合
+
+
+
+
 #210809
-
-## 4
-
-
 
 ## 3
 
