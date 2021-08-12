@@ -1,6 +1,15 @@
 <?php
 
 
+//ReflectionContainerの作るか?
+//その場合raw()もここに
+//interfaceはどうする?
+//
+//ServiceContainerに組み込むか?
+//
+
+
+
 //bindParametersはclass method用のパラメータをbindする
 //基本的にdomain中でbindParameterする
 //isPrompty == false raw()と同じ

@@ -1,6 +1,15 @@
 
 #210812
 
+## 2
+
+- ServiceContainerからrawをdelegateClassに移動するか?
+
+
+
+
+## 1
+
 - union type について
  - foo|null がある場合と無い場合
   - !isBuiltin() でclassを判定
