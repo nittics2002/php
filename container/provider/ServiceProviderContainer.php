@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Concerto\container;
+namespace Concerto\container\provider;
 
 use InvalidArgumentException;
 use Psr\Container\ContainerInterface;

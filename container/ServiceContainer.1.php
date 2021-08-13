@@ -59,11 +59,22 @@ class ServiceContainer implements
     protected $extenders = [];
     
     /**
+    *   raws
+    *
+    *   @var array
+    */
+    protected $raws = [];
+    
+    /**
     *   {inherit}
     *
     */
     public function get($id)
     {
+        if (array_key_exists($id, $this->raws)) {
+            return $this->raws[$id];
+        }
+        
         if (array_key_exists($id, $this->sharedInstances)) {
             return $this->sharedInstances[$id];
         }
@@ -106,6 +117,10 @@ class ServiceContainer implements
             return false;
         }
         //ここまで
+        
+        if (array_key_exists($id, $this->raws)) {
+            return true;
+        }
         
         if (array_key_exists($id, $this->definitions)) {
             return true;
@@ -352,5 +367,21 @@ class ServiceContainer implements
                 return $container->$method(...$arguments);
             }
         }
+    }
+    
+    /**
+    *   raw
+    *
+    *   @param string $id
+    *   @param mixed $concrete
+    **/
+    public function raw($id, $concrete)
+    {
+        if ($concrete instanceof \Closure) {
+            throw new InvalidArgumentException(
+                "required scala,array,resource,object"
+            );
+        }
+        $this->raws[$id] = $concrete;
     }
 }

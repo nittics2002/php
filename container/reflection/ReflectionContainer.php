@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Concerto\container;
+namespace Concerto\container\reflection;
 
 use ReflectionClass;
 use ReflectionMethod;
