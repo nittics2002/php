@@ -1,22 +1,39 @@
 <?php
 
 /**
-*   Raw Data Container
+*  Construct
 *
 *   @ver 210813
 **/
 
 declare(strict_types=1);
 
-namespace Concerto\container\rawdata;
+namespace Concerto\container\construct;
 
-interface RawDataContainerInterface
+interface ConstructContainerInterface
 {
-    /**
-    *   raw
-    *
-    *   @param string $id
-    *   @param mixed $concrete
-    **/
-    public function raw($id, $concrete);
+
+  /*
+  *  bindParameters
+  *
+  *  @param string $name
+  *  @param array $context
+  *  @param ?bool $isPromptly
+  *  @return ContainerInterface
+  */
+  public function bindParameters(
+    string $name,
+    array $context,
+    ?bool $isPromptly = true
+  ):ContainerInterface;
+  
+  /*
+  *  build
+  *
+  *  @param string $name
+  *  @return mixed
+  */
+  public function build(
+    string $name
+    ):mixed;
 }
