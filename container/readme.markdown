@@ -1,12 +1,21 @@
 
+
+
+#210821
+
+- ReflectionContainerInterfaceにbindParameter()
+- reflectionを利用して引数を
+- raw()はRowDataContainerで独立
+- bindParametersでclassName_methodMame_parameNameでバインド
+- unionTypeの対応が必要
+
+
+
 #210812
 
 ## 2
 
 - ServiceContainerからrawをdelegateClassに移動するか?
-
-
-
 
 ## 1
 
