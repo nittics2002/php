@@ -24,13 +24,13 @@ class Config extends ArrayObject implements ConfigInterface,
     /**
     *   __construct
     *
-    *   @param array $dataset
+    *   @param ConfigReaderInterface $reader
     */
     public function __construct(
-       array $dataset 
+        ConfigReaderInterface $reader
     ){
         parent::__construct(
-            $dataset,
+            $reader->read(),
             ArrayObject::ARRAY_AS_PROPS
         );
     }
@@ -85,32 +85,20 @@ class Config extends ArrayObject implements ConfigInterface,
     /**
     *   replace
     *
-    *   @param array $dataset
+    *   @param ConfigReaderInterface $reader
     *   @return static
     **/
     public function replace(
         ConfigReaderInterface $reader
     ):static {
         $src = $this->getArrayCopy();
-        $replaced_data = array_replace_recursive(
-            $this->getArrayCopy(),
-            $dataset
+        $dest = $reader->read();
+        
+        $data = array_replace_recursive($src, $dest);
+        parent::__construct(
+            $data,
+            ArrayObject::ARRAY_AS_PROPS
         );
-        return new static($replaced_data);
+        return static;
     }
-    
-    /**
-    *   {inherit}
-    **/
-    public function remove(
-        string $name
-    ): static {
-
-
-
-    }
-
-
-
 }
-
