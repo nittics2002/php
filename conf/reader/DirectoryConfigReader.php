@@ -58,6 +58,7 @@ class DirectoryConfigReader implements ConfigReaderInterface
     public function read(): array
     {
       $this->errors = [];
+      $config_dataset = [];
 
       $fileInfo = new SplFileInfo($base_path);
       
@@ -79,33 +80,28 @@ class DirectoryConfigReader implements ConfigReaderInterface
           continue;
         }
 
-        if ($config_file->isReadable) {
+        if (!$config_file->isReadable()) {
           $this->errors[] = $config_file->getRealPath();
           continue;
         }
 
+        $reader_fdqn = $this->fileInfoToFqdn(
+          $config_file
+        );
 
+        if ($reader_fdqn === '') {
+          $this->errors[] = $config_file->getRealPath();
+          continue;
+        );
 
+        $config_dataset[] = $this->readConfigFile(
+          $config_file,
+          $reader_fdqn
+        );
+      }
 
-
-
-
+      return $config_dataset;
     }
-
-    /**
-    *    
-    *
-    *   @param SplFileInfo $basePathFileInfo
-    *   @return string
-    */
-    protected function aaa(
-      SplFileInfo $basePathFileInfo
-    ):string{
-
-
-
-    }
-
 
     /**
     *   fileInfoToFqdn
@@ -130,6 +126,49 @@ class DirectoryConfigReader implements ConfigReaderInterface
     );
     
     return $reflectionClass->getName();
+    }
+
+    /**
+    *    readConfigFile
+    *
+    *   @param SplFileInfo $fileInfo
+    *   @param string $reader_fdqn
+    *   @return array
+    */
+    protected function readConfigFile(
+      SplFileInfo $fileInfo,
+      string $reader_fdqn,
+    ):array {
+      $reader = new $reader_fdqn(
+        $fileInfo->getName(),
+      );
+      
+      $bug = $this->fileInfoToBug($fileInfo);
+      $bug[] = $reader->read();
+      
+      return $bug;
+    }
+
+    /**
+    *    fileInfoToBug
+    *
+    *   @param SplFileInfo $fileInfo
+    *   @return array
+    */
+    protected function fileInfoToBug(
+      SplFileInfo $fileInfo
+    ):array {
+      $paths = explode(
+        DIRECTORY_SEPARATOR,
+        $fileInfo->getPath(),
+      );
+
+      $bug = [];
+      foreach($paths as $path_name) {
+        $bug[$path_name] = [];
+      }
+
+      return $bug;
     }
 
 }
