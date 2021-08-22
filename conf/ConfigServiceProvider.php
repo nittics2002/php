@@ -3,7 +3,7 @@
 /**
  *   ConfigServiceProvider
  *
- * @version 190716
+ * @version 210822
  **/
 
 declare(strict_types=1);
@@ -11,8 +11,10 @@ declare(strict_types=1);
 namespace Concerto\conf;
 
 use Concerto\container\provider\AbstractServiceProvider;
-use Concerto\conf\Config;
-use Concerto\conf\ConfigReaderArray;
+use Concerto\conf\
+  Config,
+  ConfigReaderArray,
+};
 
 class ConfigServiceProvider extends AbstractServiceProvider
 {

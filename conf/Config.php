@@ -1,7 +1,7 @@
 <?php
 
 /**
-*  config 
+*  Config 
 *
 *   @version 210822
 */
@@ -15,9 +15,11 @@ use Concerto\arrays\ArrayDot;
 use Concerto\conf\{
   ConfigInterface,
   ConfigReaderInterface,
+  ConfigWritableInterface,
 };
 
-class Config extends ArrayObject implements ConfigInterface
+class Config extends ArrayObject implements ConfigInterface,
+  ConfirWraitableInterface
 {
     /**
     *   __construct
@@ -52,11 +54,7 @@ class Config extends ArrayObject implements ConfigInterface
     }
     
     /**
-    *   set
-    *
-    *   @param string $name
-    *   @param mixed $val
-    *   @return static
+    *   {inherit}
     **/
     public function set(
       string $name,
@@ -71,10 +69,7 @@ class Config extends ArrayObject implements ConfigInterface
     }
     
     /**
-    *   remove
-    *
-    *   @param string $name
-    *   @return static
+    *   {inherit}
     **/
     public function remove(
         string $name
