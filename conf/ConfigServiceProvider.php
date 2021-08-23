@@ -11,7 +11,7 @@ declare(strict_types=1);
 namespace Concerto\conf;
 
 use Concerto\container\provider\AbstractServiceProvider;
-use Concerto\conf\
+use Concerto\conf\{
   Config,
   ConfigReaderArray,
 };

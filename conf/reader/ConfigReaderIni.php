@@ -76,15 +76,15 @@ class ConfigReaderIni extends AbstractConfigReader
     public function mode(int $param)
     {
         switch ($param) {
-            case self::NORMAL:
-            case self::RAW:
-            case self::TYPED:
-                $this->mode = $param;
-                break;
-            default:
-                throw new InvalidArgumentException(
-                    "mode invalid:{$param}"
-                );
+        case self::NORMAL:
+        case self::RAW:
+        case self::TYPED:
+            $this->mode = $param;
+            break;
+        default:
+            throw new InvalidArgumentException(
+                "mode invalid:{$param}"
+            );
         }
         return $this;
     }
