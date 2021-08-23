@@ -24,7 +24,7 @@ use Concerto\conf\reader\{
 class DirectoryConfigReader implements ConfigReaderInterface
 {
     /**
-     * @var array 
+     * @var array
      */
     private array $readers = [
     '' => 'AbstractConfigReader',
@@ -40,7 +40,7 @@ class DirectoryConfigReader implements ConfigReaderInterface
      * @var string
      */
     protected string $base_path = '';
-    
+
     /**
      *   __construct
      *
@@ -51,7 +51,7 @@ class DirectoryConfigReader implements ConfigReaderInterface
     ) {
         $this->base_path = $base_path;
     }
-    
+
     /**
      *   {inherit}
      */
@@ -61,7 +61,7 @@ class DirectoryConfigReader implements ConfigReaderInterface
         $config_dataset = [];
 
         $fileInfo = new SplFileInfo($base_path);
-      
+
         if (!fileInfo->isDir()) {
             throw new RuntimeException(
                 "bath path is not exists:{$this->base_path}"
@@ -75,7 +75,7 @@ class DirectoryConfigReader implements ConfigReaderInterface
             FilesystemIterator::SKIP_DOTS
         );
 
-        foreach($directory as $path => $config_file) {
+        foreach ($directory as $path => $config_file) {
             if ($config_file->isDir()) {
                 continue;
             }
@@ -111,13 +111,14 @@ class DirectoryConfigReader implements ConfigReaderInterface
      */
     protected function fileInfoToFqdn(
         SplFileInfo $fileInfo
-    ):string {
+    ): string {
         $extension = $fileInfo->getExtension();
 
-        if (!array_key_exists(
-            $extension,
-            $this->readers,
-        )
+        if (
+            !array_key_exists(
+                $extension,
+                $this->readers,
+            )
         ) {
             return '';
         }
@@ -125,7 +126,7 @@ class DirectoryConfigReader implements ConfigReaderInterface
         $reflectionClass = new ReflectionClass(
             $this->readers[$extension]
         );
-    
+
         return $reflectionClass->getName();
     }
 
@@ -139,14 +140,14 @@ class DirectoryConfigReader implements ConfigReaderInterface
     protected function readConfigFile(
         SplFileInfo $fileInfo,
         string $reader_fdqn,
-    ):array {
+    ): array {
         $reader = new $reader_fdqn(
             $fileInfo->getName(),
         );
-      
+
         $bug = $this->fileInfoToBug($fileInfo);
         $bug[] = $reader->read();
-      
+
         return $bug;
     }
 
@@ -158,18 +159,17 @@ class DirectoryConfigReader implements ConfigReaderInterface
      */
     protected function fileInfoToBug(
         SplFileInfo $fileInfo
-    ):array {
+    ): array {
         $paths = explode(
             DIRECTORY_SEPARATOR,
             $fileInfo->getPath(),
         );
 
         $bug = [];
-        foreach($paths as $path_name) {
+        foreach ($paths as $path_name) {
             $bug[$path_name] = [];
         }
 
         return $bug;
     }
-
 }

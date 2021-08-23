@@ -23,7 +23,7 @@ interface ConfigWritableInterface
         string $name,
         $val
     ): static;
-    
+
     /**
      *   remove
      *

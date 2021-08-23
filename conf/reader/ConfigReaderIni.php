@@ -22,21 +22,21 @@ class ConfigReaderIni extends AbstractConfigReader
     public const NORMAL = INI_SCANNER_NORMAL;
     public const RAW = INI_SCANNER_RAW;
     public const TYPED = INI_SCANNER_TYPED;
-    
+
     /**
      *   recursive
      *
      * @var bool
      **/
     private $recursive = false;
-    
+
     /**
      *   mode
      *
      * @var int
      **/
     private $mode = INI_SCANNER_NORMAL;
-    
+
     /**
      *   {inherit}
      */
@@ -47,7 +47,7 @@ class ConfigReaderIni extends AbstractConfigReader
             $this->recursive,
             $this->mode
         );
-        
+
         if (!is_array($data)) {
             throw new RuntimeException(
                 "config file read error"
@@ -55,7 +55,7 @@ class ConfigReaderIni extends AbstractConfigReader
         }
         return $data;
     }
-    
+
     /**
      *   多次元配列として読み込み
      *
@@ -66,7 +66,7 @@ class ConfigReaderIni extends AbstractConfigReader
         $this->recursive = true;
         return $this;
     }
-    
+
     /**
      *   mode
      *
@@ -76,15 +76,15 @@ class ConfigReaderIni extends AbstractConfigReader
     public function mode(int $param)
     {
         switch ($param) {
-        case self::NORMAL:
-        case self::RAW:
-        case self::TYPED:
-            $this->mode = $param;
-            break;
-        default:
-            throw new InvalidArgumentException(
-                "mode invalid:{$param}"
-            );
+            case self::NORMAL:
+            case self::RAW:
+            case self::TYPED:
+                $this->mode = $param;
+                break;
+            default:
+                throw new InvalidArgumentException(
+                    "mode invalid:{$param}"
+                );
         }
         return $this;
     }

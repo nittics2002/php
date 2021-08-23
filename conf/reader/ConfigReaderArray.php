@@ -21,7 +21,7 @@ class ConfigReaderArray extends AbstractConfigReader
     public function read(): array
     {
         $data = $this->doRead();
-        
+
         if (!is_array($data)) {
             throw new RuntimeException(
                 "config file read error"
@@ -29,7 +29,7 @@ class ConfigReaderArray extends AbstractConfigReader
         }
         return $data;
     }
-    
+
     /**
      *   doRead
      */

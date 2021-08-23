@@ -28,4 +28,3 @@ interface ConfigInterface
      */
     public function get(string $name): mixed;
 }
-

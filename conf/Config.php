@@ -1,7 +1,7 @@
 <?php
 
 /**
- *  Config 
+ *  Config
  *
  * @version 210822
  */
@@ -18,8 +18,9 @@ use Concerto\conf\{
   ConfigWritableInterface,
 };
 
-class Config extends ArrayObject implements ConfigInterface,
-  ConfirWraitableInterface
+class Config extends ArrayObject implements
+    ConfigInterface,
+    ConfirWraitableInterface
 {
     /**
      *   __construct
@@ -27,38 +28,38 @@ class Config extends ArrayObject implements ConfigInterface,
      * @param array $dataset
      */
     public function __construct(
-        array $dataset 
+        array $dataset
     ) {
         parent::__construct(
             $dataset,
             ArrayObject::ARRAY_AS_PROPS
         );
     }
-    
+
     /**
      *   {inherit}
      **/
     public function has(
         string $name
-    ):bool {
+    ): bool {
         return ArrayDot::has(
             $this->getArrayCopy(),
             $name
         );
     }
-    
+
     /**
      *   {inherit}
      **/
     public function get(
         string $name
-    ):mixed {
+    ): mixed {
         return ArrayDot::get(
             $this->getArrayCopy(),
             $name
         );
     }
-    
+
     /**
      *   {inherit}
      **/
@@ -68,11 +69,12 @@ class Config extends ArrayObject implements ConfigInterface,
     ): static {
         $data = ArrayDot::set(
             $this->getArrayCopy(),
-            $name, $val
+            $name,
+            $val
         );
         return new static($data);
     }
-    
+
     /**
      *   {inherit}
      **/
@@ -85,7 +87,7 @@ class Config extends ArrayObject implements ConfigInterface,
         );
         return new static($data);
     }
-    
+
     /**
      *   replace
      *
@@ -94,7 +96,7 @@ class Config extends ArrayObject implements ConfigInterface,
      **/
     public function replace(
         ConfigReaderInterface $reader
-    ):static {
+    ): static {
         $src = $this->getArrayCopy();
         $replaced_data = array_replace_recursive(
             $this->getArrayCopy(),
@@ -102,9 +104,9 @@ class Config extends ArrayObject implements ConfigInterface,
         );
         return new static($replaced_data);
     }
-    
+
     /**
-     *   
+     *
      **/
     public function extract(
         string $name
@@ -113,8 +115,4 @@ class Config extends ArrayObject implements ConfigInterface,
 
         return new static([]);
     }
-
-
-
 }
-

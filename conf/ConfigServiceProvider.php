@@ -29,7 +29,7 @@ class ConfigServiceProvider extends AbstractServiceProvider
             'configSystemPath',
             realpath(__DIR__ . '/../../../_config/common/system.php')
         );
-        
+
         $this->share(
             'configSystem',
             function ($container) {
