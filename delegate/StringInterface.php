@@ -15,8 +15,8 @@ interface StringInterface
   public static function length(string $text):int;
   public static function width(string $text):int;
   public static function trim(string $text):string;
-  public static function insert(string $text, string $insert, int $position):string;
-  public static function delete(string $text, int $start, int $length):string;
+  public static function insert(string $text, string $insert, int $offset):string;
+  public static function delete(string $text, int $offset, int $length):string;
   public static function encode(string $text, string $code):string;
   public static function match(string $text, string $pattern, ?string $option):bool;
   public static function matchAll(string $text, string $pattern, ?string $option):array;
@@ -27,5 +27,6 @@ interface StringInterface
   public static function substr(string $text, int $start, int $length):string;
   public static function split(string $text, int $length):array;
   public static function search(string $text, string $pattern, ?string $option):array;
+  public static function isEmpty(string $text):bool;
 
 } 
