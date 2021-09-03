@@ -100,7 +100,7 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * sub
   *
   * @param DateInterface $interval
   * @return DateInterface 
@@ -110,7 +110,7 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * subContext
   *
   * @param string $datetime 
   * @return DateInterface 
@@ -120,7 +120,7 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * addQuarters
   *
   * @param ?int $quater
   * @return DateInterface 
@@ -130,7 +130,7 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * addYears
   *
   * @param ?int $year
   * @return DateInterface 
@@ -140,9 +140,9 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * addMonths
   *
-  * @param ?int $year
+  * @param ?int $month
   * @return DateInterface 
   */
   public function addMonths(
@@ -150,9 +150,9 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * addWeeks
   *
-  * @param ?int $year
+  * @param ?int $week
   * @return DateInterface 
   */
   public function addWeeks(
@@ -160,9 +160,9 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * addDays
   *
-  * @param ?int $year
+  * @param ?int $day
   * @return DateInterface 
   */
   public function addDays(
@@ -170,9 +170,9 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * addHours
   *
-  * @param ?int $year
+  * @param ?int $hour
   * @return DateInterface 
   */
   public function addHours(
@@ -180,9 +180,9 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * addMinutes
   *
-  * @param ?int $year
+  * @param ?int $minute
   * @return DateInterface 
   */
   public function addMinutes(
@@ -190,9 +190,9 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * addSeconds
   *
-  * @param ?int $year
+  * @param ?int $second
   * @return DateInterface 
   */
   public function addSeconds(
@@ -200,8 +200,9 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * subQuarters
   *
+  * @param ?int $quater
   * @return DateInterface 
   */
   public function subQuarters(
@@ -209,8 +210,9 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * subYears
   *
+  * @param ?int $year
   * @return DateInterface 
   */
   public function subYears(
@@ -218,8 +220,9 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * subMonths
   *
+  * @param ?int $month
   * @return DateInterface 
   */
   public function subMonths(
@@ -227,8 +230,9 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * subWeeks
   *
+  * @param ?int $week
   * @return DateInterface 
   */
   public function subWeeks(
@@ -236,8 +240,9 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * subDays
   *
+  * @param ?int $day
   * @return DateInterface 
   */
   public function subDays(
@@ -245,8 +250,9 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * subHours
   *
+  * @param ?int $hour
   * @return DateInterface 
   */
   public function subHours(
@@ -254,8 +260,9 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * subMinutes
   *
+  * @param ?int $minute
   * @return DateInterface 
   */
   public function subMinutes(
@@ -263,8 +270,9 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * subSeconds
   *
+  * @param ?int $second
   * @return DateInterface 
   */
   public function subSeconds(
@@ -272,101 +280,103 @@ interface DateInterface extends DateTimeInterface
   ):DateInterface;
 
   /*
-  * createFromFormat
+  * nextQuarter
   *
   * @return DateInterface 
   */
   public function nextQuarter():DateInterface;
 
   /*
-  * createFromFormat
+  * nextYear
   *
   * @return DateInterface 
   */
   public function nextYear():DateInterface;
 
   /*
-  * createFromFormat
+  * nextMonth
   *
   * @return DateInterface 
   */
   public function nextMonth():DateInterface;
 
   /*
-  * createFromFormat
+  * nextWeek
   *
   * @return DateInterface 
   */
   public function nextWeek():DateInterface;
 
   /*
-  * createFromFormat
+  * nextDay
   *
   * @return DateInterface 
   */
   public function nextDay():DateInterface;
 
   /*
-  * createFromFormat
+  * previousQuarter
   *
   * @return DateInterface 
   */
   public function previousQuarter():DateInterface;
 
   /*
-  * createFromFormat
+  * previousYear
   *
   * @return DateInterface 
   */
   public function previousYear():DateInterface;
 
   /*
-  * createFromFormat
+  * previousMonth
   *
   * @return DateInterface 
   */
   public function previousMonth():DateInterface;
 
   /*
-  * createFromFormat
+  * previousWeek
   *
   * @return DateInterface 
   */
   public function previousWeek():DateInterface;
 
   /*
-  * createFromFormat
+  * previousDay
   *
   * @return DateInterface 
   */
   public function previousDay():DateInterface;
 
   /*
-  * createFromFormat
+  * modify
   *
-  * @param string $format 
+  * @param string $modifir
   * @return DateInterface 
   */
-  public function modify(string $modifier):DateInterface;
+  public function modify(
+    string $modifier
+  ):DateInterface;
 
   /*
-  * createFromFormat
+  * firstDayOfMonth
   *
   * @return DateInterface 
   */
   public function firstDayOfMonth():DateInterface;
 
   /*
-  * createFromFormat
+  * lastDayOfMonth
   *
   * @return DateInterface 
   */
   public function lastDayOfMonth():DateInterface;
 
   /*
-  * createFromFormat
+  * eq
   *
-  * @param ?DateTimezoneInterface $timezone 
+  * @param DateInterface $datetime
   * @return DateInterface 
   */
   public function eq(
@@ -374,9 +384,9 @@ interface DateInterface extends DateTimeInterface
   ):bool;
 
   /*
-  * createFromFormat
+  * ne
   *
-  * @param ?DateTimezoneInterface $timezone 
+  * @param DateInterface $datetime
   * @return DateInterface 
   */
   public function ne(
@@ -384,9 +394,9 @@ interface DateInterface extends DateTimeInterface
   ):bool;
 
   /*
-  * createFromFormat
+  * gt
   *
-  * @param ?DateTimezoneInterface $timezone 
+  * @param DateInterface $datetime
   * @return DateInterface 
   */
   public function gt(
@@ -394,9 +404,9 @@ interface DateInterface extends DateTimeInterface
   ):bool;
 
   /*
-  * createFromFormat
+  * ge
   *
-  * @param ?DateTimezoneInterface $timezone 
+  * @param DateInterface $datetime
   * @return DateInterface 
   */
   public function ge(
@@ -404,9 +414,9 @@ interface DateInterface extends DateTimeInterface
   ):bool;
 
   /*
-  * createFromFormat
+  * lt
   *
-  * @param ?DateTimezoneInterface $timezone 
+  * @param DateInterface $datetime
   * @return DateInterface 
   */
   public function lt(
@@ -414,9 +424,9 @@ interface DateInterface extends DateTimeInterface
   ):bool;
 
   /*
-  * createFromFormat
+  * le
   *
-  * @param ?DateTimezoneInterface $timezone 
+  * @param DateInterface $datetime
   * @return DateInterface 
   */
   public function le(
@@ -424,65 +434,65 @@ interface DateInterface extends DateTimeInterface
   ):bool;
 
   /*
-  * createFromFormat
+  * toArray
   *
-  * @return DateInterface 
+  * @return array 
   */
   public function toArray():array;
 
   /*
-  * createFromFormat
+  * year
   *
-  * @return DateInterface 
+  * @return int 
   */
   public function year():int;
 
   /*
-  * createFromFormat
+  * month
   *
-  * @return DateInterface 
+  * @return int 
   */
   public function month():int;
 
   /*
-  * createFromFormat
+  * week
   *
-  * @return DateInterface 
+  * @return int 
   */
   public function week():int;
 
   /*
-  * createFromFormat
+  * day
   *
-  * @return DateInterface 
+  * @return int 
   */
   public function day():int;
 
   /*
-  * createFromFormat
+  * hour
   *
-  * @return DateInterface 
+  * @return hour 
   */
   public function hour():int;
 
   /*
-  * createFromFormat
+  * minute
   *
-  * @return DateInterface 
+  * @return int 
   */
   public function minute():int;
 
   /*
-  * createFromFormat
+  * second
   *
-  * @return DateInterface 
+  * @return int 
   */
   public function second():int;
 
   /*
-  * createFromFormat
+  * timezone
   *
-  * @return DateInterface 
+  * @return DateTimezoneInterface  
   */
   public function timezone():DateTimezoneInterface;
 
