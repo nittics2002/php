@@ -1,7 +1,7 @@
 <?php
 
 /**
-* DateInterface
+* DateObject
 *
 * @version 
 *
@@ -11,10 +11,56 @@ declare(strict_types=1);
 
 namespace Concerto\contract;
 
-use DateTimeInterface;
+use DateTimeImmutable;
+use InvalidArgumentException;
+use Concerto\contract\DateInterface;
 
-interface DateInterface extends DateTimeInterface
+class DateObject implements DateInterface 
 {
+
+  /*
+  * @var DateTimeInterface
+  */
+  protected DateTimeInterface $datetime;
+
+  /*
+  * @var int
+  */
+  protected static int $fiscal_start_month = 4;
+
+  /*
+  * __construct
+  *
+  * @param ?string $datetime 
+  * @param ?DateTimezoneInterface $timezone 
+  */
+  public static function __construct(
+    ?string $datetime = 'now',
+    ?DateTimezoneInterface $timezone = null
+  ){
+    $this->datetime = new DateTimeImmutable(
+      $datetime,
+      $timezone
+    );
+  }
+
+  /*
+  * setFiscalStartMonth
+  *
+  * @param int $month 
+  * @return DateInterface 
+  */
+  public function setFiscalStartMonth(
+    int $month  
+  ):DateInterface{
+      if ($month < 1 || $month > 12) {
+        throw new InvalidArgumentException(
+          "required 1 to 12"
+        );
+      }
+      $this->fiscal_start_month = $month;
+      return $this;
+  }
 
   /*
   * createFromFormat
@@ -28,49 +74,146 @@ interface DateInterface extends DateTimeInterface
     string $format,
     string $datetime,
     ?DateTimezoneInterface $timezone
-  ):DateInterface;
+  ):DateInterface{
+    if (mb_ereg_match('!', $format)) {
+      $format = "!{$format}";
+    }
+    
+    $this->datetime =
+      DateTimeImmutable::createFromFormat(
+        $format,
+        $datetime,
+        $timezone,
+    );
+    return $this;
+  }
 
   /*
   * now
   *
   * @return DateInterface 
   */
-  public static function now():DateInterface;
+  public static function now():DateInterface
+  {
+    return new self::__construct();
+  }
 
   /*
   * today
   *
   * @return DateInterface 
   */
-  public static function today():DateInterface;
+  public static function today():DateInterface
+  {
+    return new self::__construct(
+      'today'
+    );
+  }
 
   /*
   * yeasterday
   *
   * @return DateInterface 
   */
-  public static function yeasterday():DateInterface;
+  public static function yeasterday():DateInterface
+  {
+    return new self::__construct(
+      'yeasterday'
+    );
+  }
 
   /*
   * tomorrow
   *
   * @return DateInterface 
   */
-  public static function tomorrow():DateInterface;
+  public static function tomorrow():DateInterface
+  {
+    return new self::__construct(
+      'tomorrow'
+    );
+  }
+
+  /*
+  * createFiscalStartDate
+  *
+  * @param int $year
+  * @param ?int $month
+  * @return DateTimeInterface 
+  */
+  protected static function createFiscalStartDate(
+    int $year,
+    ?int $month = null
+  ):DateTimeInterface{
+    $month = $month?? self::$fiscal_start_month;
+
+    if ($month < 1 || $month > 12) {
+      throw new InvalidArgumentException(
+        "required 1 to 12"
+      );
+    }
+
+    if ($month < self::$fiscal_start_month) {
+      --$year;
+    } 
+    
+    return DateTimeImmutable::createFromFormat(
+      '!Y-n',
+      "{$year}-" . (string)self::$fiscal_start_month
+    );
+  }
+
+  /*
+  * thisFiscalYear
+  *
+  * @return DateInterface 
+  */
+  public static function thisFiscalYear():DateInterface
+  {
+    $today = self::today();
+    
+    return new self::__construct(
+      self::createFiscalStartDate(
+        (int)$today->format('Y'),
+        (int)$today->format('n'),
+      )
+    );
+  }
+
+  /*
+  * thisHalf
+  *
+  * @return DateInterface 
+  */
+  public static function thisHalf():DateInterface
+  {
+  }
+  
+  /*
+  * thisQuater
+  *
+  * @return DateInterface 
+  */
+  public static function thisQuater():DateInterface
+  {
+    return new self::__construct(
+      'tomorrow'
+    );
+  }
 
   /*
   * thisYear
   *
   * @return DateInterface 
   */
-  public static function thisYear():DateInterface;
+  public static function thisYear():DateInterface
 
   /*
   * thisMonth
   *
   * @return DateInterface 
   */
-  public static function thisMonth():DateInterface;
+  public static function thisMonth():DateInterface
 
   /*
   * add
@@ -80,7 +223,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function add(
     DateIntervalInterface $interval
-  ):DateInterface;
+  ):DateInterface
 
   /*
   * addContext
@@ -90,7 +233,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function addContext(
     string $datetime
-  ):DateInterface;
+  ):DateInterface
 
   /*
   * sub
@@ -100,7 +243,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function sub(
     DateIntervalInterface $interval
-  ):DateInterface;
+  ):DateInterface
 
   /*
   * subContext
@@ -110,7 +253,17 @@ interface DateInterface extends DateTimeInterface
   */
   public function subContext(
     string $datetime
-  ):DateInterface;
+  ):DateInterface
+
+  /*
+  * addQuaters
+  *
+  * @param ?int $quater
+  * @return DateInterface 
+  */
+  public function addQuaters(
+    ?int $quater
+  ):DateInterface
 
   /*
   * addYears
@@ -120,7 +273,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function addYears(
     ?int $year
-  ):DateInterface;
+  ):DateInterface
 
   /*
   * addMonths
@@ -130,7 +283,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function addMonths(
     ?int $month
-  ):DateInterface;
+  ):DateInterface
 
   /*
   * addWeeks
@@ -140,7 +293,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function addWeeks(
     ?int $week
-  ):DateInterface;
+  ):DateInterface
 
   /*
   * addDays
@@ -150,7 +303,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function addDays(
     ?int $day
-  ):DateInterface;
+  ):DateInterface
 
   /*
   * addHours
@@ -160,7 +313,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function addHours(
     ?int $hour
-  ):DateInterface;
+  ):DateInterface
 
   /*
   * addMinutes
@@ -170,7 +323,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function addMinutes(
     ?int $minute
-  ):DateInterface;
+  ):DateInterface
 
   /*
   * addSeconds
@@ -180,7 +333,17 @@ interface DateInterface extends DateTimeInterface
   */
   public function addSeconds(
     ?int $second
-  ):DateInterface;
+  ):DateInterface
+
+  /*
+  * subQuaters
+  *
+  * @param ?int $quater
+  * @return DateInterface 
+  */
+  public function subQuaters(
+    ?int $quater
+  ):DateInterface
 
   /*
   * subYears
@@ -190,7 +353,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function subYears(
     ?int $year
-  ):DateInterface;
+  ):DateInterface
 
   /*
   * subMonths
@@ -200,7 +363,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function subMonths(
     ?int $month
-  ):DateInterface;
+  ):DateInterface
 
   /*
   * subWeeks
@@ -210,7 +373,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function subWeeks(
     ?int $week
-  ):DateInterface;
+  ):DateInterface
 
   /*
   * subDays
@@ -220,7 +383,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function subDays(
     ?int $day
-  ):DateInterface;
+  ):DateInterface
 
   /*
   * subHours
@@ -230,7 +393,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function subHours(
     ?int $hour
-  ):DateInterface;
+  ):DateInterface
 
   /*
   * subMinutes
@@ -240,7 +403,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function subMinutes(
     ?int $minute
-  ):DateInterface;
+  ):DateInterface
 
   /*
   * subSeconds
@@ -250,63 +413,77 @@ interface DateInterface extends DateTimeInterface
   */
   public function subSeconds(
     ?int $second
-  ):DateInterface;
+  ):DateInterface
+
+  /*
+  * nextQuater
+  *
+  * @return DateInterface 
+  */
+  public function nextQuater():DateInterface
 
   /*
   * nextYear
   *
   * @return DateInterface 
   */
-  public function nextYear():DateInterface;
+  public function nextYear():DateInterface
 
   /*
   * nextMonth
   *
   * @return DateInterface 
   */
-  public function nextMonth():DateInterface;
+  public function nextMonth():DateInterface
 
   /*
   * nextWeek
   *
   * @return DateInterface 
   */
-  public function nextWeek():DateInterface;
+  public function nextWeek():DateInterface
 
   /*
   * nextDay
   *
   * @return DateInterface 
   */
-  public function nextDay():DateInterface;
+  public function nextDay():DateInterface
+
+  /*
+  * previousQuater
+  *
+  * @return DateInterface 
+  */
+  public function previousQuater():DateInterface
 
   /*
   * previousYear
   *
   * @return DateInterface 
   */
-  public function previousYear():DateInterface;
+  public function previousYear():DateInterface
 
   /*
   * previousMonth
   *
   * @return DateInterface 
   */
-  public function previousMonth():DateInterface;
+  public function previousMonth():DateInterface
 
   /*
   * previousWeek
   *
   * @return DateInterface 
   */
-  public function previousWeek():DateInterface;
+  public function previousWeek():DateInterface
 
   /*
   * previousDay
   *
   * @return DateInterface 
   */
-  public function previousDay():DateInterface;
+  public function previousDay():DateInterface
 
   /*
   * modify
@@ -316,21 +493,21 @@ interface DateInterface extends DateTimeInterface
   */
   public function modify(
     string $modifier
-  ):DateInterface;
+  ):DateInterface
 
   /*
   * firstDayOfMonth
   *
   * @return DateInterface 
   */
-  public function firstDayOfMonth():DateInterface;
+  public function firstDayOfMonth():DateInterface
 
   /*
   * lastDayOfMonth
   *
   * @return DateInterface 
   */
-  public function lastDayOfMonth():DateInterface;
+  public function lastDayOfMonth():DateInterface
 
   /*
   * eq
@@ -340,7 +517,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function eq(
     DateInterface $datetime
-  ):bool;
+  ):bool
 
   /*
   * ne
@@ -350,7 +527,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function ne(
     DateInterface $datetime
-  ):bool;
+  ):bool
 
   /*
   * gt
@@ -360,7 +537,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function gt(
     DateInterface $datetime
-  ):bool;
+  ):bool
 
   /*
   * ge
@@ -370,7 +547,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function ge(
     DateInterface $datetime
-  ):bool;
+  ):bool
 
   /*
   * lt
@@ -380,7 +557,7 @@ interface DateInterface extends DateTimeInterface
   */
   public function lt(
     DateInterface $datetime
-  ):bool;
+  ):bool
 
   /*
   * le
@@ -390,76 +567,80 @@ interface DateInterface extends DateTimeInterface
   */
   public function le(
     DateInterface $datetime
-  ):bool;
+  ):bool
 
   /*
   * toArray
   *
   * @return array 
   */
-  public function toArray():array;
+  public function toArray():array
 
   /*
   * year
   *
   * @return int 
   */
-  public function year():int;
+  public function year():int
 
   /*
   * month
   *
   * @return int 
   */
-  public function month():int;
+  public function month():int
 
   /*
   * week
   *
   * @return int 
   */
-  public function week():int;
+  public function week():int
 
   /*
   * day
   *
   * @return int 
   */
-  public function day():int;
+  public function day():int
 
   /*
   * hour
   *
   * @return hour 
   */
-  public function hour():int;
+  public function hour():int
 
   /*
   * minute
   *
   * @return int 
   */
-  public function minute():int;
+  public function minute():int
 
   /*
   * second
   *
   * @return int 
   */
-  public function second():int;
+  public function second():int
 
   /*
   * timezone
   *
   * @return DateTimezoneInterface  
   */
-  public function timezone():DateTimezoneInterface;
+  public function timezone():DateTimezoneInterface
 
   /*
   * unixtime
   *
   * @return int 
   */
-  public function unixtime():int;
+  public function unixtime():int
+  {
+
+
+  }
 
 } 
