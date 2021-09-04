@@ -1,32 +1,293 @@
 <?php
 
-namespace Concerto\delegator;
+/**
+* DateInterface
+*
+* @version 
+*
+*/
 
+declare(strict_types=1);
+
+namespace Concerto\delegator;
 
 interface StringInterface
 {
-  public static function lower(string $text):string;
-  public static function upper(string $text):string;
-  public static function title(string $text):string;
-  public static function study(string $text):string;
-  public static function camel(string $text):string;
-  public static function snake(string $text):string;
-  public static function kana(string $text string $mode):string;
-  public static function length(string $text):int;
-  public static function width(string $text):int;
-  public static function trim(string $text):string;
-  public static function insert(string $text, string $insert, int $offset):string;
-  public static function delete(string $text, int $offset, int $length):string;
-  public static function encode(string $text, string $code):string;
-  public static function match(string $text, string $pattern, ?string $option):bool;
-  public static function matchAll(string $text, string $pattern, ?string $option):array;
-  public static function implode(array $array, string $separator):string;
-  public static function explode(string $text, string $separator):array;
-  public static function replace(string $text, string $pattern, string $replacement, ?string $option):string;
-  public static function splice(string $text, int $offset, ?int $length, ?string $replacement):string;
-  public static function substr(string $text, int $start, int $length):string;
-  public static function split(string $text, int $length):array;
-  public static function search(string $text, string $pattern, ?string $option):array;
-  public static function isEmpty(string $text):bool;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @return DateInterface 
+  */
+  public static function lower(
+    string $text
+  ):string;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @return DateInterface 
+  */
+  public static function upper(
+    string $text
+  ):string;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @return DateInterface 
+  */
+  public static function title(
+    string $text
+  ):string;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @return DateInterface 
+  */
+  public static function study(
+    string $text
+  ):string;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @return DateInterface 
+  */
+  public static function camel(
+    string $text
+  ):string;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @return DateInterface 
+  */
+  public static function snake(
+    string $text
+  ):string;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @param string $datetime 
+  * @return DateInterface 
+  */
+  public static function kana(
+    string $text,
+    string $mode
+  ):string;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @return DateInterface 
+  */
+  public static function length(
+    string $text
+  ):int;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @return DateInterface 
+  */
+  public static function width(
+    string $text
+  ):int;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @return DateInterface 
+  */
+  public static function trim(
+    string $text
+  ):string;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @param string $datetime 
+  * @param ?DateTimezoneInterface $timezone 
+  * @return DateInterface 
+  */
+  public static function insert(
+    string $text,
+    string $insert,
+    int $offset
+  ):string;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @param string $datetime 
+  * @param ?DateTimezoneInterface $timezone 
+  * @return DateInterface 
+  */
+  public static function delete(
+    string $text,
+    int $offset,
+    int $length
+  ):string;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @param string $datetime 
+  * @return DateInterface 
+  */
+  public static function encode(
+    string $text,
+    string $code
+  ):string;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @param string $datetime 
+  * @param ?DateTimezoneInterface $timezone 
+  * @return DateInterface 
+  */
+  public static function match(
+    string $text,
+    string $pattern,
+    ?string $option
+  ):bool;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @param string $datetime 
+  * @param ?DateTimezoneInterface $timezone 
+  * @return DateInterface 
+  */
+  public static function matchAll(
+    string $text,
+    string $pattern,
+    ?string $option
+  ):array;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @param string $datetime 
+  * @return DateInterface 
+  */
+  public static function implode(
+    array $array,
+    string $separator
+  ):string;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @param string $datetime 
+  * @return DateInterface 
+  */
+  public static function explode(
+    string $text,
+    string $separator
+  ):array;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @param string $datetime 
+  * @param ?DateTimezoneInterface $timezone 
+  * @param string $datetime 
+  * @return DateInterface 
+  */
+  public static function replace(
+    string $text,
+    string $pattern,
+    string $replacement,
+    ?string $option
+  ):string;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @param string $datetime 
+  * @param string $datetime 
+  * @param ?DateTimezoneInterface $timezone 
+  * @return DateInterface 
+  */
+  public static function splice(
+    string $text,
+    int $offset,
+    ?int $length,
+    ?string $replacement
+  ):string;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @param string $datetime 
+  * @param ?DateTimezoneInterface $timezone 
+  * @return DateInterface 
+  */
+  public static function substr(
+    string $text,
+    int $start,
+    int $length
+  ):string;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @param string $datetime 
+  * @return DateInterface 
+  */
+  public static function split(
+    string $text,
+    int $length
+  ):array;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @param string $datetime 
+  * @param ?DateTimezoneInterface $timezone 
+  * @return DateInterface 
+  */
+  public static function search(
+    string $text,
+    string $pattern,
+    ?string $option
+  ):array;
+
+  /*
+  * createFromFormat
+  *
+  * @param string $format 
+  * @return DateInterface 
+  */
+  public static function isEmpty(
+    string $text
+  ):bool;
 
 } 
