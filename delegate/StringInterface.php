@@ -15,71 +15,71 @@ interface StringInterface
 {
 
   /*
-  * createFromFormat
+  * lower
   *
-  * @param string $format 
-  * @return DateInterface 
+  * @param string $text 
+  * @return string 
   */
   public static function lower(
     string $text
   ):string;
 
   /*
-  * createFromFormat
+  * upper
   *
-  * @param string $format 
-  * @return DateInterface 
+  * @param string $text 
+  * @return string 
   */
   public static function upper(
     string $text
   ):string;
 
   /*
-  * createFromFormat
+  * title
   *
-  * @param string $format 
-  * @return DateInterface 
+  * @param string $text 
+  * @return string 
   */
   public static function title(
     string $text
   ):string;
 
   /*
-  * createFromFormat
+  * study
   *
-  * @param string $format 
-  * @return DateInterface 
+  * @param string $text 
+  * @return string 
   */
   public static function study(
     string $text
   ):string;
 
   /*
-  * createFromFormat
+  * camel
   *
-  * @param string $format 
-  * @return DateInterface 
+  * @param string $text 
+  * @return string 
   */
   public static function camel(
     string $text
   ):string;
 
   /*
-  * createFromFormat
+  * snake
   *
-  * @param string $format 
-  * @return DateInterface 
+  * @param string $text 
+  * @return string 
   */
   public static function snake(
     string $text
   ):string;
 
   /*
-  * createFromFormat
+  * kana
   *
-  * @param string $format 
-  * @param string $datetime 
-  * @return DateInterface 
+  * @param string $text 
+  * @param string $mode 
+  * @return string 
   */
   public static function kana(
     string $text,
@@ -87,42 +87,42 @@ interface StringInterface
   ):string;
 
   /*
-  * createFromFormat
+  * length
   *
-  * @param string $format 
-  * @return DateInterface 
+  * @param string $text 
+  * @return int 
   */
   public static function length(
     string $text
   ):int;
 
   /*
-  * createFromFormat
+  * width
   *
-  * @param string $format 
-  * @return DateInterface 
+  * @param string $text 
+  * @return int 
   */
   public static function width(
     string $text
   ):int;
 
   /*
-  * createFromFormat
+  * trim
   *
-  * @param string $format 
-  * @return DateInterface 
+  * @param string $text 
+  * @return string 
   */
   public static function trim(
     string $text
   ):string;
 
   /*
-  * createFromFormat
+  * insert
   *
-  * @param string $format 
-  * @param string $datetime 
-  * @param ?DateTimezoneInterface $timezone 
-  * @return DateInterface 
+  * @param string $text 
+  * @param string $insert 
+  * @param int $offset 
+  * @return string 
   */
   public static function insert(
     string $text,
@@ -131,12 +131,12 @@ interface StringInterface
   ):string;
 
   /*
-  * createFromFormat
+  * delete
   *
-  * @param string $format 
-  * @param string $datetime 
-  * @param ?DateTimezoneInterface $timezone 
-  * @return DateInterface 
+  * @param string $text 
+  * @param ?int $offset 
+  * @param ?int $length 
+  * @return string 
   */
   public static function delete(
     string $text,
@@ -145,11 +145,11 @@ interface StringInterface
   ):string;
 
   /*
-  * createFromFormat
+  * encode
   *
-  * @param string $format 
-  * @param string $datetime 
-  * @return DateInterface 
+  * @param string $text 
+  * @param string $code 
+  * @return string 
   */
   public static function encode(
     string $text,
@@ -157,12 +157,12 @@ interface StringInterface
   ):string;
 
   /*
-  * createFromFormat
+  * match
   *
-  * @param string $format 
-  * @param string $datetime 
-  * @param ?DateTimezoneInterface $timezone 
-  * @return DateInterface 
+  * @param string $text 
+  * @param string $pattern 
+  * @param ?string $option 
+  * @return bool 
   */
   public static function match(
     string $text,
@@ -171,12 +171,12 @@ interface StringInterface
   ):bool;
 
   /*
-  * createFromFormat
+  * matchAll
   *
-  * @param string $format 
-  * @param string $datetime 
-  * @param ?DateTimezoneInterface $timezone 
-  * @return DateInterface 
+  * @param string $text 
+  * @param string $pattern 
+  * @param ?string $option 
+  * @return array 
   */
   public static function matchAll(
     string $text,
@@ -185,11 +185,11 @@ interface StringInterface
   ):array;
 
   /*
-  * createFromFormat
+  * implode
   *
-  * @param string $format 
-  * @param string $datetime 
-  * @return DateInterface 
+  * @param string $text 
+  * @param string $separator 
+  * @return string 
   */
   public static function implode(
     array $array,
@@ -197,11 +197,11 @@ interface StringInterface
   ):string;
 
   /*
-  * createFromFormat
+  * explode
   *
-  * @param string $format 
-  * @param string $datetime 
-  * @return DateInterface 
+  * @param string $text 
+  * @param string $separator 
+  * @return array 
   */
   public static function explode(
     string $text,
@@ -209,13 +209,13 @@ interface StringInterface
   ):array;
 
   /*
-  * createFromFormat
+  * replace
   *
-  * @param string $format 
-  * @param string $datetime 
-  * @param ?DateTimezoneInterface $timezone 
-  * @param string $datetime 
-  * @return DateInterface 
+  * @param string $text 
+  * @param string $pattern 
+  * @param string $replacement 
+  * @param ?string $option 
+  * @return string 
   */
   public static function replace(
     string $text,
@@ -225,13 +225,13 @@ interface StringInterface
   ):string;
 
   /*
-  * createFromFormat
+  * split
   *
-  * @param string $format 
-  * @param string $datetime 
-  * @param string $datetime 
-  * @param ?DateTimezoneInterface $timezone 
-  * @return DateInterface 
+  * @param string $text 
+  * @param int $offset 
+  * @param ?iint $length 
+  * @param ?string $replacement 
+  * @return string 
   */
   public static function splice(
     string $text,
@@ -241,50 +241,50 @@ interface StringInterface
   ):string;
 
   /*
-  * createFromFormat
+  * substr
   *
-  * @param string $format 
-  * @param string $datetime 
-  * @param ?DateTimezoneInterface $timezone 
-  * @return DateInterface 
+  * @param string $text 
+  * @param int $start
+  * @param ?int $length
+  * @return string 
   */
   public static function substr(
     string $text,
     int $start,
-    int $length
+    ?int $length = null
   ):string;
 
   /*
-  * createFromFormat
+  * split
   *
-  * @param string $format 
-  * @param string $datetime 
-  * @return DateInterface 
+  * @param string $text 
+  * @param ?int $length
+  * @return array 
   */
   public static function split(
     string $text,
-    int $length
+    ?int $length = null
   ):array;
 
   /*
-  * createFromFormat
+  * search
   *
-  * @param string $format 
-  * @param string $datetime 
-  * @param ?DateTimezoneInterface $timezone 
-  * @return DateInterface 
+  * @param string $text 
+  * @param string $pattern 
+  * @param ?string $option 
+  * @return array 
   */
   public static function search(
     string $text,
     string $pattern,
-    ?string $option
+    ?string $option = null
   ):array;
 
   /*
-  * createFromFormat
+  * isEmpty
   *
-  * @param string $format 
-  * @return DateInterface 
+  * @param string $text 
+  * @return bool 
   */
   public static function isEmpty(
     string $text
