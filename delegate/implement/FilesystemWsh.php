@@ -262,10 +262,10 @@ class FilesystemWsh implements FilesystemInterface
   */
   public static function isAbsolutePath(
     string $file
-  ):void {
-
-
-
+  ):bool {
+    $com = self::createFsoComObject();
+    return $com->GetAbsolutePathName($file) ===
+      $file;
   }
 
   /*
@@ -281,18 +281,17 @@ class FilesystemWsh implements FilesystemInterface
     ?string $prefix = '',
     ?string $suffix = ''
   ):string {
-    $tempfile = new SplTempFileObject();
-    $extension = $tempfile->getExtension();
-    mb_substr($dir, -1, 1)
+    $com = self::createFsoComObject();
+    $temp_name = $com->GetTempName();
 
     return
       $dir .
       mb_substr($dir, -1, 1) === DIRECTORY_SEPARATOR?
         '':DIRECTORY_SEPARATOR .
       $prefix .
-      $tempfile->getBaseName() .
+      $com->GetBaseName($temp_name) .
       $suffix .
-      $extension === ''? '':".{$extension}";
+      $com->GetExtension($temp_name);
   } 
 
   /*
