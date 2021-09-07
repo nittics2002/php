@@ -46,7 +46,7 @@ interface FilesystemInterface
   */
   public static function exists(
     string $file
-  );
+  ):bool;
 
   /*
   * touch
@@ -54,23 +54,23 @@ interface FilesystemInterface
   * @param string $file
   * @param ?int $time
   * @param ?int $atime
-  * @return string
+  * @return void
   */
   public static function touch(
     string $file,
     ?int $time = null,
     ?int $atime = null
-  ):string;
+  ):void;
 
   /*
   * remove
   *
   * @param string $file
-  * @return string
+  * @return void
   */
   public static function remove(
     string $file
-  ):string;
+  ):void;
 
   /*
   * chmod
@@ -121,14 +121,12 @@ interface FilesystemInterface
   *
   * @param string $origin
   * @param string $target
-  * @param bool $overwrite
-  * @return string
+  * @return void
   */
   public static function rename(
     string $origin,
     string $target,
-    bool $overwrite = false
-  ):string;
+  ):void;
 
   /*
   * symlink
@@ -146,11 +144,11 @@ interface FilesystemInterface
   * readlink
   *
   * @param string $path
-  * @return string
+  * @return bool
   */
   public static function readlink(
     string $path
-  ):string;
+  ):bool;
 
   /*
   * realpath

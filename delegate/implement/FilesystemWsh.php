@@ -9,7 +9,9 @@
 
 declare(strict_types=1);
 
-use FilesystemInterface;
+use COM;
+use RuntimeException;
+use Concerto\aaa\FilesystemInterface;
 
 class FilesystemWsh implements FilesystemInterface
 {
@@ -27,6 +29,13 @@ class FilesystemWsh implements FilesystemInterface
     string $targetFile,
     ?bool $overwriteNewerFiles = false
   ):void {
+    $com = self::createFsoComObject();
+    $com->CopyFile(
+      $originFile,
+      $targetFile,
+      $overwriteNewerFiles,
+    );
+  }
 
   /*
   * mkdir
@@ -39,16 +48,51 @@ class FilesystemWsh implements FilesystemInterface
     string $dirs,
     string|int|null $mode = 0777
   ):void {
+    $com = self::createFsoComObject();
+    $com->CreateFolder(
+      $dirs,
+    );
+  }
 
   /*
   * exists
   *
   * @param string $file
-  * @return
+  * @return bool
   */
   public static function exists(
     string $file
-  );
+  ):bool{
+    $com = self::createFsoComObject();
+    return $this->existsFolder($file) ||
+      $this->existsFile($file);
+  }
+
+  /*
+  * existsFolder
+  *
+  * @param string $path
+  * @return bool
+  */
+  private static function existsFolder(
+    string $path
+  ):bool{
+    $com = self::createFsoComObject();
+    return $com->FolderExists($path);
+  }
+
+  /*
+  * existsFile
+  *
+  * @param string $path
+  * @return bool
+  */
+  private static function existsFile(
+    string $path
+  ):bool{
+    $com = self::createFsoComObject();
+    return $com->FileExists($path);
+  }
 
   /*
   * touch
@@ -56,23 +100,35 @@ class FilesystemWsh implements FilesystemInterface
   * @param string $file
   * @param ?int $time
   * @param ?int $atime
-  * @return string
+  * @return void
   */
   public static function touch(
     string $file,
     ?int $time = null,
     ?int $atime = null
-  ):string {
+  ):void {
+    throw new RuntimeException(
+      "not supported"
+    );
+  }
 
   /*
   * remove
   *
   * @param string $file
-  * @return string
+  * @return void
   */
   public static function remove(
     string $file
-  ):string {
+  ):void {
+    $com = self::createFsoComObject();
+    
+    if ($this->existsFolder($file)) {
+      $com->DeleteFolder($file);
+    } else {
+      $com->DeleteFile($file);
+    }
+  }
 
   /*
   * chmod
@@ -89,6 +145,10 @@ class FilesystemWsh implements FilesystemInterface
     ?int $umask = 0000,
     ?bool $recursive = false
   ):void {
+    throw new RuntimeException(
+      "not supported"
+    );
+  }
 
   /*
   * chown
@@ -103,6 +163,10 @@ class FilesystemWsh implements FilesystemInterface
     string $user,
     bool $recursive = false
   ):void {
+    throw new RuntimeException(
+      "not supported"
+    );
+  }
 
   /*
   * chgrp
@@ -117,6 +181,10 @@ class FilesystemWsh implements FilesystemInterface
     string|int $group,
     bool $recursive = false
   ):void {
+    throw new RuntimeException(
+      "not supported"
+    );
+  }
 
   /*
   * rename
@@ -124,13 +192,19 @@ class FilesystemWsh implements FilesystemInterface
   * @param string $origin
   * @param string $target
   * @param bool $overwrite
-  * @return string
+  * @return void
   */
   public static function rename(
     string $origin,
     string $target,
     bool $overwrite = false
-  ):string {
+  ):void {
+    $com = self::createFsoComObject();
+    $com->MoveFile(
+      $origin,
+      $target,
+    );
+  }
 
   /*
   * symlink
@@ -188,7 +262,7 @@ class FilesystemWsh implements FilesystemInterface
   */
   public static function isAbsolutePath(
     string $file
-  ):boid {
+  ):void {
 
 
 
@@ -222,20 +296,15 @@ class FilesystemWsh implements FilesystemInterface
   } 
 
   /*
-  * tempnam
+  * createFsoComObject
   *
-  * @param string $dir,
-  * @param ?string $prefix
-  * @param ?string $suffix
-  * @return string
+  * @return COM
   */
   protected static function createFsoComObject(
-
-  ) {
-    $com = new COM(
+  ):COM {
+    return new COM(
       'Scripting.FileSystemObject',
     );
-
   }
 
 }
