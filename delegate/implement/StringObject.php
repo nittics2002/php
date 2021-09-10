@@ -1,7 +1,7 @@
 <?php
 
 /**
-* DateInterface
+* StringObject
 *
 * @version 
 *
@@ -11,121 +11,136 @@ declare(strict_types=1);
 
 namespace Concerto\delegator;
 
-interface StringInterface
+use InvalidArgumentException;
+
+class StringObject
 {
 
   /*
   * lower
   *
-  * @param string $text 
+  * @param string $string 
   * @return string 
   */
   public static function lower(
-    string $text
-  ):string;
+    string $string
+  ):string{
+    return mb_strtolower($string);
+  }
 
   /*
   * upper
   *
-  * @param string $text 
+  * @param string $string 
   * @return string 
   */
   public static function upper(
-    string $text
-  ):string;
+    string $string
+  ):string{
+    return mb_strtoupper($string);
+  }
 
   /*
   * title
   *
-  * @param string $text 
+  * @param string $string 
   * @return string 
   */
   public static function title(
-    string $text
+    string $string
   ):string;
 
   /*
   * study
   *
-  * @param string $text 
+  * @param string $string 
   * @return string 
   */
   public static function study(
-    string $text
+    string $string
   ):string;
 
   /*
   * camel
   *
-  * @param string $text 
+  * @param string $string 
   * @return string 
   */
   public static function camel(
-    string $text
+    string $string
   ):string;
 
   /*
   * snake
   *
-  * @param string $text 
+  * @param string $string 
   * @return string 
   */
   public static function snake(
-    string $text
+    string $string
   ):string;
 
   /*
   * kana
   *
-  * @param string $text 
+  * @param string $string 
   * @param string $mode 
   * @return string 
   */
   public static function kana(
-    string $text,
+    string $string,
     string $mode
-  ):string;
+  ):string{
+    return mb_convert_kana(
+      $string,
+      $mode,
+    );
+  }
 
   /*
   * length
   *
-  * @param string $text 
+  * @param string $string 
   * @return int 
   */
   public static function length(
-    string $text
-  ):int;
+    string $string
+  ):int{
+    return mb_strlen($string);
+  }
 
   /*
   * width
   *
-  * @param string $text 
+  * @param string $string 
   * @return int 
   */
   public static function width(
-    string $text
-  ):int;
+    string $string
+  ):int{
+    return mb_strwidth($string);
+  }
 
   /*
   * trim
   *
-  * @param string $text 
+  * @param string $string 
   * @return string 
   */
   public static function trim(
-    string $text
+    string $string
   ):string;
 
   /*
   * insert
   *
-  * @param string $text 
+  * @param string $string 
   * @param string $insert 
   * @param int $offset 
   * @return string 
   */
   public static function insert(
-    string $text,
+    string $string,
     string $insert,
     int $offset
   ):string;
@@ -133,13 +148,13 @@ interface StringInterface
   /*
   * delete
   *
-  * @param string $text 
+  * @param string $string 
   * @param ?int $offset 
   * @param ?int $length 
   * @return string 
   */
   public static function delete(
-    string $text,
+    string $string,
     int $offset,
     int $length
   ):string;
@@ -147,47 +162,90 @@ interface StringInterface
   /*
   * encode
   *
-  * @param string $text 
-  * @param string $code 
+  * @param string $string 
+  * @param string $to_encoding 
+  * @param string $from_encoding 
   * @return string 
   */
   public static function encode(
-    string $text,
-    string $code
-  ):string;
+    string $string,
+    string $to_encoding
+    ?string $from_encoding,
+  ):string {
+    $result = mb_convert_encoding(
+      $string,
+      $to_encoding
+      $from_encoding,
+    );
+    if ($result === false) {
+      throw new InvalidArgumentException(
+        "encode error"
+      );
+    }
+    return $result;
+  }
 
   /*
   * match
   *
-  * @param string $text 
+  * @param string $string 
   * @param string $pattern 
   * @param ?string $option 
   * @return bool 
   */
   public static function match(
-    string $text,
+    string $string,
     string $pattern,
     ?string $option
-  ):bool;
+  ):bool{
+    return mb_ereg_match(
+      $pattern,
+      $string,
+      $option,
+    );
+  }
 
   /*
   * matchAll
   *
-  * @param string $text 
+  * @param string $string 
   * @param string $pattern 
   * @param ?string $option 
   * @return array 
   */
   public static function matchAll(
-    string $text,
+    string $string,
     string $pattern,
     ?string $option
-  ):array;
+  ):array{
+    $result = mb_ereg_search_init(
+      $string,
+      $pattern,
+      $option,
+    );
+
+    if ($result === false) {
+      throw new InvalidArgumentException(
+        "matchAll init error"
+      );
+    }
+
+    $length = static::length(
+      $string
+    );
+
+    while(
+      ($result = 
+
+
+
+
+
 
   /*
   * implode
   *
-  * @param string $text 
+  * @param string $string 
   * @param string $separator 
   * @return string 
   */
@@ -199,42 +257,62 @@ interface StringInterface
   /*
   * explode
   *
-  * @param string $text 
+  * @param string $string 
   * @param string $separator 
   * @return array 
   */
   public static function explode(
-    string $text,
+    string $string,
     string $separator
   ):array;
 
   /*
   * replace
   *
-  * @param string $text 
+  * @param string $string 
   * @param string $pattern 
   * @param string $replacement 
   * @param ?string $option 
   * @return string 
   */
   public static function replace(
-    string $text,
+    string $string,
     string $pattern,
     string $replacement,
     ?string $option
-  ):string;
+  ):string{
+    $result = mb_ereg_replace(
+      $pattern,
+      $replacement,
+      $string,
+      $option,
+    );
+
+    if ($result === false) {
+      throw new InvalidArgumentException(
+        "replace error"
+      );
+    }
+
+    if ($result === null) {
+      throw new InvalidArgumentException(
+        "encoding error"
+      );
+    }
+    return $result;
+  }
 
   /*
   * split
   *
-  * @param string $text 
+  * @param string $string 
   * @param int $offset 
   * @param ?iint $length 
   * @param ?string $replacement 
   * @return string 
   */
   public static function splice(
-    string $text,
+    string $string,
     int $offset,
     ?int $length,
     ?string $replacement
@@ -243,39 +321,57 @@ interface StringInterface
   /*
   * substr
   *
-  * @param string $text 
+  * @param string $string 
   * @param int $start
   * @param ?int $length
   * @return string 
   */
   public static function substr(
-    string $text,
+    string $string,
     int $start,
     ?int $length = null
-  ):string;
+  ):string{
+    return mb_substr(
+      $string,
+      $start,
+      $length,
+    );
+  }
 
   /*
   * split
   *
-  * @param string $text 
+  * @param string $string 
   * @param ?int $length
   * @return array 
   */
   public static function split(
-    string $text,
+    string $string,
     ?int $length = null
-  ):array;
+  ):array{
+    $result = mb_split(
+      $string,
+      $length,
+    );
+
+    if ($result === false){
+      throw new InvalidArgumentException(
+        "sprit error"
+      );
+    }
+    return $result;
+  }
 
   /*
   * search
   *
-  * @param string $text 
+  * @param string $string 
   * @param string $pattern 
   * @param ?string $option 
   * @return array 
   */
   public static function search(
-    string $text,
+    string $string,
     string $pattern,
     ?string $option = null
   ):array;
@@ -283,11 +379,11 @@ interface StringInterface
   /*
   * isEmpty
   *
-  * @param string $text 
+  * @param string $string 
   * @return bool 
   */
   public static function isEmpty(
-    string $text
+    string $string
   ):bool;
 
 } 
