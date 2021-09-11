@@ -48,7 +48,12 @@ class StringObject
   */
   public static function title(
     string $string
-  ):string;
+  ):string {
+    return mb_convert_case(
+      $string,
+      MB_CASE_TITLE
+    );
+  }
 
   /*
   * study
@@ -240,14 +245,21 @@ class StringObject
   /*
   * implode
   *
-  * @param string $string 
+  * @param array $arry
   * @param string $separator 
   * @return string 
   */
   public static function implode(
     array $array,
     string $separator
-  ):string;
+  ):string{
+    $result = array_shift($array);
+
+    foreach($array as $string) {
+      $result .= "{$separator}{$string}";
+    }
+    return $result;
+  }
 
   /*
   * explode
@@ -259,7 +271,12 @@ class StringObject
   public static function explode(
     string $string,
     string $separator
-  ):array;
+  ):array{
+    return static::split(
+      $string,
+      $separator,
+    );
+  }
 
   /*
   * replace
@@ -298,7 +315,7 @@ class StringObject
   }
 
   /*
-  * split
+  * splice
   *
   * @param string $string 
   * @param int $offset 
@@ -337,16 +354,16 @@ class StringObject
   * split
   *
   * @param string $string 
-  * @param ?int $length
+  * @param string $pattern
   * @return array 
   */
   public static function split(
     string $string,
-    ?int $length = null
+    string $pattern
   ):array{
     $result = mb_split(
       $string,
-      $length,
+      $pattern,
     );
 
     if ($result === false){
