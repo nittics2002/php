@@ -12,10 +12,10 @@ declare(strict_types=1);
 namespace Concerto\delegator;
 
 use InvalidArgumentException;
+use RuntimeException;
 
 class StringObject
 {
-
   /*
   * lower
   *
@@ -216,31 +216,26 @@ class StringObject
   public static function matchAll(
     string $string,
     string $pattern,
-    ?string $option
+    ?string $option = 'msr',
   ):array{
-    $result = mb_ereg_search_init(
-      $string,
-      $pattern,
-      $option,
-    );
-
-    if ($result === false) {
+    if (!mb_ereg_search_init($string, $pattern, $options)) {
       throw new InvalidArgumentException(
         "matchAll init error"
       );
     }
 
-    $length = static::length(
-      $string
-    );
-
-    while(
-      ($result = 
-
-
-
-
-
+    if (!mb_ereg_search_setpos(0)) {
+      throw new InvalidArgumentException(
+        "matchAll position error"
+      );
+   }
+   
+   $matches = [];
+   while(($regs = mb_ereg_search_regs()) !== false) {
+     $matches[] = $regs;
+   }
+   return $matches;
+ }
 
   /*
   * implode
