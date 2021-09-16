@@ -3,7 +3,7 @@
 /**
 * DatePeriodInterface
 *
-* @version 
+* @version
 *
 */
 
@@ -17,32 +17,31 @@ use DateIntervalInterface;
 interface DatePeriodInterface
 {
 
-  /*
-  * interval
-  *
-  * @return DateIntervalInterface 
-  */
-  public function interval():DateIntervalInterface;
+    /*
+    * interval
+    *
+    * @return DateIntervalInterface
+    */
+    public function interval(): DateIntervalInterface;
 
-  /*
-  * startDate
-  *
-  * @return DateInterface 
-  */
-  public function startDate():DateInterface;
+    /*
+    * startDate
+    *
+    * @return DateInterface
+    */
+    public function startDate(): DateInterface;
 
-  /*
-  * endDate
-  *
-  * @return DateInterface 
-  */
-  public function endDate():DateInterface;
+    /*
+    * endDate
+    *
+    * @return DateInterface
+    */
+    public function endDate(): DateInterface;
 
-  /*
-  * recurrences
-  *
-  * @return int 
-  */
-  public function recurrences():?int;
-
-} 
+    /*
+    * recurrences
+    *
+    * @return int
+    */
+    public function recurrences(): ?int;
+}
