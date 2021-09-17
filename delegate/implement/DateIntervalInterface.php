@@ -1,9 +1,9 @@
 <?php
 
 /**
-* DateIntervalInterface
+*   DateIntervalInterface
 *
-* @version
+*   @version
 *
 */
 
@@ -15,20 +15,20 @@ interface DateIntervalInterface
 {
 
   /*
-  * createFromDateString
+  *   createFromDateString
   *
-  * @param string $datetime
-  * @return DateIntervalInterface
+  *   @param string $datetime
+  *   @return DateIntervalInterface
   */
     public static function createFromDateString(
         string $datetime
     ): DateIntervalInterface;
 
   /*
-  * format
+  *   format
   *
-  * @param string $format
-  * @return string
+  *   @param string $format
+  *   @return string
   */
     public function format(
         string $format

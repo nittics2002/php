@@ -1,9 +1,9 @@
 <?php
 
 /**
-* DatePeriodInterface
+*   DatePeriodInterface
 *
-* @version
+*   @version
 *
 */
 
@@ -18,30 +18,30 @@ interface DatePeriodInterface
 {
 
     /*
-    * interval
+    *   interval
     *
-    * @return DateIntervalInterface
+    *   @return DateIntervalInterface
     */
     public function interval(): DateIntervalInterface;
 
     /*
-    * startDate
+    *   startDate
     *
-    * @return DateInterface
+    *   @return DateInterface
     */
     public function startDate(): DateInterface;
 
     /*
-    * endDate
+    *   endDate
     *
-    * @return DateInterface
+    *   @return DateInterface
     */
     public function endDate(): DateInterface;
 
     /*
-    * recurrences
+    *   recurrences
     *
-    * @return int
+    *   @return int
     */
     public function recurrences(): ?int;
 }

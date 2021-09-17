@@ -1,9 +1,9 @@
 <?php
 
 /**
-* FilesystemInterface
+*   FilesystemInterface
 *
-* @version
+*   @version
 *
 */
 
@@ -13,12 +13,12 @@ interface FilesystemInterface
 {
 
     /*
-    * copy
+    *   copy
     *
-    * @param string $originFile
-    * @param string $targetFile
-    * @param ?bool $overwriteNewerFiles
-    * @return void
+    *   @param string $originFile
+    *   @param string $targetFile
+    *   @param ?bool $overwriteNewerFiles
+    *   @return void
     */
     public static function copy(
         string $originFile,
@@ -27,11 +27,11 @@ interface FilesystemInterface
     ): void;
 
     /*
-    * mkdir
+    *   mkdir
     *
-    * @param string $dirs
-    * @param string|int|null $mode
-    * @return void
+    *   @param string $dirs
+    *   @param string|int|null $mode
+    *   @return void
     */
     public static function mkdir(
         string $dirs,
@@ -39,22 +39,22 @@ interface FilesystemInterface
     ): void;
 
     /*
-    * exists
+    *   exists
     *
-    * @param string $file
-    * @return
+    *   @param string $file
+    *   @return
     */
     public static function exists(
         string $file
     );
 
     /*
-    * touch
+    *   touch
     *
-    * @param string $file
-    * @param ?int $time
-    * @param ?int $atime
-    * @return string
+    *   @param string $file
+    *   @param ?int $time
+    *   @param ?int $atime
+    *   @return string
     */
     public static function touch(
         string $file,
@@ -63,23 +63,23 @@ interface FilesystemInterface
     ): string;
 
     /*
-    * remove
+    *   remove
     *
-    * @param string $file
-    * @return string
+    *   @param string $file
+    *   @return string
     */
     public static function remove(
         string $file
     ): string;
 
     /*
-    * chmod
+    *   chmod
     *
-    * @param string $files
-    * @param int $mode
-    * @param ?int $umask
-    * @param ?bool $recursive
-    * @return void
+    *   @param string $files
+    *   @param int $mode
+    *   @param ?int $umask
+    *   @param ?bool $recursive
+    *   @return void
     */
     public static function chmod(
         string $files,
@@ -89,12 +89,12 @@ interface FilesystemInterface
     ): void;
 
     /*
-    * chown
+    *   chown
     *
-    * @param string $files
-    * @param string $user
-    * @param bool $recursive
-    * @return void
+    *   @param string $files
+    *   @param string $user
+    *   @param bool $recursive
+    *   @return void
     */
     public static function chown(
         string $files,
@@ -103,12 +103,12 @@ interface FilesystemInterface
     ): void;
 
     /*
-    * chgrp
+    *   chgrp
     *
-    * @param string $files
-    * @param string|int $group
-    * @param bool $recursive
-    * @return void
+    *   @param string $files
+    *   @param string|int $group
+    *   @param bool $recursive
+    *   @return void
     */
     public static function chgrp(
         string $files,
@@ -117,12 +117,12 @@ interface FilesystemInterface
     ): void;
 
     /*
-    * rename
+    *   rename
     *
-    * @param string $origin
-    * @param string $target
-    * @param bool $overwrite
-    * @return string
+    *   @param string $origin
+    *   @param string $target
+    *   @param bool $overwrite
+    *   @return string
     */
     public static function rename(
         string $origin,
@@ -131,11 +131,11 @@ interface FilesystemInterface
     ): string;
 
     /*
-    * symlink
+    *   symlink
     *
-    * @param string $target
-    * @param string $link
-    * @return void
+    *   @param string $target
+    *   @param string $link
+    *   @return void
     */
     public static function symlink(
         string $target,
@@ -143,33 +143,33 @@ interface FilesystemInterface
     ): void;
 
     /*
-    * readlink
+    *   readlink
     *
-    * @param string $path
-    * @return string
+    *   @param string $path
+    *   @return string
     */
     public static function readlink(
         string $path
     ): string;
 
     /*
-    * realpath
+    *   realpath
     *
-    * @param string $path
-    * @return string
+    *   @param string $path
+    *   @return string
     */
     public static function realpath(
         string $path,
     ): string;
 
     /*
-    * mirror
+    *   mirror
     *
-    * @param string $originDir
-    * @param string $targetDir
-    * @param ?\Traversable $iterator
-    * @param ?array $options
-    * @return void
+    *   @param string $originDir
+    *   @param string $targetDir
+    *   @param ?\Traversable $iterator
+    *   @param ?array $options
+    *   @return void
     */
     public static function mirror(
         string $originDir,
@@ -179,10 +179,10 @@ interface FilesystemInterface
     ): void;
 
     /*
-    * isAbsolutePath
+    *   isAbsolutePath
     *
-    * @param string $file
-    * @return bool
+    *   @param string $file
+    *   @return bool
     */
     public static function isAbsolutePath(
         string $file
@@ -190,12 +190,12 @@ interface FilesystemInterface
 
 
     /*
-    * tempnam
+    *   tempnam
     *
-    * @param string $dir,
-    * @param ?string $prefix
-    * @param ?string $suffix
-    * @return string
+    *   @param string $dir,
+    *   @param ?string $prefix
+    *   @param ?string $suffix
+    *   @return string
     */
     public static function tempnam(
         string $dir,

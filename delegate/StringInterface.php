@@ -1,10 +1,9 @@
 <?php
 
 /**
-* DateInterface
+*   StringInterface
 *
-* @version
-*
+*   @version
 */
 
 declare(strict_types=1);
@@ -15,181 +14,181 @@ interface StringInterface
 {
 
     /*
-    * lower
+    *   lower
     *
-    * @param string $text
-    * @return string
+    *   @param string $string
+    *   @return string
     */
     public static function lower(
-        string $text
+        string $string
     ): string;
 
     /*
-    * upper
+    *   upper
     *
-    * @param string $text
-    * @return string
+    *   @param string $string
+    *   @return string
     */
     public static function upper(
-        string $text
+        string $string
     ): string;
 
     /*
-    * title
+    *   title
     *
-    * @param string $text
-    * @return string
+    *   @param string $string
+    *   @return string
     */
     public static function title(
-        string $text
+        string $string
     ): string;
 
     /*
-    * study
+    *   study
     *
-    * @param string $text
-    * @return string
+    *   @param string $string
+    *   @return string
     */
     public static function study(
-        string $text
+        string $string
     ): string;
 
     /*
-    * camel
+    *   camel
     *
-    * @param string $text
-    * @return string
+    *   @param string $string
+    *   @return string
     */
     public static function camel(
-        string $text
+        string $string
     ): string;
 
     /*
-    * snake
+    *   snake
     *
-    * @param string $text
-    * @return string
+    *   @param string $string
+    *   @return string
     */
     public static function snake(
-        string $text
+        string $string
     ): string;
 
     /*
-    * kana
+    *   kana
     *
-    * @param string $text
-    * @param string $mode
-    * @return string
+    *   @param string $string
+    *   @param string $mode
+    *   @return string
     */
     public static function kana(
-        string $text,
+        string $string,
         string $mode
     ): string;
 
     /*
-    * length
+    *   length
     *
-    * @param string $text
-    * @return int
+    *   @param string $string
+    *   @return int
     */
     public static function length(
-        string $text
+        string $string
     ): int;
 
     /*
-    * width
+    *   width
     *
-    * @param string $text
-    * @return int
+    *   @param string $string
+    *   @return int
     */
     public static function width(
-        string $text
+        string $string
     ): int;
 
     /*
-    * trim
+    *   trim
     *
-    * @param string $text
-    * @return string
+    *   @param string $string
+    *   @return string
     */
     public static function trim(
-        string $text
+        string $string
     ): string;
 
     /*
-    * insert
+    *   insert
     *
-    * @param string $text
-    * @param string $insert
-    * @param int $offset
-    * @return string
+    *   @param string $string
+    *   @param string $insert
+    *   @param int $offset
+    *   @return string
     */
     public static function insert(
-        string $text,
+        string $string,
         string $insert,
         int $offset
     ): string;
 
     /*
-    * delete
+    *   delete
     *
-    * @param string $text
-    * @param ?int $offset
-    * @param ?int $length
-    * @return string
+    *   @param string $string
+    *   @param ?int $offset
+    *   @param ?int $length
+    *   @return string
     */
     public static function delete(
-        string $text,
+        string $string,
         int $offset,
         int $length
     ): string;
 
     /*
-    * encode
+    *   encode
     *
-    * @param string $text
-    * @param string $code
-    * @return string
+    *   @param string $string
+    *   @param string $code
+    *   @return string
     */
     public static function encode(
-        string $text,
+        string $string,
         string $code
     ): string;
 
     /*
-    * match
+    *   match
     *
-    * @param string $text
-    * @param string $pattern
-    * @param ?string $option
-    * @return bool
+    *   @param string $string
+    *   @param string $pattern
+    *   @param ?string $option
+    *   @return bool
     */
     public static function match(
-        string $text,
+        string $string,
         string $pattern,
         ?string $option
     ): bool;
 
     /*
-    * matchAll
+    *   matchAll
     *
-    * @param string $text
-    * @param string $pattern
-    * @param ?string $option
-    * @return array
+    *   @param string $string
+    *   @param string $pattern
+    *   @param ?string $option
+    *   @return array
     */
     public static function matchAll(
-        string $text,
+        string $string,
         string $pattern,
         ?string $option
     ): array;
 
     /*
-    * implode
+    *   implode
     *
-    * @param string $text
-    * @param string $separator
-    * @return string
+    *   @param string $string
+    *   @param string $separator
+    *   @return string
     */
     public static function implode(
         array $array,
@@ -197,96 +196,108 @@ interface StringInterface
     ): string;
 
     /*
-    * explode
+    *   explode
     *
-    * @param string $text
-    * @param string $separator
-    * @return array
+    *   @param string $string
+    *   @param string $separator
+    *   @return array
     */
     public static function explode(
-        string $text,
+        string $string,
         string $separator
     ): array;
 
     /*
-    * replace
+    *   replace
     *
-    * @param string $text
-    * @param string $pattern
-    * @param string $replacement
-    * @param ?string $option
-    * @return string
+    *   @param string $string
+    *   @param string $pattern
+    *   @param string $replacement
+    *   @param ?string $option
+    *   @return string
     */
     public static function replace(
-        string $text,
+        string $string,
         string $pattern,
         string $replacement,
         ?string $option
     ): string;
 
     /*
-    * split
+    *   split
     *
-    * @param string $text
-    * @param int $offset
-    * @param ?iint $length
-    * @param ?string $replacement
-    * @return string
+    *   @param string $string
+    *   @param int $offset
+    *   @param ?iint $length
+    *   @param ?string $replacement
+    *   @return string
     */
     public static function splice(
-        string $text,
+        string $string,
         int $offset,
         ?int $length,
         ?string $replacement
     ): string;
 
     /*
-    * substr
+    *   substr
     *
-    * @param string $text
-    * @param int $start
-    * @param ?int $length
-    * @return string
+    *   @param string $string
+    *   @param int $start
+    *   @param ?int $length
+    *   @return string
     */
     public static function substr(
-        string $text,
+        string $string,
         int $start,
-        ?int $length = null
+        ?int $length
     ): string;
 
     /*
-    * split
+    *   split
     *
-    * @param string $text
-    * @param ?int $length
-    * @return array
+    *   @param string $string
+    *   @param ?int $length
+    *   @return array
     */
     public static function split(
-        string $text,
-        ?int $length = null
+        string $string,
+        ?int $length
     ): array;
 
     /*
-    * search
+    *   search
     *
-    * @param string $text
-    * @param string $pattern
-    * @param ?string $option
-    * @return array
+    *   @param string $string
+    *   @param string $pattern
+    *   @param ?string $option
+    *   @return array
     */
     public static function search(
-        string $text,
+        string $string,
         string $pattern,
-        ?string $option = null
+        ?string $option
     ): array;
 
     /*
-    * isEmpty
+    *   isEmpty
     *
-    * @param string $text
-    * @return bool
+    *   @param string $string
+    *   @return bool
     */
     public static function isEmpty(
-        string $text
+        string $string
+    ): bool;
+
+    /*
+    *   isValidEncoding
+    *
+    *   @param string $string
+    *   @param ?string $encoding
+    *   @return bool
+    */
+    public static function isValidEncoding(
+        string $string,
+        ?string $encoding,
     ): bool;
 }

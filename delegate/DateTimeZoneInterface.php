@@ -1,9 +1,9 @@
 <?php
 
 /**
-* DateInterface
+*   DateInterface
 *
-* @version
+*   @version
 *
 */
 
@@ -15,16 +15,16 @@ interface DateTimeZoneInterface
 {
 
     /*
-    * name
+    *   name
     *
-    * @return string
+    *   @return string
     */
     public function name(): string;
 
     /*
-    * offset
+    *   offset
     *
-    * @return int
+    *   @return int
     */
     public function offset(): int;
 }

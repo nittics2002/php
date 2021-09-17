@@ -1,9 +1,9 @@
 <?php
 
 /**
-* FilesystemWsh
+*   FilesystemWsh
 *
-* @version
+*   @version
 *
 */
 
@@ -19,12 +19,12 @@ class FilesystemWsh implements FilesystemInterface
 {
 
     /*
-    * copy
+    *   copy
     *
-    * @param string $originFile
-    * @param string $targetFile
-    * @param ?bool $overwriteNewerFiles
-    * @return void
+    *   @param string $originFile
+    *   @param string $targetFile
+    *   @param ?bool $overwriteNewerFiles
+    *   @return void
     */
     public static function copy(
         string $originFile,
@@ -40,11 +40,11 @@ class FilesystemWsh implements FilesystemInterface
     }
 
     /*
-    * mkdir
+    *   mkdir
     *
-    * @param string $dirs
-    * @param string|int|null $mode
-    * @return void
+    *   @param string $dirs
+    *   @param string|int|null $mode
+    *   @return void
     */
     public static function mkdir(
         string $dirs,
@@ -57,10 +57,10 @@ class FilesystemWsh implements FilesystemInterface
     }
 
     /*
-    * exists
+    *   exists
     *
-    * @param string $file
-    * @return bool
+    *   @param string $file
+    *   @return bool
     */
     public static function exists(
         string $file
@@ -71,10 +71,10 @@ class FilesystemWsh implements FilesystemInterface
     }
 
     /*
-    * existsFolder
+    *   existsFolder
     *
-    * @param string $path
-    * @return bool
+    *   @param string $path
+    *   @return bool
     */
     private static function existsFolder(
         string $path
@@ -84,10 +84,10 @@ class FilesystemWsh implements FilesystemInterface
     }
 
     /*
-    * existsFile
+    *   existsFile
     *
-    * @param string $path
-    * @return bool
+    *   @param string $path
+    *   @return bool
     */
     private static function existsFile(
         string $path
@@ -97,12 +97,12 @@ class FilesystemWsh implements FilesystemInterface
     }
 
     /*
-    * touch
+    *   touch
     *
-    * @param string $file
-    * @param ?int $time
-    * @param ?int $atime
-    * @return void
+    *   @param string $file
+    *   @param ?int $time
+    *   @param ?int $atime
+    *   @return void
     */
     public static function touch(
         string $file,
@@ -115,10 +115,10 @@ class FilesystemWsh implements FilesystemInterface
     }
 
     /*
-    * remove
+    *   remove
     *
-    * @param string $file
-    * @return void
+    *   @param string $file
+    *   @return void
     */
     public static function remove(
         string $file
@@ -133,13 +133,13 @@ class FilesystemWsh implements FilesystemInterface
     }
 
     /*
-    * chmod
+    *   chmod
     *
-    * @param string $files
-    * @param int $mode
-    * @param ?int $umask
-    * @param ?bool $recursive
-    * @return void
+    *   @param string $files
+    *   @param int $mode
+    *   @param ?int $umask
+    *   @param ?bool $recursive
+    *   @return void
     */
     public static function chmod(
         string $files,
@@ -153,12 +153,12 @@ class FilesystemWsh implements FilesystemInterface
     }
 
     /*
-    * chown
+    *   chown
     *
-    * @param string $files
-    * @param string $user
-    * @param bool $recursive
-    * @return void
+    *   @param string $files
+    *   @param string $user
+    *   @param bool $recursive
+    *   @return void
     */
     public static function chown(
         string $files,
@@ -171,12 +171,12 @@ class FilesystemWsh implements FilesystemInterface
     }
 
     /*
-    * chgrp
+    *   chgrp
     *
-    * @param string $files
-    * @param string|int $group
-    * @param bool $recursive
-    * @return void
+    *   @param string $files
+    *   @param string|int $group
+    *   @param bool $recursive
+    *   @return void
     */
     public static function chgrp(
         string $files,
@@ -189,12 +189,12 @@ class FilesystemWsh implements FilesystemInterface
     }
 
     /*
-    * rename
+    *   rename
     *
-    * @param string $origin
-    * @param string $target
-    * @param bool $overwrite
-    * @return void
+    *   @param string $origin
+    *   @param string $target
+    *   @param bool $overwrite
+    *   @return void
     */
     public static function rename(
         string $origin,
@@ -209,11 +209,11 @@ class FilesystemWsh implements FilesystemInterface
     }
 
     /*
-    * symlink
+    *   symlink
     *
-    * @param string $target
-    * @param string $link
-    * @return void
+    *   @param string $target
+    *   @param string $link
+    *   @return void
     */
     public static function symlink(
         string $target,
@@ -222,10 +222,10 @@ class FilesystemWsh implements FilesystemInterface
     }
 
     /*
-    * readlink
+    *   readlink
     *
-    * @param string $path
-    * @return string
+    *   @param string $path
+    *   @return string
     */
     public static function readlink(
         string $path
@@ -233,10 +233,10 @@ class FilesystemWsh implements FilesystemInterface
     }
 
     /*
-    * realpath
+    *   realpath
     *
-    * @param string $path
-    * @return string
+    *   @param string $path
+    *   @return string
     */
     public static function realpath(
         string $path,
@@ -244,13 +244,13 @@ class FilesystemWsh implements FilesystemInterface
     }
 
     /*
-    * mirror
+    *   mirror
     *
-    * @param string $originDir
-    * @param string $targetDir
-    * @param ?\Traversable $iterator
-    * @param ?array $options
-    * @return void
+    *   @param string $originDir
+    *   @param string $targetDir
+    *   @param ?\Traversable $iterator
+    *   @param ?array $options
+    *   @return void
     */
     public static function mirror(
         string $originDir,
@@ -261,10 +261,10 @@ class FilesystemWsh implements FilesystemInterface
     }
 
     /*
-    * isAbsolutePath
+    *   isAbsolutePath
     *
-    * @param string $file
-    * @return bool
+    *   @param string $file
+    *   @return bool
     */
     public static function isAbsolutePath(
         string $file
@@ -275,12 +275,12 @@ class FilesystemWsh implements FilesystemInterface
     }
 
     /*
-    * tempnam
+    *   tempnam
     *
-    * @param string $dir,
-    * @param ?string $prefix
-    * @param ?string $suffix
-    * @return string
+    *   @param string $dir,
+    *   @param ?string $prefix
+    *   @param ?string $suffix
+    *   @return string
     */
     public static function tempnam(
         string $dir,
@@ -301,9 +301,9 @@ class FilesystemWsh implements FilesystemInterface
     }
 
     /*
-    * createFsoComObject
+    *   createFsoComObject
     *
-    * @return COM
+    *   @return COM
     */
     protected static function createFsoComObject(): COM
     {
