@@ -196,9 +196,6 @@ class DateObject implements DateInterface
     */
     public static function thisQuater(): DateInterface
     {
-        return new $this->__construct(
-            'tomorrow'
-        );
     }
 
     /*
@@ -208,6 +205,9 @@ class DateObject implements DateInterface
     */
     public static function thisYear(): DateInterface
     {
+      return $this->modify(
+        'this year'
+      );
     }
 
     /*
@@ -217,6 +217,9 @@ class DateObject implements DateInterface
     */
     public static function thisMonth(): DateInterface
     {
+      return $this->modify(
+        'this month'
+      );
     }
 
     /*
@@ -550,6 +553,21 @@ class DateObject implements DateInterface
     public function modify(
         string $modifier
     ): DateInterface {
+      $result = $this->datetime->modify(
+       $modifir 
+      );
+
+      if ($result === false) {
+        throw new InvalidArgumentException(
+            "first day of month error"
+        );
+      }
+
+      return new $this->__construct(
+        $result->format(
+          DateTimeInterface::ATOM
+        ) 
+      );
     }
 
     /*
@@ -559,6 +577,9 @@ class DateObject implements DateInterface
     */
     public function firstDayOfMonth(): DateInterface
     {
+      $result = $this->datetime->modify(
+        'first day of'
+      );
     }
 
     /*
@@ -568,6 +589,9 @@ class DateObject implements DateInterface
     */
     public function lastDayOfMonth(): DateInterface
     {
+      $result = $this->datetime->modify(
+        'last day of'
+      );
     }
 
     /*
@@ -661,6 +685,9 @@ class DateObject implements DateInterface
     */
     public function toArray(): array
     {
+      return getdate(
+        $this->unixtime()
+      );
     }
 
     /*
