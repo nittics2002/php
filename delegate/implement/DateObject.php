@@ -228,6 +228,12 @@ class DateObject implements DateInterface
     public function add(
         DateIntervalInterface $interval
     ): DateInterface {
+      $result = $this->datetime->add($interval);
+      return new $this->__construct(
+        $result->format(
+          DateTimeInterface::ATOM
+        );
+      );
     }
 
     /*
@@ -250,6 +256,12 @@ class DateObject implements DateInterface
     public function sub(
         DateIntervalInterface $interval
     ): DateInterface {
+      $result = $this->datetime->sub($interval);
+      return new $this->__construct(
+        $result->format(
+          DateTimeInterface::ATOM
+        );
+      );
     }
 
     /*
@@ -559,69 +571,87 @@ class DateObject implements DateInterface
     }
 
     /*
+    *   same
+    *
+    *   @param DateInterface $datetime
+    *   @return bool
+    */
+    public function same(
+        DateInterface $datetime
+    ): bool {
+      return $this->datetime === $datetime;
+    }
+
+    /*
     *   eq
     *
     *   @param DateInterface $datetime
-    *   @return DateInterface
+    *   @return bool
     */
     public function eq(
         DateInterface $datetime
     ): bool {
+      return $this->datetime == $datetime;
     }
 
     /*
     *   ne
     *
     *   @param DateInterface $datetime
-    *   @return DateInterface
+    *   @return bool
     */
     public function ne(
         DateInterface $datetime
     ): bool {
+      return $this->datetime != $datetime;
     }
 
     /*
     *   gt
     *
     *   @param DateInterface $datetime
-    *   @return DateInterface
+    *   @return bool
     */
     public function gt(
         DateInterface $datetime
     ): bool {
+      return $this->datetime > $datetime;
     }
 
     /*
     *   ge
     *
     *   @param DateInterface $datetime
-    *   @return DateInterface
+    *   @return bool
     */
     public function ge(
         DateInterface $datetime
     ): bool {
+      return $this->datetime >= $datetime;
     }
 
     /*
     *   lt
     *
     *   @param DateInterface $datetime
-    *   @return DateInterface
+    *   @return bool
     */
     public function lt(
         DateInterface $datetime
     ): bool {
+      return $this->datetime < $datetime;
     }
 
     /*
     *   le
     *
     *   @param DateInterface $datetime
-    *   @return DateInterface
+    *   @return bool
     */
     public function le(
         DateInterface $datetime
     ): bool {
+      return $this->datetime <= $datetime;
     }
 
     /*
@@ -640,6 +670,7 @@ class DateObject implements DateInterface
     */
     public function year(): int
     {
+      return (int)$this->datetime->format('Y');
     }
 
     /*
@@ -649,6 +680,7 @@ class DateObject implements DateInterface
     */
     public function month(): int
     {
+      return (int)$this->datetime->format('m');
     }
 
     /*
@@ -658,6 +690,7 @@ class DateObject implements DateInterface
     */
     public function week(): int
     {
+      return (int)$this->datetime->format('w');
     }
 
     /*
@@ -667,6 +700,7 @@ class DateObject implements DateInterface
     */
     public function day(): int
     {
+      return (int)$this->datetime->format('d');
     }
 
     /*
@@ -676,6 +710,7 @@ class DateObject implements DateInterface
     */
     public function hour(): int
     {
+      return (int)$this->datetime->format('H');
     }
 
     /*
@@ -685,6 +720,7 @@ class DateObject implements DateInterface
     */
     public function minute(): int
     {
+      return (int)$this->datetime->format('i');
     }
 
     /*
@@ -694,6 +730,17 @@ class DateObject implements DateInterface
     */
     public function second(): int
     {
+      return (int)$this->datetime->format('s');
+    }
+
+    /*
+    *   microsecond
+    *
+    *   @return int
+    */
+    public function microsecond(): int
+    {
+      return (int)$this->datetime->format('u');
     }
 
     /*
@@ -703,6 +750,10 @@ class DateObject implements DateInterface
     */
     public function timezone(): DateTimezoneInterface
     {
+      $timezone = $this->datetime->getTimezone();
+      return new DateIntervalObject(
+        $timezone->getName()
+      );
     }
 
     /*
@@ -712,5 +763,6 @@ class DateObject implements DateInterface
     */
     public function unixtime(): int
     {
+      return $this->datetime->getTimestamp();
     }
 }
