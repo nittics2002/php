@@ -219,6 +219,9 @@ class FilesystemWsh implements FilesystemInterface
         string $target,
         string $link
     ): void {
+        throw new RuntimeException(
+            "not supported"
+        );
     }
 
     /*
@@ -230,6 +233,9 @@ class FilesystemWsh implements FilesystemInterface
     public static function readlink(
         string $path
     ): string {
+      throw new BadMethodCallException(
+        "not suported"
+      );
     }
 
     /*
@@ -241,6 +247,9 @@ class FilesystemWsh implements FilesystemInterface
     public static function realpath(
         string $path,
     ): string {
+      throw new BadMethodCallException(
+        "not suported"
+      );
     }
 
     /*
@@ -258,6 +267,9 @@ class FilesystemWsh implements FilesystemInterface
         ?\Traversable $iterator = null,
         ?array $options = []
     ): void {
+      throw new BadMethodCallException(
+        "not suported"
+      );
     }
 
     /*
