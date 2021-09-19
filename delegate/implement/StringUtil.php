@@ -225,6 +225,12 @@ class StringUtil implements StringInterface
         string $insert,
         int $offset
     ): string {
+      return static::splice(
+        $string,
+        $offset,
+        0,
+        $insert,
+      );
     }
 
     /*
@@ -240,6 +246,17 @@ class StringUtil implements StringInterface
         int $offset,
         int $length
     ): string {
+        if ($length < 0) {
+          throw new InvalidArgumentException(
+            "length must be greater then 0"
+          );
+        }
+        return static::splice(
+          $target,
+          $offset,
+          $length,
+          '',
+        );
     }
 
     /*
@@ -408,21 +425,16 @@ class StringUtil implements StringInterface
         ?int $length = null,
         ?string $replacement = null,
     ): string {
-        $deleted = static::delete(
-            $string,
-            $offset,
-            $length
-        );
+        $target = MbString::strToArray($string);
+        $len = $length?? count($string);
         
-        if ($replacement === null) {
-            return $deleted;
-        }
-        
-        return static::insert(
-            $deleted,
-            $offset,
-            $replacement,
+        array_splice(
+          $target,
+          $offset,
+          $len,
+          $replacement
         );
+        return static::implode('', $target);
     }
 
     /*
@@ -533,5 +545,30 @@ class StringUtil implements StringInterface
             $encoding?? ini_get('default_charset'),
             true
         );
+    }
+    
+    /**
+    *   文字を1文字毎配列変換
+    *
+    *   @param string $string
+    *   @return array
+    **/
+    public static function strToArray(
+        string $string,
+        string $encoding = 'UTF-8'
+    ): array {
+        $result = preg_split(
+          "//u",
+          $string,
+          0,
+          PREG_SPLIT_NO_EMPTY
+        );
+
+        if ($result === false) {
+            throw new InvalidArgumentException(
+                "sprit error"
+            );
+        }
+        return $result;
     }
 }
