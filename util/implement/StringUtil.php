@@ -8,9 +8,10 @@
 
 declare(strict_types=1);
 
-namespace Concerto\delegator;
+namespace Concerto\util\implement;
 
 use InvalidArgumentException;
+use Concerto\util\StringInterface;
 
 class StringUtil implements StringInterface
 {
@@ -18,8 +19,8 @@ class StringUtil implements StringInterface
     *   @var string
     */
     protected const SPACE_PATTERN =
-        "[ \t\n\r\0\x0B\x0C\u{A0}\u{FEFF}]"
-    
+        "[ \t\n\r\0\x0B\x0C\u{A0}\u{FEFF}]";
+
     /*
     *   lower
     *
@@ -27,7 +28,7 @@ class StringUtil implements StringInterface
     *   @return string
     */
     public static function lower(
-        string $string
+        string $string,
     ): string {
         return mb_strtolower($string);
     }
@@ -39,7 +40,7 @@ class StringUtil implements StringInterface
     *   @return string
     */
     public static function upper(
-        string $string
+        string $string,
     ): string {
         return mb_strtoupper($string);
     }
@@ -51,7 +52,7 @@ class StringUtil implements StringInterface
     *   @return string
     */
     public static function title(
-        string $string
+        string $string,
     ): string {
         return mb_convert_case(
             $string,
@@ -69,7 +70,7 @@ class StringUtil implements StringInterface
     *       'mstBumon_Data' ==> 'mst_bumon__data' //_Data ==> __dataとなる
     */
     public static function snake(
-        string $string
+        string $string,
     ): string {
         $replaced = mb_ereg_replace_callback(
             '[A-Z]',
@@ -78,19 +79,19 @@ class StringUtil implements StringInterface
             },
             $string
         );
-        
+
         if ($replaced === null) {
             throw new InvalidArgumentException(
                 "encoding error:{$string}"
-            )
+            );
         }
-        
+
         if ($replaced === false) {
             throw new InvalidArgumentException(
                 "trim error:{$string}"
-            )
+            );
         }
-        
+
         if (
             mb_substr($replaced, 0, 1) === '_' &&
             mb_substr($string, 0, 1) !== '_'
@@ -107,7 +108,7 @@ class StringUtil implements StringInterface
     *   @return string
     */
     public static function camel(
-        string $string
+        string $string,
     ): string {
         $snaked = static::toSnake($string);
         $replaced = static::replace(
@@ -115,9 +116,9 @@ class StringUtil implements StringInterface
             '_',
             ' ',
         );
-        
-        $titled =static::title($replaced);
-        
+
+        $titled = static::title($replaced);
+
         return static::implode(
             '',
             static::explode(
@@ -134,7 +135,7 @@ class StringUtil implements StringInterface
     *   @return string
     */
     public static function study(
-        string $string
+        string $string,
     ): string {
         $uppered = static::camel($string);
         return mb_strtolower(mb_substr($uppered, 0, 1)) .
@@ -150,7 +151,7 @@ class StringUtil implements StringInterface
     */
     public static function kana(
         string $string,
-        string $mode
+        string $mode,
     ): string {
         return mb_convert_kana(
             $string,
@@ -165,7 +166,7 @@ class StringUtil implements StringInterface
     *   @return int
     */
     public static function length(
-        string $string
+        string $string,
     ): int {
         return mb_strlen($string);
     }
@@ -177,7 +178,7 @@ class StringUtil implements StringInterface
     *   @return int
     */
     public static function width(
-        string $string
+        string $string,
     ): int {
         return mb_strwidth($string);
     }
@@ -189,7 +190,7 @@ class StringUtil implements StringInterface
     *   @return string
     */
     public static function trim(
-        string $string
+        string $string,
     ): string {
         $pattern = static::SPACE_PATTERN;
         $replaced = (string)mb_ereg_replace(
@@ -197,17 +198,17 @@ class StringUtil implements StringInterface
             '',
             $string
         );
-        
+
         if ($replaced === null) {
             throw new InvalidArgumentException(
                 "encoding error:{$string}"
-            )
+            );
         }
-        
+
         if ($replaced === false) {
             throw new InvalidArgumentException(
                 "trim error:{$string}"
-            )
+            );
         }
         return $replaced;
     }
@@ -223,14 +224,14 @@ class StringUtil implements StringInterface
     public static function insert(
         string $string,
         string $insert,
-        int $offset
+        int $offset,
     ): string {
-      return static::splice(
-        $string,
-        $offset,
-        0,
-        $insert,
-      );
+        return static::splice(
+            $string,
+            $offset,
+            0,
+            $insert,
+        );
     }
 
     /*
@@ -244,18 +245,18 @@ class StringUtil implements StringInterface
     public static function delete(
         string $string,
         int $offset,
-        int $length
+        int $length,
     ): string {
         if ($length < 0) {
-          throw new InvalidArgumentException(
-            "length must be greater then 0"
-          );
+            throw new InvalidArgumentException(
+                "length must be greater then 0"
+            );
         }
         return static::splice(
-          $target,
-          $offset,
-          $length,
-          '',
+            $target,
+            $offset,
+            $length,
+            '',
         );
     }
 
@@ -264,7 +265,7 @@ class StringUtil implements StringInterface
     *
     *   @param string $string
     *   @param string $to_encoding
-    *   @param string $from_encoding
+    *   @param ?string $from_encoding
     *   @return string
     */
     public static function encode(
@@ -297,7 +298,7 @@ class StringUtil implements StringInterface
     public static function match(
         string $string,
         string $pattern,
-        ?string $option = 'pr'
+        ?string $option = 'pr',
     ): bool {
         return mb_ereg_match(
             $pattern,
@@ -341,13 +342,13 @@ class StringUtil implements StringInterface
     /*
     *   implode
     *
-    *   @param array $arry
+    *   @param array $array
     *   @param string $separator
     *   @return string
     */
     public static function implode(
         array $array,
-        string $separator
+        string $separator,
     ): string {
         $result = array_shift($array);
 
@@ -366,7 +367,7 @@ class StringUtil implements StringInterface
     */
     public static function explode(
         string $string,
-        string $separator
+        string $separator,
     ): array {
         return static::split(
             $string,
@@ -387,7 +388,7 @@ class StringUtil implements StringInterface
         string $string,
         string $pattern,
         string $replacement,
-        ?string $option = 'pr'
+        ?string $option = 'pr',
     ): string {
         $result = mb_ereg_replace(
             $pattern,
@@ -425,14 +426,14 @@ class StringUtil implements StringInterface
         ?int $length = null,
         ?string $replacement = null,
     ): string {
-        $target = MbString::strToArray($string);
-        $len = $length?? count($string);
-        
+        $target = static::strToArray($string);
+        $len = $length ?? count($string);
+
         array_splice(
-          $target,
-          $offset,
-          $len,
-          $replacement
+            $target,
+            $offset,
+            $len,
+            $replacement
         );
         return static::implode('', $target);
     }
@@ -448,7 +449,7 @@ class StringUtil implements StringInterface
     public static function substr(
         string $string,
         int $start,
-        ?int $length = null
+        ?int $length = null,
     ): string {
         return mb_substr(
             $string,
@@ -466,7 +467,7 @@ class StringUtil implements StringInterface
     */
     public static function split(
         string $string,
-        string $pattern
+        string $pattern,
     ): array {
         $result = mb_split(
             $string,
@@ -492,7 +493,7 @@ class StringUtil implements StringInterface
     public static function search(
         string $string,
         string $pattern,
-        ?string $option = 'pr'
+        ?string $option = 'pr',
     ): array {
         if (!mb_ereg_search_init($string, $pattern, $options)) {
             throw new InvalidArgumentException(
@@ -524,7 +525,7 @@ class StringUtil implements StringInterface
     *   @return bool
     */
     public static function isEmpty(
-        string $string
+        string $string,
     ): bool {
         return $string === '';
     }
@@ -542,26 +543,27 @@ class StringUtil implements StringInterface
     ): bool {
         return (bool)mb_detect_encoding(
             $string,
-            $encoding?? ini_get('default_charset'),
+            $encoding ?? ini_get('default_charset'),
             true
         );
     }
-    
+
     /**
     *   文字を1文字毎配列変換
     *
     *   @param string $string
+    *   @param ?string ?$encoding
     *   @return array
     **/
     public static function strToArray(
         string $string,
-        string $encoding = 'UTF-8'
+        ?string $encoding = 'UTF-8',
     ): array {
         $result = preg_split(
-          "//u",
-          $string,
-          0,
-          PREG_SPLIT_NO_EMPTY
+            "//u",
+            $string,
+            0,
+            PREG_SPLIT_NO_EMPTY
         );
 
         if ($result === false) {

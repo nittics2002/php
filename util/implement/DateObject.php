@@ -4,16 +4,15 @@
 *   DateObject
 *
 *   @version
-*
 */
 
 declare(strict_types=1);
 
-namespace Concerto\contract;
+namespace Concerto\util\implement;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
-use Concerto\contract\DateInterface;
+use Concerto\util\DateInterface;
 
 class DateObject implements DateInterface
 {
@@ -73,7 +72,7 @@ class DateObject implements DateInterface
     public static function createFromFormat(
         string $format,
         string $datetime,
-        ?DateTimezoneInterface $timezone
+        ?DateTimezoneInterface $timezone,
     ): DateInterface {
         if (mb_ereg_match('!', $format)) {
             $format = "!{$format}";
@@ -205,9 +204,9 @@ class DateObject implements DateInterface
     */
     public static function thisYear(): DateInterface
     {
-      return $this->modify(
-        'this year'
-      );
+        return $this->modify(
+            'this year'
+        );
     }
 
     /*
@@ -217,9 +216,9 @@ class DateObject implements DateInterface
     */
     public static function thisMonth(): DateInterface
     {
-      return $this->modify(
-        'this month'
-      );
+        return $this->modify(
+            'this month'
+        );
     }
 
     /*
@@ -229,14 +228,14 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function add(
-        DateIntervalInterface $interval
+        DateIntervalInterface $interval,
     ): DateInterface {
-      $result = $this->datetime->add($interval);
-      return new $this->__construct(
-        $result->format(
-          DateTimeInterface::ATOM
+        $result = $this->datetime->add($interval);
+        return new $this->__construct(
+            $result->format(
+                DateTimeInterface::ATOM
+            )
         );
-      );
     }
 
     /*
@@ -246,7 +245,7 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function addContext(
-        string $datetime
+        string $datetime,
     ): DateInterface {
     }
 
@@ -257,14 +256,14 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function sub(
-        DateIntervalInterface $interval
+        DateIntervalInterface $interval,
     ): DateInterface {
-      $result = $this->datetime->sub($interval);
-      return new $this->__construct(
-        $result->format(
-          DateTimeInterface::ATOM
+        $result = $this->datetime->sub($interval);
+        return new $this->__construct(
+            $result->format(
+                DateTimeInterface::ATOM
+            )
         );
-      );
     }
 
     /*
@@ -274,7 +273,7 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function subContext(
-        string $datetime
+        string $datetime,
     ): DateInterface {
     }
 
@@ -296,7 +295,7 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function addYears(
-        ?int $year
+        ?int $year,
     ): DateInterface {
     }
 
@@ -307,7 +306,7 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function addMonths(
-        ?int $month
+        ?int $month,
     ): DateInterface {
     }
 
@@ -318,7 +317,7 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function addWeeks(
-        ?int $week
+        ?int $week,
     ): DateInterface {
     }
 
@@ -329,7 +328,7 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function addDays(
-        ?int $day
+        ?int $day,
     ): DateInterface {
     }
 
@@ -340,7 +339,7 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function addHours(
-        ?int $hour
+        ?int $hour,
     ): DateInterface {
     }
 
@@ -351,7 +350,7 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function addMinutes(
-        ?int $minute
+        ?int $minute,
     ): DateInterface {
     }
 
@@ -362,7 +361,7 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function addSeconds(
-        ?int $second
+        ?int $second,
     ): DateInterface {
     }
 
@@ -373,7 +372,7 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function subQuaters(
-        ?int $quater
+        ?int $quater,
     ): DateInterface {
     }
 
@@ -384,7 +383,7 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function subYears(
-        ?int $year
+        ?int $year,
     ): DateInterface {
     }
 
@@ -395,7 +394,7 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function subMonths(
-        ?int $month
+        ?int $month,
     ): DateInterface {
     }
 
@@ -406,7 +405,7 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function subWeeks(
-        ?int $week
+        ?int $week,
     ): DateInterface {
     }
 
@@ -417,7 +416,7 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function subDays(
-        ?int $day
+        ?int $day,
     ): DateInterface {
     }
 
@@ -428,7 +427,7 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function subHours(
-        ?int $hour
+        ?int $hour,
     ): DateInterface {
     }
 
@@ -439,7 +438,7 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function subMinutes(
-        ?int $minute
+        ?int $minute,
     ): DateInterface {
     }
 
@@ -450,7 +449,7 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function subSeconds(
-        ?int $second
+        ?int $second,
     ): DateInterface {
     }
 
@@ -551,23 +550,23 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function modify(
-        string $modifier
+        string $modifier,
     ): DateInterface {
-      $result = $this->datetime->modify(
-       $modifir 
-      );
-
-      if ($result === false) {
-        throw new InvalidArgumentException(
-            "first day of month error"
+        $result = $this->datetime->modify(
+            $modifir
         );
-      }
 
-      return new $this->__construct(
-        $result->format(
-          DateTimeInterface::ATOM
-        ) 
-      );
+        if ($result === false) {
+            throw new InvalidArgumentException(
+                "first day of month error"
+            );
+        }
+
+        return new $this->__construct(
+            $result->format(
+                DateTimeInterface::ATOM
+            )
+        );
     }
 
     /*
@@ -577,9 +576,9 @@ class DateObject implements DateInterface
     */
     public function firstDayOfMonth(): DateInterface
     {
-      $result = $this->datetime->modify(
-        'first day of'
-      );
+        $result = $this->datetime->modify(
+            'first day of'
+        );
     }
 
     /*
@@ -589,9 +588,9 @@ class DateObject implements DateInterface
     */
     public function lastDayOfMonth(): DateInterface
     {
-      $result = $this->datetime->modify(
-        'last day of'
-      );
+        $result = $this->datetime->modify(
+            'last day of'
+        );
     }
 
     /*
@@ -601,9 +600,9 @@ class DateObject implements DateInterface
     *   @return bool
     */
     public function same(
-        DateInterface $datetime
+        DateInterface $datetime,
     ): bool {
-      return $this->datetime === $datetime;
+        return $this->datetime === $datetime;
     }
 
     /*
@@ -613,9 +612,9 @@ class DateObject implements DateInterface
     *   @return bool
     */
     public function eq(
-        DateInterface $datetime
+        DateInterface $datetime,
     ): bool {
-      return $this->datetime == $datetime;
+        return $this->datetime == $datetime;
     }
 
     /*
@@ -625,9 +624,9 @@ class DateObject implements DateInterface
     *   @return bool
     */
     public function ne(
-        DateInterface $datetime
+        DateInterface $datetime,
     ): bool {
-      return $this->datetime != $datetime;
+        return $this->datetime != $datetime;
     }
 
     /*
@@ -637,9 +636,9 @@ class DateObject implements DateInterface
     *   @return bool
     */
     public function gt(
-        DateInterface $datetime
+        DateInterface $datetime,
     ): bool {
-      return $this->datetime > $datetime;
+        return $this->datetime > $datetime;
     }
 
     /*
@@ -649,9 +648,9 @@ class DateObject implements DateInterface
     *   @return bool
     */
     public function ge(
-        DateInterface $datetime
+        DateInterface $datetime,
     ): bool {
-      return $this->datetime >= $datetime;
+        return $this->datetime >= $datetime;
     }
 
     /*
@@ -661,9 +660,9 @@ class DateObject implements DateInterface
     *   @return bool
     */
     public function lt(
-        DateInterface $datetime
+        DateInterface $datetime,
     ): bool {
-      return $this->datetime < $datetime;
+        return $this->datetime < $datetime;
     }
 
     /*
@@ -673,9 +672,9 @@ class DateObject implements DateInterface
     *   @return bool
     */
     public function le(
-        DateInterface $datetime
+        DateInterface $datetime,
     ): bool {
-      return $this->datetime <= $datetime;
+        return $this->datetime <= $datetime;
     }
 
     /*
@@ -685,9 +684,9 @@ class DateObject implements DateInterface
     */
     public function toArray(): array
     {
-      return getdate(
-        $this->unixtime()
-      );
+        return getdate(
+            $this->unixtime()
+        );
     }
 
     /*
@@ -697,7 +696,7 @@ class DateObject implements DateInterface
     */
     public function year(): int
     {
-      return (int)$this->datetime->format('Y');
+        return (int)$this->datetime->format('Y');
     }
 
     /*
@@ -707,7 +706,7 @@ class DateObject implements DateInterface
     */
     public function month(): int
     {
-      return (int)$this->datetime->format('m');
+        return (int)$this->datetime->format('m');
     }
 
     /*
@@ -717,7 +716,7 @@ class DateObject implements DateInterface
     */
     public function week(): int
     {
-      return (int)$this->datetime->format('w');
+        return (int)$this->datetime->format('w');
     }
 
     /*
@@ -727,7 +726,7 @@ class DateObject implements DateInterface
     */
     public function day(): int
     {
-      return (int)$this->datetime->format('d');
+        return (int)$this->datetime->format('d');
     }
 
     /*
@@ -737,7 +736,7 @@ class DateObject implements DateInterface
     */
     public function hour(): int
     {
-      return (int)$this->datetime->format('H');
+        return (int)$this->datetime->format('H');
     }
 
     /*
@@ -747,7 +746,7 @@ class DateObject implements DateInterface
     */
     public function minute(): int
     {
-      return (int)$this->datetime->format('i');
+        return (int)$this->datetime->format('i');
     }
 
     /*
@@ -757,7 +756,7 @@ class DateObject implements DateInterface
     */
     public function second(): int
     {
-      return (int)$this->datetime->format('s');
+        return (int)$this->datetime->format('s');
     }
 
     /*
@@ -767,7 +766,7 @@ class DateObject implements DateInterface
     */
     public function microsecond(): int
     {
-      return (int)$this->datetime->format('u');
+        return (int)$this->datetime->format('u');
     }
 
     /*
@@ -777,10 +776,10 @@ class DateObject implements DateInterface
     */
     public function timezone(): DateTimezoneInterface
     {
-      $timezone = $this->datetime->getTimezone();
-      return new DateIntervalObject(
-        $timezone->getName()
-      );
+        $timezone = $this->datetime->getTimezone();
+        return new DateIntervalObject(
+            $timezone->getName()
+        );
     }
 
     /*
@@ -790,6 +789,6 @@ class DateObject implements DateInterface
     */
     public function unixtime(): int
     {
-      return $this->datetime->getTimestamp();
+        return $this->datetime->getTimestamp();
     }
 }

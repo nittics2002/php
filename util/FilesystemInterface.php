@@ -1,23 +1,17 @@
 <?php
 
 /**
-*   FilesystemWsh
+*   FilesystemInterface
 *
 *   @version
-*
 */
 
 declare(strict_types=1);
 
-namespace Concerto\aaa;
+namespace Concerto\util;
 
-use COM;
-use RuntimeException;
-use Concerto\aaa\FilesystemInterface;
-
-class FilesystemWsh implements FilesystemInterface
+interface FilesystemInterface
 {
-
     /*
     *   copy
     *
@@ -30,14 +24,7 @@ class FilesystemWsh implements FilesystemInterface
         string $originFile,
         string $targetFile,
         ?bool $overwriteNewerFiles = false
-    ): void {
-        $com = self::createFsoComObject();
-        $com->CopyFile(
-            $originFile,
-            $targetFile,
-            $overwriteNewerFiles,
-        );
-    }
+    ): void;
 
     /*
     *   mkdir
@@ -49,52 +36,17 @@ class FilesystemWsh implements FilesystemInterface
     public static function mkdir(
         string $dirs,
         string | int | null $mode = 0777
-    ): void {
-        $com = self::createFsoComObject();
-        $com->CreateFolder(
-            $dirs,
-        );
-    }
+    ): void;
 
     /*
     *   exists
     *
     *   @param string $file
-    *   @return bool
+    *   @return
     */
     public static function exists(
         string $file
-    ): bool {
-        $com = self::createFsoComObject();
-        return $this->existsFolder($file) ||
-        $this->existsFile($file);
-    }
-
-    /*
-    *   existsFolder
-    *
-    *   @param string $path
-    *   @return bool
-    */
-    private static function existsFolder(
-        string $path
-    ): bool {
-        $com = self::createFsoComObject();
-        return $com->FolderExists($path);
-    }
-
-    /*
-    *   existsFile
-    *
-    *   @param string $path
-    *   @return bool
-    */
-    private static function existsFile(
-        string $path
-    ): bool {
-        $com = self::createFsoComObject();
-        return $com->FileExists($path);
-    }
+    );
 
     /*
     *   touch
@@ -102,35 +54,23 @@ class FilesystemWsh implements FilesystemInterface
     *   @param string $file
     *   @param ?int $time
     *   @param ?int $atime
-    *   @return void
+    *   @return string
     */
     public static function touch(
         string $file,
         ?int $time = null,
         ?int $atime = null
-    ): void {
-        throw new RuntimeException(
-            "not supported"
-        );
-    }
+    ): string;
 
     /*
     *   remove
     *
     *   @param string $file
-    *   @return void
+    *   @return string
     */
     public static function remove(
         string $file
-    ): void {
-        $com = self::createFsoComObject();
-
-        if ($this->existsFolder($file)) {
-            $com->DeleteFolder($file);
-        } else {
-            $com->DeleteFile($file);
-        }
-    }
+    ): string;
 
     /*
     *   chmod
@@ -146,11 +86,7 @@ class FilesystemWsh implements FilesystemInterface
         int $mode,
         ?int $umask = 0000,
         ?bool $recursive = false
-    ): void {
-        throw new RuntimeException(
-            "not supported"
-        );
-    }
+    ): void;
 
     /*
     *   chown
@@ -164,11 +100,7 @@ class FilesystemWsh implements FilesystemInterface
         string $files,
         string $user,
         bool $recursive = false
-    ): void {
-        throw new RuntimeException(
-            "not supported"
-        );
-    }
+    ): void;
 
     /*
     *   chgrp
@@ -182,11 +114,7 @@ class FilesystemWsh implements FilesystemInterface
         string $files,
         string | int $group,
         bool $recursive = false
-    ): void {
-        throw new RuntimeException(
-            "not supported"
-        );
-    }
+    ): void;
 
     /*
     *   rename
@@ -194,19 +122,13 @@ class FilesystemWsh implements FilesystemInterface
     *   @param string $origin
     *   @param string $target
     *   @param bool $overwrite
-    *   @return void
+    *   @return string
     */
     public static function rename(
         string $origin,
         string $target,
         bool $overwrite = false
-    ): void {
-        $com = self::createFsoComObject();
-        $com->MoveFile(
-            $origin,
-            $target,
-        );
-    }
+    ): string;
 
     /*
     *   symlink
@@ -218,11 +140,7 @@ class FilesystemWsh implements FilesystemInterface
     public static function symlink(
         string $target,
         string $link
-    ): void {
-        throw new RuntimeException(
-            "not supported"
-        );
-    }
+    ): void;
 
     /*
     *   readlink
@@ -232,11 +150,7 @@ class FilesystemWsh implements FilesystemInterface
     */
     public static function readlink(
         string $path
-    ): string {
-      throw new BadMethodCallException(
-        "not suported"
-      );
-    }
+    ): string;
 
     /*
     *   realpath
@@ -246,11 +160,7 @@ class FilesystemWsh implements FilesystemInterface
     */
     public static function realpath(
         string $path,
-    ): string {
-      throw new BadMethodCallException(
-        "not suported"
-      );
-    }
+    ): string;
 
     /*
     *   mirror
@@ -266,11 +176,7 @@ class FilesystemWsh implements FilesystemInterface
         string $targetDir,
         ?\Traversable $iterator = null,
         ?array $options = []
-    ): void {
-      throw new BadMethodCallException(
-        "not suported"
-      );
-    }
+    ): void;
 
     /*
     *   isAbsolutePath
@@ -280,11 +186,8 @@ class FilesystemWsh implements FilesystemInterface
     */
     public static function isAbsolutePath(
         string $file
-    ): bool {
-        $com = self::createFsoComObject();
-        return $com->GetAbsolutePathName($file) ===
-        $file;
-    }
+    ): bool;
+
 
     /*
     *   tempnam
@@ -298,29 +201,5 @@ class FilesystemWsh implements FilesystemInterface
         string $dir,
         ?string $prefix = '',
         ?string $suffix = ''
-    ): string {
-        $com = self::createFsoComObject();
-        $temp_name = $com->GetTempName();
-
-        return
-        $dir .
-        mb_substr($dir, -1, 1) === DIRECTORY_SEPARATOR ?
-        '' : DIRECTORY_SEPARATOR .
-        $prefix .
-        $com->GetBaseName($temp_name) .
-        $suffix .
-        $com->GetExtension($temp_name);
-    }
-
-    /*
-    *   createFsoComObject
-    *
-    *   @return COM
-    */
-    protected static function createFsoComObject(): COM
-    {
-        return new COM(
-            'Scripting.FileSystemObject',
-        );
-    }
+    ): string;
 }

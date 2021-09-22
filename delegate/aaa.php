@@ -4,22 +4,21 @@ namespace concerto\delegator;
 
 use Concerto\delegator\StandardDelegatorTrait;
 
-
 abstract class StandardDelegatorObject
 {
 
 
   //delegatorの定義と変換方法の定義
-  protected array $delegator = [
-    DelegateClass1::class => function(...$that) {
-      return new DelegateClass1(
-        $that->getId(),
-      );
+protected array $delegator = [
+    DelegateClass1::class => function (...$that) {
+        return new DelegateClass1(
+            $that->getId(),
+        );
     },
-    DelegateClass2::class => function(...$that) {
-      return new DelegateClass2(
-        $that->toString(),
-      );
+    DelegateClass2::class => function (...$that) {
+        return new DelegateClass2(
+            $that->toString(),
+        );
     },
   ];
 
@@ -27,41 +26,41 @@ abstract class StandardDelegatorObject
   //methodの定義
   //implements method は 定義が必要
 
-  public function impMethod1(
+public function impMethod1(
     int $name1,
     string $name2,
-  ):string {
-    
-    
-     $result = call_user_func_array(
-      DelegateClass1::class,
-      [$name2, $name1, true],
-     );
+): string {
+
+
+    $result = call_user_func_array(
+        DelegateClass1::class,
+        [$name2, $name1, true],
+    );
 
     if ($result === false) {
-      $this->exceptionMethod(
-        "aaaa"
-      );
-  }
-
-    
-    
-    
+        $this->exceptionMethod(
+            "aaaa"
+        );
+    }
 
 
 
 
 
-  protected array $methods = [
+
+
+
+
+    protected array $methods = [
     '__construct' => [
-      DelegateClass1::class,
-      'arguments' => [
-        'param_name1' => 'p_name3',
+    DelegateClass1::class,
+    'arguments' => [
+      'param_name1' => 'p_name3',
 
     ],
 
 
-  ];
+    ];
 
 
 
@@ -70,77 +69,77 @@ abstract class StandardDelegatorObject
 
 
     use StandardDelegatorTrait;
-    
+
     /**
-    *   @var string 
+    *   @var string
     */
     protected static string $delegatorNamespace;
-    
+
     /**
-    *   @var object 
+    *   @var object
     */
     protected object $delegator;
-    
+
     /**
     *   {inherit}
     */
-    protected static function delegatorNamespace():string
+    protected static function delegatorNamespace(): string
     {
         return static::$delegatorNamespace;
     }
-    
+
     /**
     *   {inherit}
     */
     abstract protected static function convertToOriginal(
         object $delegator
-    ):object;
-    
+    ): object;
+
     /**
     *   {inherit}
     */
     abstract protected static function convertToDelegator(
         object $original
-    ):object;
-    
+    ): object;
+
     /**
     *   {inherit}
     */
     public function __call(
         string $name,
         array $arguments
-    //): mixed {
+        //): mixed {
     ) {
         return static::convertAndExecuteAllArgumentsAndResult(
             [static::class, $name],
             $arguments
         );
     }
-    
+
     /**
     *   {inherit}
     */
     public static function __callStatic(
         string $name,
         array $arguments
-    //): mixed {
+        //): mixed {
     ) {
         return static::convertAndExecuteAllArgumentsAndResult(
             [static::class, $name],
             $arguments
         );
     }
-    
+
     /**
     *   {inherit}
     */
     public function __get(
         string $name
-    //): mixed {
+        //): mixed {
     ) {
         return $this->delegator->$name;
     }
-    
+
     /**
     *   {inherit}
     */
@@ -150,7 +149,7 @@ abstract class StandardDelegatorObject
     ): void {
         $this->delegator->$name = $arguments;
     }
-    
+
     /**
     *   {inherit}
     */
@@ -159,11 +158,12 @@ abstract class StandardDelegatorObject
     ): bool {
         return isset($this->delegator->$name);
     }
-    
+
     /**
     *   {inherit}
     */
-    public function __unset(string $name):void {
+    public function __unset(string $name): void
+    {
         unset($this->delegator->$name);
     }
 }

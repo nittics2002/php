@@ -4,19 +4,17 @@
 *   DatePeriodInterface
 *
 *   @version
-*
 */
 
 declare(strict_types=1);
 
-namespace Concerto\delegator;
+namespace Concerto\util;
 
 use DateInterface;
 use DateIntervalInterface;
 
 interface DatePeriodInterface
 {
-
     /*
     *   interval
     *

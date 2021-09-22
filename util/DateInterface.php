@@ -4,18 +4,16 @@
 *   DateInterface
 *
 *   @version
-*
 */
 
 declare(strict_types=1);
 
-namespace Concerto\contract;
+namespace Concerto\util;
 
 use DateTimeInterface;
 
 interface DateInterface extends DateTimeInterface
 {
-
     /*
     *   createFromFormat
     *
@@ -27,7 +25,7 @@ interface DateInterface extends DateTimeInterface
     public static function createFromFormat(
         string $format,
         string $datetime,
-        ?DateTimezoneInterface $timezone
+        ?DateTimezoneInterface $timezone,
     ): DateInterface;
 
     /*
@@ -79,7 +77,7 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function add(
-        DateIntervalInterface $interval
+        DateIntervalInterface $interval,
     ): DateInterface;
 
     /*
@@ -89,7 +87,7 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function addContext(
-        string $datetime
+        string $datetime,
     ): DateInterface;
 
     /*
@@ -99,7 +97,7 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function sub(
-        DateIntervalInterface $interval
+        DateIntervalInterface $interval,
     ): DateInterface;
 
     /*
@@ -109,7 +107,7 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function subContext(
-        string $datetime
+        string $datetime,
     ): DateInterface;
 
     /*
@@ -119,7 +117,7 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function addYears(
-        ?int $year
+        ?int $year,
     ): DateInterface;
 
     /*
@@ -129,7 +127,7 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function addMonths(
-        ?int $month
+        ?int $month,
     ): DateInterface;
 
     /*
@@ -139,7 +137,7 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function addWeeks(
-        ?int $week
+        ?int $week,
     ): DateInterface;
 
     /*
@@ -149,7 +147,7 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function addDays(
-        ?int $day
+        ?int $day,
     ): DateInterface;
 
     /*
@@ -159,7 +157,7 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function addHours(
-        ?int $hour
+        ?int $hour,
     ): DateInterface;
 
     /*
@@ -169,7 +167,7 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function addMinutes(
-        ?int $minute
+        ?int $minute,
     ): DateInterface;
 
     /*
@@ -179,7 +177,17 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function addSeconds(
-        ?int $second
+        ?int $second,
+    ): DateInterface;
+
+    /*
+    *   subQuaters
+    *
+    *   @param ?int $quater
+    *   @return DateInterface
+    */
+    public function subQuaters(
+        ?int $quater,
     ): DateInterface;
 
     /*
@@ -189,7 +197,7 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function subYears(
-        ?int $year
+        ?int $year,
     ): DateInterface;
 
     /*
@@ -199,7 +207,7 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function subMonths(
-        ?int $month
+        ?int $month,
     ): DateInterface;
 
     /*
@@ -209,7 +217,7 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function subWeeks(
-        ?int $week
+        ?int $week,
     ): DateInterface;
 
     /*
@@ -219,7 +227,7 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function subDays(
-        ?int $day
+        ?int $day,
     ): DateInterface;
 
     /*
@@ -229,7 +237,7 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function subHours(
-        ?int $hour
+        ?int $hour,
     ): DateInterface;
 
     /*
@@ -239,7 +247,7 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function subMinutes(
-        ?int $minute
+        ?int $minute,
     ): DateInterface;
 
     /*
@@ -249,8 +257,15 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function subSeconds(
-        ?int $second
+        ?int $second,
     ): DateInterface;
+
+    /*
+    *   nextQuater
+    *
+    *   @return DateInterface
+    */
+    public function nextQuater(): DateInterface;
 
     /*
     *   nextYear
@@ -279,6 +294,13 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function nextDay(): DateInterface;
+
+    /*
+    *   previousQuater
+    *
+    *   @return DateInterface
+    */
+    public function previousQuater(): DateInterface;
 
     /*
     *   previousYear
@@ -315,7 +337,7 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function modify(
-        string $modifier
+        string $modifier,
     ): DateInterface;
 
     /*
@@ -331,65 +353,74 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function lastDayOfMonth(): DateInterface;
+    /*
+    *   same
+    *
+    *   @param DateInterface $datetime
+    *   @return bool
+    */
+    public function same(
+        DateInterface $datetime,
+    ): bool;
 
     /*
     *   eq
     *
     *   @param DateInterface $datetime
-    *   @return DateInterface
+    *   @return bool
     */
     public function eq(
-        DateInterface $datetime
+        DateInterface $datetime,
     ): bool;
 
     /*
     *   ne
     *
     *   @param DateInterface $datetime
-    *   @return DateInterface
+    *   @return bool
     */
     public function ne(
-        DateInterface $datetime
+        DateInterface $datetime,
     ): bool;
 
     /*
     *   gt
     *
     *   @param DateInterface $datetime
-    *   @return DateInterface
+    *   @return bool
     */
     public function gt(
-        DateInterface $datetime
+        DateInterface $datetime,
     ): bool;
 
     /*
     *   ge
     *
     *   @param DateInterface $datetime
-    *   @return DateInterface
+    *   @return bool
     */
     public function ge(
-        DateInterface $datetime
+        DateInterface $datetime,
     ): bool;
 
     /*
     *   lt
     *
     *   @param DateInterface $datetime
-    *   @return DateInterface
+    *   @return bool
     */
     public function lt(
-        DateInterface $datetime
+        DateInterface $datetime,
     ): bool;
 
     /*
     *   le
     *
     *   @param DateInterface $datetime
-    *   @return DateInterface
+    *   @return bool
     */
     public function le(
-        DateInterface $datetime
+        DateInterface $datetime,
     ): bool;
 
     /*
@@ -447,6 +478,12 @@ interface DateInterface extends DateTimeInterface
     *   @return int
     */
     public function second(): int;
+    /*
+    *   microsecond
+    *
+    *   @return int
+    */
+    public function microsecond(): int;
 
     /*
     *   timezone

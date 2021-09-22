@@ -8,11 +8,10 @@
 
 declare(strict_types=1);
 
-namespace Concerto\delegator;
+namespace Concerto\util;
 
 interface StringInterface
 {
-
     /*
     *   lower
     *
@@ -20,7 +19,7 @@ interface StringInterface
     *   @return string
     */
     public static function lower(
-        string $string
+        string $string,
     ): string;
 
     /*
@@ -30,7 +29,7 @@ interface StringInterface
     *   @return string
     */
     public static function upper(
-        string $string
+        string $string,
     ): string;
 
     /*
@@ -40,7 +39,7 @@ interface StringInterface
     *   @return string
     */
     public static function title(
-        string $string
+        string $string,
     ): string;
 
     /*
@@ -50,7 +49,7 @@ interface StringInterface
     *   @return string
     */
     public static function study(
-        string $string
+        string $string,
     ): string;
 
     /*
@@ -60,7 +59,7 @@ interface StringInterface
     *   @return string
     */
     public static function camel(
-        string $string
+        string $string,
     ): string;
 
     /*
@@ -70,7 +69,7 @@ interface StringInterface
     *   @return string
     */
     public static function snake(
-        string $string
+        string $string,
     ): string;
 
     /*
@@ -82,7 +81,7 @@ interface StringInterface
     */
     public static function kana(
         string $string,
-        string $mode
+        string $mode,
     ): string;
 
     /*
@@ -92,7 +91,7 @@ interface StringInterface
     *   @return int
     */
     public static function length(
-        string $string
+        string $string,
     ): int;
 
     /*
@@ -102,7 +101,7 @@ interface StringInterface
     *   @return int
     */
     public static function width(
-        string $string
+        string $string,
     ): int;
 
     /*
@@ -112,7 +111,7 @@ interface StringInterface
     *   @return string
     */
     public static function trim(
-        string $string
+        string $string,
     ): string;
 
     /*
@@ -126,7 +125,7 @@ interface StringInterface
     public static function insert(
         string $string,
         string $insert,
-        int $offset
+        int $offset,
     ): string;
 
     /*
@@ -140,19 +139,21 @@ interface StringInterface
     public static function delete(
         string $string,
         int $offset,
-        int $length
+        int $length,
     ): string;
 
     /*
     *   encode
     *
     *   @param string $string
-    *   @param string $code
+    *   @param string $to_encoding
+    *   @param ?string $from_encoding
     *   @return string
     */
     public static function encode(
         string $string,
-        string $code
+        string $to_encoding,
+        ?string $from_encoding,
     ): string;
 
     /*
@@ -166,7 +167,7 @@ interface StringInterface
     public static function match(
         string $string,
         string $pattern,
-        ?string $option
+        ?string $option,
     ): bool;
 
     /*
@@ -180,19 +181,19 @@ interface StringInterface
     public static function matchAll(
         string $string,
         string $pattern,
-        ?string $option
+        ?string $option,
     ): array;
 
     /*
     *   implode
     *
-    *   @param string $string
+    *   @param array $array
     *   @param string $separator
     *   @return string
     */
     public static function implode(
         array $array,
-        string $separator
+        string $separator,
     ): string;
 
     /*
@@ -204,7 +205,7 @@ interface StringInterface
     */
     public static function explode(
         string $string,
-        string $separator
+        string $separator,
     ): array;
 
     /*
@@ -220,7 +221,7 @@ interface StringInterface
         string $string,
         string $pattern,
         string $replacement,
-        ?string $option
+        ?string $option,
     ): string;
 
     /*
@@ -236,7 +237,7 @@ interface StringInterface
         string $string,
         int $offset,
         ?int $length,
-        ?string $replacement
+        ?string $replacement,
     ): string;
 
     /*
@@ -250,19 +251,19 @@ interface StringInterface
     public static function substr(
         string $string,
         int $start,
-        ?int $length
+        ?int $length,
     ): string;
 
     /*
     *   split
     *
     *   @param string $string
-    *   @param ?int $length
+    *   @param string $pattern
     *   @return array
     */
     public static function split(
         string $string,
-        ?int $length
+        string $pattern,
     ): array;
 
     /*
@@ -276,7 +277,7 @@ interface StringInterface
     public static function search(
         string $string,
         string $pattern,
-        ?string $option
+        ?string $option,
     ): array;
 
     /*
@@ -286,7 +287,7 @@ interface StringInterface
     *   @return bool
     */
     public static function isEmpty(
-        string $string
+        string $string,
     ): bool;
 
     /*
@@ -300,4 +301,16 @@ interface StringInterface
         string $string,
         ?string $encoding,
     ): bool;
+
+    /**
+    *   文字を1文字毎配列変換
+    *
+    *   @param string $string
+    *   @param ?string ?$encoding
+    *   @return array
+    **/
+    public static function strToArray(
+        string $string,
+        ?string $encoding,
+    ): array;
 }

@@ -4,16 +4,14 @@
 *   DateInterface
 *
 *   @version
-*
 */
 
 declare(strict_types=1);
 
-namespace Concerto\delegator;
+namespace Concerto\util;
 
 interface DateTimeZoneInterface
 {
-
     /*
     *   name
     *
