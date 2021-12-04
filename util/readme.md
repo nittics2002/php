@@ -1,3 +1,9 @@
+#211204
+
+- DateObject
+    - quater,half　要機能追加
+
+
 #210917
 
 - StringInterface

@@ -12,11 +12,18 @@ namespace Concerto\util\implement;
 
 use DateTimeImmutable;
 use InvalidArgumentException;
-use Concerto\util\DateInterface;
+use Concerto\util\{
+    DateInterface,
+    DateIntervalInterface,
+    DateTimezoneInterface,
+};
+use Concerto\util\implements\{
+    DateIntervalObject,
+    DatePeriodObject,
+};
 
 class DateObject implements DateInterface
 {
-
     /*
     *   @var DateTimeInterface
     */
@@ -163,11 +170,11 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   thisFiscalYear
+    *   thisHalf
     *
     *   @return DateInterface
     */
-    public static function thisFiscalYear(): DateInterface
+    public static function thisHalf(): DateInterface
     {
         $today = self::today();
 
@@ -177,15 +184,6 @@ class DateObject implements DateInterface
                 (int)$today->format('n'),
             )
         );
-    }
-
-    /*
-    *   thisHalf
-    *
-    *   @return DateInterface
-    */
-    public static function thisHalf(): DateInterface
-    {
     }
 
     /*
@@ -222,6 +220,21 @@ class DateObject implements DateInterface
     }
 
     /*
+    *   datetimeToString
+    *
+    *   @param DateInterface $date
+    *   @return string
+    */
+    protected datetimeToString(
+        DateInterface $date
+    ): string
+    {
+        return $date->fotmat(
+            DateTimeInterface::ATOM,
+        );
+    }
+
+    /*
     *   add
     *
     *   @param DateInterface $interval
@@ -232,21 +245,8 @@ class DateObject implements DateInterface
     ): DateInterface {
         $result = $this->datetime->add($interval);
         return new $this->__construct(
-            $result->format(
-                DateTimeInterface::ATOM
-            )
+            $this->datetimeToString($result),
         );
-    }
-
-    /*
-    *   addContext
-    *
-    *   @param string $datetime
-    *   @return DateInterface
-    */
-    public function addContext(
-        string $datetime,
-    ): DateInterface {
     }
 
     /*
@@ -260,21 +260,79 @@ class DateObject implements DateInterface
     ): DateInterface {
         $result = $this->datetime->sub($interval);
         return new $this->__construct(
-            $result->format(
-                DateTimeInterface::ATOM
-            )
+            $this->datetimeToString($result),
         );
     }
 
     /*
-    *   subContext
+    *   addDuration
     *
-    *   @param string $datetime
+    *   @param int $duration
+    *   @param string $designator
+    *   @param ?bool $isTime
     *   @return DateInterface
     */
-    public function subContext(
-        string $datetime,
+    protected function addDuration(
+        int $duration,
+        string $designator,
+        ?bool $isTime = false,
     ): DateInterface {
+        return $duration < 0?
+            $this->subDuration(
+                abs($duration),
+                $designator,
+            ):
+            $this->datetimeToString(
+                $this->add(
+                    new DateInterval(
+                        $isTime? 'PT':'T' .
+                        "{$duration}{$designator}"
+                    ),
+                ),
+            );
+    }
+
+    /*
+    *   subDuration
+    *
+    *   @param int $duration
+    *   @param string $designator
+    *   @param ?bool $isTime
+    *   @return DateInterface
+    */
+    protected function subDuration(
+        int $duration,
+        string $designator,
+        ?bool $isTime = false,
+    ): DateInterface {
+        return $duration < 0?
+            $this->addDuration(
+                abs($duration),
+                $designator,
+            ):
+            $this->datetimeToString(
+                $this->sub(
+                    new DateInterval(
+                        $isTime? 'PT':'T' .
+                        "{$duration}{$designator}"
+                    ),
+                ),
+            );
+    }
+
+    /*
+    *   addHalfs
+    *
+    *   @param ?int $half
+    *   @return DateInterface
+    */
+    public function addHalfs(
+        ?int $half,
+    ): DateInterface {
+        return $this->addDuration(
+            $year * 6,
+            'M',
+        );
     }
 
     /*
@@ -286,6 +344,10 @@ class DateObject implements DateInterface
     public function addQuaters(
         ?int $quater
     ): DateInterface {
+        return $this->addDuration(
+            $year * 3,
+            'M',
+        );
     }
 
     /*
@@ -295,8 +357,12 @@ class DateObject implements DateInterface
     *   @return DateInterface
     */
     public function addYears(
-        ?int $year,
+        ?int $year = 1,
     ): DateInterface {
+        return $this->addDuration(
+            $year,
+            'Y',
+        );
     }
 
     /*
@@ -308,6 +374,10 @@ class DateObject implements DateInterface
     public function addMonths(
         ?int $month,
     ): DateInterface {
+        return $this->addDuration(
+            $year,
+            'M',
+        );
     }
 
     /*
@@ -319,6 +389,10 @@ class DateObject implements DateInterface
     public function addWeeks(
         ?int $week,
     ): DateInterface {
+        return $this->addDuration(
+            $year,
+            'W',
+        );
     }
 
     /*
@@ -330,6 +404,10 @@ class DateObject implements DateInterface
     public function addDays(
         ?int $day,
     ): DateInterface {
+        return $this->addDuration(
+            $year,
+            'D',
+        );
     }
 
     /*
@@ -341,6 +419,11 @@ class DateObject implements DateInterface
     public function addHours(
         ?int $hour,
     ): DateInterface {
+        return $this->addDuration(
+            $year,
+            'H',
+            true,
+        );
     }
 
     /*
@@ -352,6 +435,11 @@ class DateObject implements DateInterface
     public function addMinutes(
         ?int $minute,
     ): DateInterface {
+        return $this->addDuration(
+            $year,
+            'M',
+            true,
+        );
     }
 
     /*
@@ -363,6 +451,26 @@ class DateObject implements DateInterface
     public function addSeconds(
         ?int $second,
     ): DateInterface {
+        return $this->addDuration(
+            $year,
+            'S',
+            true,
+        );
+    }
+
+    /*
+    *   subHalfs
+    *
+    *   @param ?int $half
+    *   @return DateInterface
+    */
+    public function subHalfs(
+        ?int $half,
+    ): DateInterface{
+        return $this->subDuration(
+            $year * 3,
+            'M',
+        );
     }
 
     /*
@@ -374,6 +482,10 @@ class DateObject implements DateInterface
     public function subQuaters(
         ?int $quater,
     ): DateInterface {
+        return $this->subDuration(
+            $year * 3,
+            'M',
+        );
     }
 
     /*
@@ -385,6 +497,10 @@ class DateObject implements DateInterface
     public function subYears(
         ?int $year,
     ): DateInterface {
+        return $this->subDuration(
+            $year,
+            'Y',
+        );
     }
 
     /*
@@ -396,6 +512,10 @@ class DateObject implements DateInterface
     public function subMonths(
         ?int $month,
     ): DateInterface {
+        return $this->subDuration(
+            $year,
+            'M',
+        );
     }
 
     /*
@@ -407,6 +527,10 @@ class DateObject implements DateInterface
     public function subWeeks(
         ?int $week,
     ): DateInterface {
+        return $this->subDuration(
+            $year,
+            'W',
+        );
     }
 
     /*
@@ -418,6 +542,10 @@ class DateObject implements DateInterface
     public function subDays(
         ?int $day,
     ): DateInterface {
+        return $this->subDuration(
+            $year,
+            'D',
+        );
     }
 
     /*
@@ -429,6 +557,11 @@ class DateObject implements DateInterface
     public function subHours(
         ?int $hour,
     ): DateInterface {
+        return $this->subDuration(
+            $year,
+            'H',
+            true,
+        );
     }
 
     /*
@@ -440,6 +573,11 @@ class DateObject implements DateInterface
     public function subMinutes(
         ?int $minute,
     ): DateInterface {
+        return $this->subDuration(
+            $year,
+            'M',
+            true,
+        );
     }
 
     /*
@@ -451,6 +589,24 @@ class DateObject implements DateInterface
     public function subSeconds(
         ?int $second,
     ): DateInterface {
+        return $this->subDuration(
+            $year,
+            'S',
+            true,
+        );
+    }
+
+    /*
+    *   nextHalf
+    *
+    *   @return DateInterface
+    */
+    public function nextHalf(): DateInterface
+    {
+        return $this->addDuration(
+            6,
+            'M',
+        );
     }
 
     /*
@@ -460,6 +616,10 @@ class DateObject implements DateInterface
     */
     public function nextQuater(): DateInterface
     {
+        return $this->addDuration(
+            3,
+            'M',
+        );
     }
 
     /*
@@ -469,6 +629,10 @@ class DateObject implements DateInterface
     */
     public function nextYear(): DateInterface
     {
+        return $this->addDuration(
+            1,
+            'Y',
+        );
     }
 
     /*
@@ -478,6 +642,10 @@ class DateObject implements DateInterface
     */
     public function nextMonth(): DateInterface
     {
+        return $this->addDuration(
+            1,
+            'M',
+        );
     }
 
     /*
@@ -487,6 +655,10 @@ class DateObject implements DateInterface
     */
     public function nextWeek(): DateInterface
     {
+        return $this->addDuration(
+            1,
+            'W',
+        );
     }
 
     /*
@@ -496,6 +668,23 @@ class DateObject implements DateInterface
     */
     public function nextDay(): DateInterface
     {
+        return $this->addDuration(
+            1,
+            'D',
+        );
+    }
+
+    /*
+    *   previousHalf
+    *
+    *   @return DateInterface
+    */
+    public function previousHalf(): DateInterface
+    {
+        return $this->subDuration(
+            6,
+            'M',
+        );
     }
 
     /*
@@ -505,6 +694,10 @@ class DateObject implements DateInterface
     */
     public function previousQuater(): DateInterface
     {
+        return $this->subDuration(
+            3,
+            'M',
+        );
     }
 
     /*
@@ -514,6 +707,10 @@ class DateObject implements DateInterface
     */
     public function previousYear(): DateInterface
     {
+        return $this->subDuration(
+            1,
+            'Y',
+        );
     }
 
     /*
@@ -523,6 +720,10 @@ class DateObject implements DateInterface
     */
     public function previousMonth(): DateInterface
     {
+        return $this->subDuration(
+            1,
+            'M',
+        );
     }
 
     /*
@@ -532,6 +733,10 @@ class DateObject implements DateInterface
     */
     public function previousWeek(): DateInterface
     {
+        return $this->subDuration(
+            1,
+            'W',
+        );
     }
 
     /*
@@ -541,6 +746,10 @@ class DateObject implements DateInterface
     */
     public function previousDay(): DateInterface
     {
+        return $this->subDuration(
+            1,
+            'D',
+        );
     }
 
     /*
@@ -563,8 +772,8 @@ class DateObject implements DateInterface
         }
 
         return new $this->__construct(
-            $result->format(
-                DateTimeInterface::ATOM
+            $this->datetimeToString(
+                $result
             )
         );
     }
@@ -603,6 +812,18 @@ class DateObject implements DateInterface
         DateInterface $datetime,
     ): bool {
         return $this->datetime === $datetime;
+    }
+
+    /*
+    *   different
+    *
+    *   @param DateInterface $datetime
+    *   @return bool
+    */
+    public function different(
+        DateInterface $datetime,
+    ): bool {
+        return $this->datetime !== $datetime;
     }
 
     /*
@@ -790,5 +1011,76 @@ class DateObject implements DateInterface
     public function unixtime(): int
     {
         return $this->datetime->getTimestamp();
+    }
+    
+    /*
+    *   period
+    *
+    *   @param DateIntervalInterface $interval
+    *   @param ?bool $exclude_start_date
+    *   @return DatePeriodInterface
+    */
+    public function period(
+        DateIntervalInterface $interval,
+        ?bool $exclude_start_date = false,
+    ): DatePeriodInterface {
+        return new DatePeriodObject(
+            $this,
+            $interval,
+            $exclude_start_date?
+                DatePeriod::EXCLUDE_START_DATE:0
+        );
+    }
+    
+    /*
+    *   {inherit}
+    * 
+    *   @return DateInterface
+    */
+    public function diff(
+        DateTimeInterface $targetObject,
+        bool $absolute = false,
+    ): DateInterface {
+        $result = $this->datetime->diff(
+            $targetObject,
+            $absolute,
+        );
+        return new $this->__construct(
+            $this->datetimeToString(
+                $result,
+            );
+        );
+    }
+    
+    /*
+    *   {inherit}
+    */
+    public function format(
+        string $format,
+    ): string {
+        return $this->datetime->format(
+            $format,
+        );
+    }
+    
+    /*
+    *   {inherit}
+    */
+    public function getOffset():int
+    {
+        return $this->datetime->getOffset();
+    }
+    
+    /*
+    *   {inherit}
+    * 
+    *   @return DateTimeZoneInterface
+    */
+    public function getTimezone():DateTimeZoneInterface
+    {
+        $result = $this->datetime->getTimezone();
+        return new DateTimeZoneObject(
+            $result->getName(),
+        );
     }
 }

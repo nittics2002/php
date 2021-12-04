@@ -57,11 +57,11 @@ interface DateInterface extends DateTimeInterface
     public static function tomorrow(): DateInterface;
 
     /*
-    *   thisFiscalYear
+    *   thisHalf
     *
     *   @return DateInterface
     */
-    public static function thisFiscalYear(): DateInterface;
+    public static function thisHalf(): DateInterface;
 
     /*
     *   thisQuater
@@ -95,16 +95,6 @@ interface DateInterface extends DateTimeInterface
     ): DateInterface;
 
     /*
-    *   addContext
-    *
-    *   @param string $datetime
-    *   @return DateInterface
-    */
-    public function addContext(
-        string $datetime,
-    ): DateInterface;
-
-    /*
     *   sub
     *
     *   @param DateInterface $interval
@@ -115,23 +105,13 @@ interface DateInterface extends DateTimeInterface
     ): DateInterface;
 
     /*
-    *   subContext
+    *   addHalfs
     *
-    *   @param string $datetime
+    *   @param ?int $half
     *   @return DateInterface
     */
-    public function subContext(
-        string $datetime,
-    ): DateInterface;
-
-    /*
-    *   addFiscalYears
-    *
-    *   @param ?int $fiscalYear
-    *   @return DateInterface
-    */
-    public function addFiscalYears(
-        ?int $fiscalYear,
+    public function addHalfs(
+        ?int $half,
     ): DateInterface;
 
     /*
@@ -215,13 +195,13 @@ interface DateInterface extends DateTimeInterface
     ): DateInterface;
 
     /*
-    *   subFiscalYears
+    *   subHalfs
     *
-    *   @param ?int $fiscalYear
+    *   @param ?int $half
     *   @return DateInterface
     */
-    public function subFiscalYears(
-        ?int $fiscalYear,
+    public function subHalfs(
+        ?int $half,
     ): DateInterface;
 
     /*
@@ -305,11 +285,11 @@ interface DateInterface extends DateTimeInterface
     ): DateInterface;
 
     /*
-    *   nextFiscalYear
+    *   nextHalf
     *
     *   @return DateInterface
     */
-    public function nextFiscalYear(): DateInterface;
+    public function nextHalf(): DateInterface;
 
     /*
     *   nextQuater
@@ -347,11 +327,11 @@ interface DateInterface extends DateTimeInterface
     public function nextDay(): DateInterface;
 
     /*
-    *   previousFiscalYear
+    *   previousHalf
     *
     *   @return DateInterface
     */
-    public function previousFiscalYear(): DateInterface;
+    public function previousHalf(): DateInterface;
 
     /*
     *   previousQuater
@@ -399,11 +379,11 @@ interface DateInterface extends DateTimeInterface
     ): DateInterface;
 
     /*
-    *   firstDayOfFiscalYear
+    *   firstDayOfHalf
     *
     *   @return DateInterface
     */
-    public function firstDayOfFiscalYear(): DateInterface;
+    public function firstDayOfHalf(): DateInterface;
 
     /*
     *   firstDayOfQuater
@@ -427,11 +407,11 @@ interface DateInterface extends DateTimeInterface
     public function firstDayOfMonth(): DateInterface;
 
     /*
-    *   lastDayOfFiscalYear
+    *   lastDayOfHalf
     *
     *   @return DateInterface
     */
-    public function lastDayOfFiscalYear(): DateInterface;
+    public function lastDayOfHalf(): DateInterface;
 
     /*
     *   lastDayOfQuater
@@ -461,6 +441,16 @@ interface DateInterface extends DateTimeInterface
     *   @return bool
     */
     public function same(
+        DateInterface $datetime,
+    ): bool;
+    
+    /*
+    *   different
+    *
+    *   @param DateInterface $datetime
+    *   @return bool
+    */
+    public function different(
         DateInterface $datetime,
     ): bool;
 
