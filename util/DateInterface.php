@@ -3,7 +3,7 @@
 /**
 *   DateInterface
 *
-*   @version
+*   @version 211204
 */
 
 declare(strict_types=1);
@@ -57,6 +57,20 @@ interface DateInterface extends DateTimeInterface
     public static function tomorrow(): DateInterface;
 
     /*
+    *   thisFiscalYear
+    *
+    *   @return DateInterface
+    */
+    public static function thisFiscalYear(): DateInterface;
+
+    /*
+    *   thisQuater
+    *
+    *   @return DateInterface
+    */
+    public static function thisQuater(): DateInterface;
+
+    /*
     *   thisYear
     *
     *   @return DateInterface
@@ -108,6 +122,26 @@ interface DateInterface extends DateTimeInterface
     */
     public function subContext(
         string $datetime,
+    ): DateInterface;
+
+    /*
+    *   addFiscalYears
+    *
+    *   @param ?int $fiscalYear
+    *   @return DateInterface
+    */
+    public function addFiscalYears(
+        ?int $fiscalYear,
+    ): DateInterface;
+
+    /*
+    *   addQuaters
+    *
+    *   @param ?int $quater
+    *   @return DateInterface
+    */
+    public function addQuaters(
+        ?int $quater,
     ): DateInterface;
 
     /*
@@ -178,6 +212,16 @@ interface DateInterface extends DateTimeInterface
     */
     public function addSeconds(
         ?int $second,
+    ): DateInterface;
+
+    /*
+    *   subFiscalYears
+    *
+    *   @param ?int $fiscalYear
+    *   @return DateInterface
+    */
+    public function subFiscalYears(
+        ?int $fiscalYear,
     ): DateInterface;
 
     /*
@@ -261,6 +305,13 @@ interface DateInterface extends DateTimeInterface
     ): DateInterface;
 
     /*
+    *   nextFiscalYear
+    *
+    *   @return DateInterface
+    */
+    public function nextFiscalYear(): DateInterface;
+
+    /*
     *   nextQuater
     *
     *   @return DateInterface
@@ -294,6 +345,13 @@ interface DateInterface extends DateTimeInterface
     *   @return DateInterface
     */
     public function nextDay(): DateInterface;
+
+    /*
+    *   previousFiscalYear
+    *
+    *   @return DateInterface
+    */
+    public function previousFiscalYear(): DateInterface;
 
     /*
     *   previousQuater
@@ -341,6 +399,27 @@ interface DateInterface extends DateTimeInterface
     ): DateInterface;
 
     /*
+    *   firstDayOfFiscalYear
+    *
+    *   @return DateInterface
+    */
+    public function firstDayOfFiscalYear(): DateInterface;
+
+    /*
+    *   firstDayOfQuater
+    *
+    *   @return DateInterface
+    */
+    public function firstDayOfQuater(): DateInterface;
+
+    /*
+    *   firstDayOfYear
+    *
+    *   @return DateInterface
+    */
+    public function firstDayOfYear(): DateInterface;
+
+    /*
     *   firstDayOfMonth
     *
     *   @return DateInterface
@@ -348,11 +427,33 @@ interface DateInterface extends DateTimeInterface
     public function firstDayOfMonth(): DateInterface;
 
     /*
+    *   lastDayOfFiscalYear
+    *
+    *   @return DateInterface
+    */
+    public function lastDayOfFiscalYear(): DateInterface;
+
+    /*
+    *   lastDayOfQuater
+    *
+    *   @return DateInterface
+    */
+    public function lastDayOfQuater(): DateInterface;
+
+    /*
+    *   lastDayOfYear
+    *
+    *   @return DateInterface
+    */
+    public function lastDayOfYear(): DateInterface;
+
+    /*
     *   lastDayOfMonth
     *
     *   @return DateInterface
     */
     public function lastDayOfMonth(): DateInterface;
+    
     /*
     *   same
     *
@@ -498,4 +599,16 @@ interface DateInterface extends DateTimeInterface
     *   @return int
     */
     public function unixtime(): int;
+    
+    /*
+    *   period
+    *
+    *   @param DateIntervalInterface $interval
+    *   @param ?bool $exclude_start_date
+    *   @return DatePeriodInterface
+    */
+    public function period(
+        DateIntervalInterface $interval,
+        ?bool $exclude_start_date
+    ): DatePeriodInterface;
 }

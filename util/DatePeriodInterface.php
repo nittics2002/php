@@ -3,17 +3,19 @@
 /**
 *   DatePeriodInterface
 *
-*   @version
+*   @version 211204
 */
 
 declare(strict_types=1);
 
 namespace Concerto\util;
 
-use DateInterface;
-use DateIntervalInterface;
+use Countable;
+use Concerto\util\DateInterface;
+use Concerto\util\DateIntervalInterface;
 
-interface DatePeriodInterface
+interface DatePeriodInterface extends Traversable,
+    Countable
 {
     /*
     *   interval
@@ -37,9 +39,9 @@ interface DatePeriodInterface
     public function endDate(): DateInterface;
 
     /*
-    *   recurrences
+    *   current
     *
-    *   @return int
+    *   @return DateInterface
     */
-    public function recurrences(): ?int;
+    public function current(): DateInterface;
 }
