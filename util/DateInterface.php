@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Concerto\util;
 
+use DateTime;
+use DateTimeImmutable;
 use DateTimeInterface;
 
 interface DateInterface extends DateTimeInterface
@@ -601,4 +603,18 @@ interface DateInterface extends DateTimeInterface
         DateIntervalInterface $interval,
         ?bool $exclude_start_date
     ): DatePeriodInterface;
+
+    /*
+    *   toDateTime
+    *
+    *   @return DateTime
+    */
+    public function toDateTime(): DateTime;
+
+    /*
+    *   toDateTimeImmutable
+    *
+    *   @return DateTime
+    */
+    public function toDateTimeImmutable(): DateTimeImmutable;
 }

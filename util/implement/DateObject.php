@@ -25,9 +25,9 @@ use Concerto\util\implements\{
 class DateObject implements DateInterface
 {
     /*
-    *   @var DateTimeInterface
+    *   @var DateTimeImmutable
     */
-    protected DateTimeInterface $datetime;
+    protected DateTimeImmutable $datetime;
 
     /*
     *   @var int
@@ -69,12 +69,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   createFromFormat
-    *
-    *   @param string $format
-    *   @param string $datetime
-    *   @param ?DateTimezoneInterface $timezone
-    *   @return DateInterface
+    *   {inherit}
     */
     public static function createFromFormat(
         string $format,
@@ -95,9 +90,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   now
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public static function now(): DateInterface
     {
@@ -105,9 +98,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   today
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public static function today(): DateInterface
     {
@@ -117,9 +108,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   yeasterday
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public static function yeasterday(): DateInterface
     {
@@ -129,9 +118,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   tomorrow
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public static function tomorrow(): DateInterface
     {
@@ -170,9 +157,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   thisHalf
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public static function thisHalf(): DateInterface
     {
@@ -187,18 +172,14 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   thisQuater
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public static function thisQuater(): DateInterface
     {
     }
 
     /*
-    *   thisYear
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public static function thisYear(): DateInterface
     {
@@ -208,9 +189,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   thisMonth
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public static function thisMonth(): DateInterface
     {
@@ -235,10 +214,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   add
-    *
-    *   @param DateInterface $interval
-    *   @return DateInterface
+    *   {inherit}
     */
     public function add(
         DateIntervalInterface $interval,
@@ -250,10 +226,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   sub
-    *
-    *   @param DateInterface $interval
-    *   @return DateInterface
+    *   {inherit}
     */
     public function sub(
         DateIntervalInterface $interval,
@@ -321,10 +294,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   addHalfs
-    *
-    *   @param ?int $half
-    *   @return DateInterface
+    *   {inherit}
     */
     public function addHalfs(
         ?int $half,
@@ -336,10 +306,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   addQuaters
-    *
-    *   @param ?int $quater
-    *   @return DateInterface
+    *   {inherit}
     */
     public function addQuaters(
         ?int $quater
@@ -351,10 +318,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   addYears
-    *
-    *   @param ?int $year
-    *   @return DateInterface
+    *   {inherit}
     */
     public function addYears(
         ?int $year = 1,
@@ -366,10 +330,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   addMonths
-    *
-    *   @param ?int $month
-    *   @return DateInterface
+    *   {inherit}
     */
     public function addMonths(
         ?int $month,
@@ -381,10 +342,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   addWeeks
-    *
-    *   @param ?int $week
-    *   @return DateInterface
+    *   {inherit}
     */
     public function addWeeks(
         ?int $week,
@@ -396,10 +354,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   addDays
-    *
-    *   @param ?int $day
-    *   @return DateInterface
+    *   {inherit}
     */
     public function addDays(
         ?int $day,
@@ -411,10 +366,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   addHours
-    *
-    *   @param ?int $hour
-    *   @return DateInterface
+    *   {inherit}
     */
     public function addHours(
         ?int $hour,
@@ -427,10 +379,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   addMinutes
-    *
-    *   @param ?int $minute
-    *   @return DateInterface
+    *   {inherit}
     */
     public function addMinutes(
         ?int $minute,
@@ -443,10 +392,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   addSeconds
-    *
-    *   @param ?int $second
-    *   @return DateInterface
+    *   {inherit}
     */
     public function addSeconds(
         ?int $second,
@@ -459,10 +405,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   subHalfs
-    *
-    *   @param ?int $half
-    *   @return DateInterface
+    *   {inherit}
     */
     public function subHalfs(
         ?int $half,
@@ -474,10 +417,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   subQuaters
-    *
-    *   @param ?int $quater
-    *   @return DateInterface
+    *   {inherit}
     */
     public function subQuaters(
         ?int $quater,
@@ -489,10 +429,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   subYears
-    *
-    *   @param ?int $year
-    *   @return DateInterface
+    *   {inherit}
     */
     public function subYears(
         ?int $year,
@@ -504,10 +441,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   subMonths
-    *
-    *   @param ?int $month
-    *   @return DateInterface
+    *   {inherit}
     */
     public function subMonths(
         ?int $month,
@@ -519,10 +453,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   subWeeks
-    *
-    *   @param ?int $week
-    *   @return DateInterface
+    *   {inherit}
     */
     public function subWeeks(
         ?int $week,
@@ -534,10 +465,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   subDays
-    *
-    *   @param ?int $day
-    *   @return DateInterface
+    *   {inherit}
     */
     public function subDays(
         ?int $day,
@@ -549,10 +477,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   subHours
-    *
-    *   @param ?int $hour
-    *   @return DateInterface
+    *   {inherit}
     */
     public function subHours(
         ?int $hour,
@@ -565,10 +490,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   subMinutes
-    *
-    *   @param ?int $minute
-    *   @return DateInterface
+    *   {inherit}
     */
     public function subMinutes(
         ?int $minute,
@@ -581,10 +503,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   subSeconds
-    *
-    *   @param ?int $second
-    *   @return DateInterface
+    *   {inherit}
     */
     public function subSeconds(
         ?int $second,
@@ -597,9 +516,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   nextHalf
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public function nextHalf(): DateInterface
     {
@@ -610,9 +527,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   nextQuater
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public function nextQuater(): DateInterface
     {
@@ -623,9 +538,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   nextYear
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public function nextYear(): DateInterface
     {
@@ -636,9 +549,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   nextMonth
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public function nextMonth(): DateInterface
     {
@@ -649,9 +560,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   nextWeek
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public function nextWeek(): DateInterface
     {
@@ -662,9 +571,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   nextDay
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public function nextDay(): DateInterface
     {
@@ -675,9 +582,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   previousHalf
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public function previousHalf(): DateInterface
     {
@@ -688,9 +593,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   previousQuater
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public function previousQuater(): DateInterface
     {
@@ -701,9 +604,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   previousYear
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public function previousYear(): DateInterface
     {
@@ -714,9 +615,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   previousMonth
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public function previousMonth(): DateInterface
     {
@@ -727,9 +626,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   previousWeek
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public function previousWeek(): DateInterface
     {
@@ -740,9 +637,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   previousDay
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public function previousDay(): DateInterface
     {
@@ -753,10 +648,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   modify
-    *
-    *   @param string $modifir
-    *   @return DateInterface
+    *   {inherit}
     */
     public function modify(
         string $modifier,
@@ -779,9 +671,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   firstDayOfMonth
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public function firstDayOfMonth(): DateInterface
     {
@@ -791,9 +681,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   lastDayOfMonth
-    *
-    *   @return DateInterface
+    *   {inherit}
     */
     public function lastDayOfMonth(): DateInterface
     {
@@ -803,10 +691,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   same
-    *
-    *   @param DateInterface $datetime
-    *   @return bool
+    *   {inherit}
     */
     public function same(
         DateInterface $datetime,
@@ -815,10 +700,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   different
-    *
-    *   @param DateInterface $datetime
-    *   @return bool
+    *   {inherit}
     */
     public function different(
         DateInterface $datetime,
@@ -827,10 +709,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   eq
-    *
-    *   @param DateInterface $datetime
-    *   @return bool
+    *   {inherit}
     */
     public function eq(
         DateInterface $datetime,
@@ -839,10 +718,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   ne
-    *
-    *   @param DateInterface $datetime
-    *   @return bool
+    *   {inherit}
     */
     public function ne(
         DateInterface $datetime,
@@ -851,10 +727,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   gt
-    *
-    *   @param DateInterface $datetime
-    *   @return bool
+    *   {inherit}
     */
     public function gt(
         DateInterface $datetime,
@@ -863,10 +736,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   ge
-    *
-    *   @param DateInterface $datetime
-    *   @return bool
+    *   {inherit}
     */
     public function ge(
         DateInterface $datetime,
@@ -875,10 +745,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   lt
-    *
-    *   @param DateInterface $datetime
-    *   @return bool
+    *   {inherit}
     */
     public function lt(
         DateInterface $datetime,
@@ -887,10 +754,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   le
-    *
-    *   @param DateInterface $datetime
-    *   @return bool
+    *   {inherit}
     */
     public function le(
         DateInterface $datetime,
@@ -899,9 +763,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   toArray
-    *
-    *   @return array
+    *   {inherit}
     */
     public function toArray(): array
     {
@@ -911,9 +773,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   year
-    *
-    *   @return int
+    *   {inherit}
     */
     public function year(): int
     {
@@ -921,9 +781,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   month
-    *
-    *   @return int
+    *   {inherit}
     */
     public function month(): int
     {
@@ -931,9 +789,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   week
-    *
-    *   @return int
+    *   {inherit}
     */
     public function week(): int
     {
@@ -941,9 +797,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   day
-    *
-    *   @return int
+    *   {inherit}
     */
     public function day(): int
     {
@@ -951,9 +805,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   hour
-    *
-    *   @return hour
+    *   {inherit}
     */
     public function hour(): int
     {
@@ -961,9 +813,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   minute
-    *
-    *   @return int
+    *   {inherit}
     */
     public function minute(): int
     {
@@ -971,9 +821,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   second
-    *
-    *   @return int
+    *   {inherit}
     */
     public function second(): int
     {
@@ -981,9 +829,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   microsecond
-    *
-    *   @return int
+    *   {inherit}
     */
     public function microsecond(): int
     {
@@ -991,9 +837,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   timezone
-    *
-    *   @return DateTimezoneInterface
+    *   {inherit}
     */
     public function timezone(): DateTimezoneInterface
     {
@@ -1004,9 +848,7 @@ class DateObject implements DateInterface
     }
 
     /*
-    *   unixtime
-    *
-    *   @return int
+    *   {inherit}
     */
     public function unixtime(): int
     {
@@ -1014,11 +856,7 @@ class DateObject implements DateInterface
     }
     
     /*
-    *   period
-    *
-    *   @param DateIntervalInterface $interval
-    *   @param ?bool $exclude_start_date
-    *   @return DatePeriodInterface
+    *   {inherit}
     */
     public function period(
         DateIntervalInterface $interval,
@@ -1030,6 +868,28 @@ class DateObject implements DateInterface
             $exclude_start_date?
                 DatePeriod::EXCLUDE_START_DATE:0
         );
+    }
+
+    /*
+    *   toDateTime
+    *
+    *   @return DateTime
+    */
+    public function toDateTime(): DateTime
+    {
+        return DateTime::createFromImmutable(
+            $this->datetime
+        );
+    }
+
+    /*
+    *   toDateTimeImmutable
+    *
+    *   @return DateTime
+    */
+    public function toDateTimeImmutable(): DateTimeImmutable
+    {
+        return $this->datetime;
     }
     
     /*
