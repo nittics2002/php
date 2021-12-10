@@ -21,12 +21,32 @@ class DateTimeZoneObject extends DateTimeZone implements
     *
     *   @return string
     */
-    public function name(): string;
+    public function name(): string
+    {
+        return $this->getName();
 
     /*
-    *   offset
+    *   offsetTime
     *
     *   @return int
     */
-    public function offset(): int;
+    public function offsetTime(): int
+    {
+        return $this->getOffset(
+            new DateTimeImmutable(
+                'now',
+                new DateTimeZone('UTC')
+            )
+        );
+    }
+
+    /*
+    *   toDateTimezone
+    *
+    *   @return int
+    */
+    public function toDateTimezone(): DateTimezone
+    {
+        return $this;
+    }
 }

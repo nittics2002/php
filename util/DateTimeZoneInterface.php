@@ -10,6 +10,8 @@ declare(strict_types=1);
 
 namespace Concerto\util;
 
+use DateTimezone;
+
 interface DateTimeZoneInterface
 {
     /*
@@ -20,9 +22,16 @@ interface DateTimeZoneInterface
     public function name(): string;
 
     /*
-    *   offset
+    *   offsetTime
     *
     *   @return int
     */
-    public function offset(): int;
+    public function offsetTime(): int;
+
+    /*
+    *   toDateTimezone
+    *
+    *   @return int
+    */
+    public function toDateTimezone(): DateTimezone;
 }
