@@ -43,7 +43,12 @@ class DateObject implements DateInterface
     */
     public function __construct(
         ?string $datetime = 'now',
-        ?DateTimezoneInterface $timezone = null
+        ?DateTimezoneInterface $timezone = null,
+        
+        //追加?
+        ?int $fiscal_start_month = 4,
+        
+        
     ) {
         $this->datetime = new DateTimeImmutable(
             $datetime,
