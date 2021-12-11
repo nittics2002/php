@@ -1,7 +1,7 @@
 <?php
 
 /**
-*   DatePeriodInterface
+*   DatePeriodObject
 *
 *   @version 211204
 */
@@ -14,9 +14,9 @@ use Countable;
 use DatePeriod;
 use Concerto\util\DateInterface;
 use Concerto\util\DateIntervalInterface;
+use Concerto\util\DatePeriodInterface;
 
-interface DatePeriodInterface extends Traversable,
-    Countable
+class DatePeriodObject implements DatePeriodInterface
 {
     /*
     *   createFromDatePeriod
@@ -26,7 +26,10 @@ interface DatePeriodInterface extends Traversable,
     */
     public static function createFromDatePeriod(
         DatePeriod $period,
-    ): DatePeriodInterface;
+    ): DatePeriodInterface {
+        $this->period = $period;
+        return $this;
+    }
     
     /*
     *   interval

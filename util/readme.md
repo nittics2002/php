@@ -1,8 +1,7 @@
-#211204
+#211212
 
-- DateObject
-    - quater,half　要機能追加
-
+- quater,half　要機能追加
+- static method で $this を使っている
 
 #210917
 
