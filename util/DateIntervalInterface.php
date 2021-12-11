@@ -10,8 +10,20 @@ declare(strict_types=1);
 
 namespace Concerto\util;
 
+use DateInterval;
+
 interface DateIntervalInterface
 {
+    /*
+    *   createFromDateInterval
+    *
+    *   @param DateInterval $interval
+    *   @return DateIntervalInterface
+    */
+    public static function createFromDateInterval(
+        DateInterval $interval
+    ): DateIntervalInterface;
+    
     /*
     *   createFromDateString
     *
@@ -37,14 +49,14 @@ interface DateIntervalInterface
     *
     *   @return ?int
     */
-    public function fiscalYear(): ?int;
+    public function fiscalYear(): int;
     
     /*
     *   quater
     *
     *   @return ?int
     */
-    public function quaters(): ?int;
+    public function quaters(): int;
     
     /*
     *   year
@@ -100,12 +112,12 @@ interface DateIntervalInterface
     *
     *   @return int
     */
-    public function milliSeconds(): int;
+    public function milliSeconds(): float;
     
     /*
     *   microSecond
     *
     *   @return int
     */
-    public function microSeconds(): int;
+    public function microSeconds(): float;
 }

@@ -71,6 +71,18 @@ class DateObject implements DateInterface
     /*
     *   {inherit}
     */
+    public static function createFromInterface(
+        DateTimeInterface $object,
+    ): DateInterface;
+        $this->datetime = DateTimeImmutable::createFromInterface(
+            $object,
+        );
+        return $this;
+    }
+    
+    /*
+    *   {inherit}
+    */
     public static function createFromFormat(
         string $format,
         string $datetime,

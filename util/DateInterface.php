@@ -3,7 +3,7 @@
 /**
 *   DateInterface
 *
-*   @version 211204
+*   @version 211211
 */
 
 declare(strict_types=1);
@@ -16,6 +16,16 @@ use DateTimeInterface;
 
 interface DateInterface extends DateTimeInterface
 {
+    /*
+    *   createFromInterface
+    *
+    *   @param DateTimeInterface $object
+    *   @return DateInterface
+    */
+    public static function createFromInterface(
+        DateTimeInterface $object,
+    ): DateInterface;
+    
     /*
     *   createFromFormat
     *

@@ -3,7 +3,7 @@
 /**
 *   DateInterface
 *
-*   @version
+*   @version 211211
 */
 
 declare(strict_types=1);
@@ -13,9 +13,26 @@ namespace Concerto\util\implement;
 use DateTimeZone;
 use Concerto\util\DateTimeZoneInterface;
 
-class DateTimeZoneObject extends DateTimeZone implements
-    DateTimeZoneInterface
+class DateTimeZoneObject implements DateTimeZoneInterface
 {
+    /*
+    *   @val DateTimeZone
+    */
+    protected DateTimeZone $timezone;
+    
+    /*
+    *   __construct
+    *
+    *   @param string $timezone
+    */
+    public function __construct(
+        string $timezone
+    ) {
+        $this->timezone = new DateTimeZone(
+            $timezone
+        );
+    }
+    
     /*
     *   name
     *
@@ -23,7 +40,7 @@ class DateTimeZoneObject extends DateTimeZone implements
     */
     public function name(): string
     {
-        return $this->getName();
+        return $this->timozone->getName();
 
     /*
     *   offsetTime
@@ -32,7 +49,7 @@ class DateTimeZoneObject extends DateTimeZone implements
     */
     public function offsetTime(): int
     {
-        return $this->getOffset(
+        return $this->timozone->getOffset(
             new DateTimeImmutable(
                 'now',
                 new DateTimeZone('UTC')
@@ -47,6 +64,8 @@ class DateTimeZoneObject extends DateTimeZone implements
     */
     public function toDateTimezone(): DateTimezone
     {
-        return $this;
+        return new DateTimeZone(
+            $this->timozone->name(),
+        );
     }
 }
