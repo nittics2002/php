@@ -3,7 +3,7 @@
 /**
 *   DateObject
 *
-*   @version
+*   @version 211211
 */
 
 declare(strict_types=1);
@@ -20,6 +20,7 @@ use Concerto\util\{
 use Concerto\util\implements\{
     DateIntervalObject,
     DatePeriodObject,
+    DateTimeZoneObject,
 };
 
 class DateObject implements DateInterface
@@ -46,7 +47,7 @@ class DateObject implements DateInterface
     ) {
         $this->datetime = new DateTimeImmutable(
             $datetime,
-            $timezone
+            $timezone,
         );
     }
 
@@ -74,13 +75,18 @@ class DateObject implements DateInterface
     public static function createFromInterface(
         DateTimeInterface $object,
     ): DateInterface;
-        
-        
-        
-        $this->datetime = DateTimeImmutable::createFromInterface(
+        $datetime = DateTimeImmutable::createFromInterface(
             $object,
         );
-        return $this;
+        
+        return new static(
+            $datetime->format(
+                DateTimeInterface::ATOM,
+            ),
+            DateTimeZoneObject::createFromDateTimezone(
+                $datetime->getTimeZone(),
+            ),
+        );
     }
     
     /*
@@ -95,13 +101,13 @@ class DateObject implements DateInterface
             $format = "!{$format}";
         }
 
-        $this->datetime =
-        DateTimeImmutable::createFromFormat(
-            $format,
-            $datetime,
-            $timezone,
+        return static::createFromInterface()
+            DateTimeImmutable::createFromFormat(
+                $format,
+                $datetime,
+                $timezone,
+            ),
         );
-        return $this;
     }
 
     /*
@@ -109,7 +115,7 @@ class DateObject implements DateInterface
     */
     public static function now(): DateInterface
     {
-        return new $this->__construct();
+        return new static('now');
     }
 
     /*
@@ -117,9 +123,7 @@ class DateObject implements DateInterface
     */
     public static function today(): DateInterface
     {
-        return new $this->__construct(
-            'today'
-        );
+        return new static('today');
     }
 
     /*
@@ -127,9 +131,7 @@ class DateObject implements DateInterface
     */
     public static function yeasterday(): DateInterface
     {
-        return new $this->__construct(
-            'yeasterday'
-        );
+        return new static('yeasterday');
     }
 
     /*
@@ -137,9 +139,7 @@ class DateObject implements DateInterface
     */
     public static function tomorrow(): DateInterface
     {
-        return new $this->__construct(
-            'tomorrow'
-        );
+        return new static('tomorrow');
     }
 
     /*
@@ -147,13 +147,15 @@ class DateObject implements DateInterface
     *
     *   @param int $year
     *   @param ?int $month
+    *   @param ?int $fiscal_start_month
     *   @return DateTimeInterface
     */
     protected static function createFiscalStartDate(
         int $year,
-        ?int $month = null
+        ?int $month = null,
+        ?int $fiscal_start_month = 4,
     ): DateTimeInterface {
-        $month = $month ?? self::$fiscal_start_month;
+        $month = $month ?? $fiscal_start_month;
 
         if ($month < 1 || $month > 12) {
             throw new InvalidArgumentException(
@@ -161,25 +163,62 @@ class DateObject implements DateInterface
             );
         }
 
-        if ($month < self::$fiscal_start_month) {
+        if ($month < $fiscal_start_month) {
             --$year;
         }
 
         return DateTimeImmutable::createFromFormat(
             '!Y-n',
-            "{$year}-" . (string)self::$fiscal_start_month
+            "{$year}-" . (string)static::$fiscal_start_month
         );
     }
 
     /*
     *   {inherit}
     */
-    public static function thisHalf(): DateInterface
-    {
-        $today = self::today();
+    public static function thisHalf(
+        ?int $fiscal_start_month = 4,
+    ): DateInterface {
+        
+        //211211 static methodなので $this は使えない
+        $month = (int)static::today()->format('n');
+        
+        //上記createFiscalStartDate()のコピー
+        //quaterと共通化できるか?
+            //$month = $month ?? $fiscal_start_month;
 
-        return new $this->__construct(
-            self::createFiscalStartDate(
+        //$fiscal_start_month != 4 場合 どうする?
+        
+        
+        
+        //
+        if ($month < $fiscal_start_month) {
+            --$year;
+        }
+
+        return DateTimeImmutable::createFromFormat(
+            '!Y-n',
+            "{$year}-" . (string)static::$fiscal_start_month
+        );
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        $deviation = $month - $fiscal_start_month;
+        
+        
+
+
+
+        //211204時点
+        return new static(
+            static::createFiscalStartDate(
                 (int)$today->format('Y'),
                 (int)$today->format('n'),
             )
@@ -191,6 +230,10 @@ class DateObject implements DateInterface
     */
     public static function thisQuater(): DateInterface
     {
+        
+        
+        
+        
     }
 
     /*
@@ -198,9 +241,7 @@ class DateObject implements DateInterface
     */
     public static function thisYear(): DateInterface
     {
-        return $this->modify(
-            'this year'
-        );
+        return new static('this year');
     }
 
     /*
@@ -208,9 +249,7 @@ class DateObject implements DateInterface
     */
     public static function thisMonth(): DateInterface
     {
-        return $this->modify(
-            'this month'
-        );
+        return new static('this month');
     }
 
     /*
