@@ -195,8 +195,9 @@ class DateObject implements DateInterface
             static::$fiscal_start_month;
         
         $fiscal_start = static::createFromFormat(
-            '!Y-n',
-            "{$year}-" . (string)$fiscal_start_month
+            '!Yn',
+            (string)$today->year() .
+                (string)$fiscal_start_month
         );
         
         $next_fiscal_start = $fiscal_start->addMonths(6);
@@ -210,54 +211,6 @@ class DateObject implements DateInterface
         }
         
         return $fiscal_start->subMonths(6);
-
-
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        //今月のint月計算方法の別解
-        $month = static::thisMonth()
-            ->month();
-        
-        
-        //以下だとだめっぽい
-        $month = (int)static::today()->format('n');
-        
-        if ($month < $fiscal_start_month) {
-            --$year;
-        }
-
-        $next_start_month = $fiscal_start_month + 6;
-        
-        if ($next_start_month > 12) {
-            $next_start_month -= 12;
-        }
-
-        if (
-            $month >= $fiscal_start_month &&
-            $month < $next_start_month
-        ) {
-            $month ;
-        }
-
-
-        if ($month >= $fiscal_start_month + 6) {
-            $month ;
-        }
-
-        return DateTimeImmutable::createFromFormat(
-            '!Y-n',
-            "{$year}-" . (string)static::$fiscal_start_month
-        );
     }
 
     /*
