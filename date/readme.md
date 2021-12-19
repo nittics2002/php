@@ -1,6 +1,10 @@
 
 #211219
 
+- 先に static 以外のテスト
+    - その後に create
+    - Half/quater は最後?
+
 - half,quater 反映
 
 - sameYear() などは作らない？

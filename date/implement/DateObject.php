@@ -78,7 +78,7 @@ class DateObject implements DateInterface
     */
     public static function createFromInterface(
         DateTimeInterface $object,
-    ): DateInterface;
+    ): DateInterface {
         $datetime = DateTimeImmutable::createFromInterface(
             $object,
         );
@@ -105,7 +105,7 @@ class DateObject implements DateInterface
             $format = "!{$format}";
         }
 
-        return static::createFromInterface()
+        return static::createFromInterface(
             DateTimeImmutable::createFromFormat(
                 $format,
                 $datetime,
@@ -258,10 +258,9 @@ class DateObject implements DateInterface
     *   @param DateInterface $date
     *   @return string
     */
-    protected datetimeToString(
-        DateInterface $date
-    ): string
-    {
+    protected function datetimeToString(
+        DateInterface $date,
+    ): string {
         return $date->fotmat(
             DateTimeInterface::ATOM,
         );
@@ -962,7 +961,7 @@ class DateObject implements DateInterface
         return new $this->__construct(
             $this->datetimeToString(
                 $result,
-            );
+            ),
         );
     }
     
