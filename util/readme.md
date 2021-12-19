@@ -1,3 +1,10 @@
+
+#211219
+
+- dateを独立namespace
+    - String　も mbstring に
+    - File も　同じように
+
 #211212
 
 - quater,half　要機能追加

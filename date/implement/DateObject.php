@@ -146,6 +146,12 @@ class DateObject implements DateInterface
         return new static('tomorrow');
     }
 
+
+
+
+
+    //thisHalf で　再検討中
+    //ここをどうする?
     /*
     *   createFiscalStartDate
     *
@@ -181,51 +187,76 @@ class DateObject implements DateInterface
     *   {inherit}
     */
     public static function thisHalf(
-        ?int $fiscal_start_month = 4,
+        ?int $fiscal_start_month,
     ): DateInterface {
+        $today = static::today();
         
-        //211211 static methodなので $this は使えない
+        $fiscal_start_month = $fiscal_start_month??
+            static::$fiscal_start_month;
+        
+        $fiscal_start = static::createFromFormat(
+            '!Y-n',
+            "{$year}-" . (string)$fiscal_start_month
+        );
+        
+        $next_fiscal_start = $fiscal_start->addMonths(6);
+        
+        if ($today >= $next_fiscal_start) {
+            return $next_fiscal_start;
+        }
+        
+        if ($today >= $fiscal_start) {
+            return $fiscal_start;
+        }
+        
+        return $fiscal_start->subMonths(6);
+
+
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //今月のint月計算方法の別解
+        $month = static::thisMonth()
+            ->month();
+        
+        
+        //以下だとだめっぽい
         $month = (int)static::today()->format('n');
         
-        //上記createFiscalStartDate()のコピー
-        //quaterと共通化できるか?
-            //$month = $month ?? $fiscal_start_month;
-
-        //$fiscal_start_month != 4 場合 どうする?
-        
-        
-        
-        //
         if ($month < $fiscal_start_month) {
             --$year;
+        }
+
+        $next_start_month = $fiscal_start_month + 6;
+        
+        if ($next_start_month > 12) {
+            $next_start_month -= 12;
+        }
+
+        if (
+            $month >= $fiscal_start_month &&
+            $month < $next_start_month
+        ) {
+            $month ;
+        }
+
+
+        if ($month >= $fiscal_start_month + 6) {
+            $month ;
         }
 
         return DateTimeImmutable::createFromFormat(
             '!Y-n',
             "{$year}-" . (string)static::$fiscal_start_month
-        );
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        $deviation = $month - $fiscal_start_month;
-        
-        
-
-
-
-        //211204時点
-        return new static(
-            static::createFiscalStartDate(
-                (int)$today->format('Y'),
-                (int)$today->format('n'),
-            )
         );
     }
 
@@ -234,6 +265,18 @@ class DateObject implements DateInterface
     */
     public static function thisQuater(): DateInterface
     {
+        $month = (int)static::today()->format('n');
+
+        if (
+            $month < $fiscal_start_month
+        ) {
+            --$year;
+        }
+
+        return DateTimeImmutable::createFromFormat(
+            '!Y-n',
+            "{$year}-" . (string)static::$fiscal_start_month
+        );
         
         
         
