@@ -1,6 +1,17 @@
 #!/bin/bash
 
-cd "$(dirname $0)"
+set -e
+set -x
+
+###
+# user setting
+###
+PHPUNIT=phpunit-9.5.10.phar
+
+
+CURRENT_PATH="$(cd $(dirname $0) && pwd)"
+
+cd "${CURRENT_PATH}"
 
 sudo apt install php8.1-cli php8.1-xml php8.1-mbstring
 sudo apt install libpcre2-8-0 --only-upgrade 
@@ -10,8 +21,9 @@ php composer-setup.php
 php -r "unlink('composer-setup.php');"
 
 
-PHPUNIT=phpunit-9.5.10.phar
 wget "https://phar.phpunit.de/${PHPUNIT}"
 
 mv "${PHPUNIT}" phpunit.phar
 
+[[ $(echo ${PATH} |grep ${CURRENT_PATH} -c) = 0 ]] && \
+    export PATH="${PATH}:${CURRENT_PATH}" && echo "path=${PATH}"

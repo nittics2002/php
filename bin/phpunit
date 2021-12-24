@@ -1,3 +1,5 @@
 #!/bin/bash
 
-php phpunit.phar "$@"
+PHAR_PATH="$(dirname $0)"
+
+php "${PHAR_PATH}/phpunit.phar" "$@"

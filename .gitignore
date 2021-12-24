@@ -1,0 +1,5 @@
+/vendor/*
+!/vendor/composer/
+!/vendor/autoload.php
+/bin/*.phar
+.phpunit.result.cache
