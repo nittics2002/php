@@ -627,4 +627,11 @@ interface DateInterface extends DateTimeInterface
     *   @return DateTime
     */
     public function toDateTimeImmutable(): DateTimeImmutable;
+
+    /*
+    *   fiscalStartMonth
+    *
+    *   @return int
+    */
+    public function fiscalStartMonth(): int;
 }

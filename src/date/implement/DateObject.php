@@ -905,7 +905,7 @@ class DateObject implements DateInterface
     */
     public function unixtime(): int
     {
-        return $this->datetime->getTimestamp();
+        return $this->getTimestamp();
     }
     
     /*
@@ -946,6 +946,20 @@ class DateObject implements DateInterface
     }
     
     /*
+    *   fiscalStartMonth
+    *
+    *   @return int
+    */
+    public function fiscalStartMonth(): int
+    {
+        return $this->fiscal_start_month;
+    }
+    
+    /**
+    *   Hereinafter \DateTimeInterface
+    */
+    
+    /*
     *   {inherit}
     * 
     *   @return DateInterface
@@ -982,6 +996,16 @@ class DateObject implements DateInterface
     public function getOffset():int
     {
         return $this->datetime->getOffset();
+    }
+    
+    /*
+    *   {inherit}
+    * 
+    *   @return int|false
+    */
+    public function getTimestamp():int|false
+    {
+        return $this->datetime->getTimestamp();
     }
     
     /*
