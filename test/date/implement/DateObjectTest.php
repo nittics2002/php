@@ -248,7 +248,52 @@ class DateObjectTest extends TestCase
         );
    }
 
+    /**
+    *   @return DateInterface $date
+    *   @return string $expected_date_string
+    */
+    protected function datetimeToStringProvider()
+    {
+        return [
+            //00:00
+            [
+                new DateObject('today'),
+                DateTimeImmutable::createFromFormat(
+                    'today'
+                )->fotmat(
+                    DateTimeInterface::ATOM,
+                ),
+            ],
+            //12:34:56
+            [
+                new DateObject('2345-12-31T12:34:56'),
+                DateTimeImmutable::createFromFormat(
+                    '2345-12-31T12:34:56'
+                )->fotmat(
+                    DateTimeInterface::ATOM,
+                ),
+            ],
+            
+        ];
+    }
 
+    /**
+    *   @test
+    *   @dataProvider datetimeToStringProvider
+    */
+    public function datetimeToString(
+        DateInterface $date,
+        string $expected_date_string,
+    ) {
+        $this->assertEquals(
+            $expected_date_string,
+            $this->callPrivateMethod(
+                $date,
+                'datetimeToString',
+                [$date],
+            ),
+        );
+    }
 
 
 
