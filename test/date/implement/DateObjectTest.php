@@ -170,7 +170,151 @@ class DateObjectTest extends TestCase
             $obj->fiscalStartMonth(),
         );
     }
+
+    /**
+    *   @test
+    */
+    public function now()
+    {
+        $this->assertEqualsDateTime(
+            new DateObject('now'),
+            DateObject::now(),
+        );
+   }
+
+    /**
+    *   @test
+    */
+    public function today()
+    {
+        $this->assertEqualsDateTime(
+            new DateObject('today'),
+            DateObject::today(),
+        );
+   }
+
+    /**
+    *   @test
+    */
+    public function yeasterday()
+    {
+        $this->assertEqualsDateTime(
+            new DateObject('yeasterday'),
+            DateObject::yeasterday(),
+        );
+   }
+
+    /**
+    *   @test
+    */
+    public function tomorrow()
+    {
+        $this->assertEqualsDateTime(
+            new DateObject('tomorrow'),
+            DateObject::tomorrow(),
+        );
+   }
+
+    /**
+    *   @test
+    */
+    public function thisYear()
+    {
+        $this->assertEqualsDateTime(
+            new DateObject('this year'),
+            DateObject::thisYear(),
+        );
+   }
+
+    /**
+    *   @test
+    */
+    public function thisMonth()
+    {
+        $this->assertEqualsDateTime(
+            new DateObject('this month'),
+            DateObject::thisMonth(),
+        );
+   }
+
+    /**
+    *   @test
+    */
+    public function thisMonth()
+    {
+        $this->assertEqualsDateTime(
+            new DateObject('this month'),
+            DateObject::thisMonth(),
+        );
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //createFromInterface作成後に確認する
+
+    /**
+    *   @return ?string $datetime
+    *   @return ?int $month
+    *   @return DateInterface $expected_datetime
+    *   @return int $expected_month
+    */
+    protected function setFiscalStartMonthProvider()
+    {
+        $datetime = new DateTimeImmutable('today');
+        
+        
+        return [
+            //
+            [
+                ,
+                1,
+                
+            ],
+        ];
+    }
     
+    /**
+    *   @test
+    *   @dataProvider setFiscalStartMonthProvider
+    */
+    public function setFiscalStartMonth(
+        ?string $datetime,
+        ?int $month,
+        DateInterface $expected_datetime,
+        int $expected_month,
+    ) {
+        
+        $obj = new DateObject('today');
+        
+        $actual = $obj->setFiscalStartMonth(
+            $month,
+        );
+        
+        $this->assertEquals(
+            $expected_month,
+            $obj->fiscalStartMonth(),
+        );
+        
+        $this->assertEqualsDateTime(
+            $expected_datetime,
+            $actual,
+        );
+    }
+    
+    //quater/halfはまとめて後ろに
     
     
     
