@@ -1,0 +1,9 @@
+language: php
+php:
+ - '8.1'
+
+script:
+ - phpunit --testsuite _first
+
+
+
