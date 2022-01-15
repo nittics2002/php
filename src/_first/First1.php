@@ -7,7 +7,7 @@ class First1
     public function __construct(
         protected string $first_name,
         protected string $last_name,
-        protected ?string $separator = ' ',
+        protected string $separator = ' ',
     ) {
     }
     
