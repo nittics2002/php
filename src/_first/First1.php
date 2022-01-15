@@ -1,6 +1,6 @@
 <?php
 
-namespace _First;
+namespace _first;
 
 class First1
 {

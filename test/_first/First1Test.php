@@ -3,8 +3,7 @@
 namespace test\_first;
 
 use PHPUnit\Framework\TestCase;
-
-use _first\_First1;
+use _first\First1;
 
 class First1Test extends TestCase
 {
@@ -17,7 +16,7 @@ class First1Test extends TestCase
                 '青木',
                 '太郎',
                 null,
-                '青木 太郎',
+                '太郎 青木',
             ],
         ];
     }
@@ -29,15 +28,22 @@ class First1Test extends TestCase
     public function testFullName(
         string $first_name,
         string $last_name,
-        ?string $separator = ' ',
+        ?string $separator,
         string $expected,
     ):void
     {
-        $obj = new First1(
-            $first_name,
-            $last_name,
-            $separator,
-        );
+        if ($separator === null) {
+            $obj = new First1(
+                $first_name,
+                $last_name,
+            );
+        } else {
+            $obj = new First1(
+                $first_name,
+                $last_name,
+                $separator,
+            );
+        }
         
         $this->assertEquals(
             $expected,

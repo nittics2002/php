@@ -12,9 +12,9 @@
     },
     "autoload": {
         "psr-4": {
-            "_First\\" : "src\\_first",
+            "_first\\" : "src/_first/",
             "Concerto\\date\\" : "src/date/",
-            "test\\_First\\" : "test\\_first",
+            "test\\_first\\" : "test/_first/",
             "test\\Concerto\\date\\" : "test/date/"
         }
     },
