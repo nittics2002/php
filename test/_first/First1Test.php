@@ -1,14 +1,16 @@
 <?php
 
-namespace test\_First;
+namespace test\_first;
 
 use PHPUnit\Framework\TestCase;
+
+use _first\_First1;
 
 class First1Test extends TestCase
 {
     
     
-    public function testFullNameProvider():array
+    public function FullNameProvider():array
     {
         return [
             [
@@ -22,7 +24,7 @@ class First1Test extends TestCase
     
     /**
     *   @test
-    *   @dataProvider testFullNameProvider
+    *   @dataProvider FullNameProvider
     */
     public function testFullName(
         string $first_name,

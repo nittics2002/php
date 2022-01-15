@@ -13,8 +13,8 @@ CURRENT_PATH="$(cd $(dirname $0) && pwd)"
 
 cd "${CURRENT_PATH}"
 
-sudo apt install php8.1-cli php8.1-xml php8.1-mbstring
-sudo apt install libpcre2-8-0 --only-upgrade 
+sudo apt install -y php8.1-cli php8.1-xml php8.1-mbstring
+sudo apt install -y libpcre2-8-0 --only-upgrade 
 
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php
