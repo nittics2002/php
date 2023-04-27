@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="./vendor/autoload.php"
+         colors="true"
+>
+    <testsuites>
+        <testsuite name="all">
+            <directory suffix="Test.php">./test/reflection</directory>
+        </testsuite>
+    </testsuites>
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">./src/reflection</directory>
+        </include>
+        <report>
+            <html outputDirectory="./tmp/report/date" />
+        </report>
+    </coverage>
+    <php>
+        <ini name="date.timezone" value="Asia/Tokyo"/>
+        <var name="DB_DSN" value="sqlite:"/>
+        <var name="TEMP_DIR" value="./tmp:"/>
+    </php>
+</phpunit>
