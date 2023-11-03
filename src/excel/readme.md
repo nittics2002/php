@@ -1,5 +1,17 @@
 #
 
+## 231103
+
+- ExcelRange
+    - Pointを作ったが、アドレス変換以外不要?
+
+- ExcelSheet内のmethodで配列に変換する
+        - range($address, $dimention_array):staric
+
+
+
+
+
 ## 231028
 
 - ExcelSheet
